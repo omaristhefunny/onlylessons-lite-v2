@@ -1,4 +1,4 @@
-![Logo](https://ka.aubree.lat/images/nreds.png)
+![Logo](https://ka.aubree.lat/images/banner.png)
 
 
 # sunset-network
