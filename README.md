@@ -1,7 +1,7 @@
 ![Logo](https://ka.aubree.lat/images/banner.png)
 
 
-# sunset-network
+# suntree-network
 
 no games here, too heavy. :3
 
