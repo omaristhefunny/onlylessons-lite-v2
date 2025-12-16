@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Embeddable game wrapper</title>
+  <style>
+    iframe {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        margin: 0;
+    }
+    body, html { margin: 0; height: 100%; }
+  </style>
+</head>
+<body>
+  <iframe></iframe>
+  <script>
+        async function directsetip() {
+          try {
+            const res = await fetch('/ip');
+            if (!res.ok) throw new Error('fetch failed');
+
+            const ip = await res.text();
+            sessionStorage.setItem("prefix", ip)
+            return ip
+          } catch (err) {
+            console.error(err);
+            return null;
+          }
+        }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      const ip = await directsetip();
+      const iframe = document.querySelector("iframe");
+      if (ip) {
+        iframe.src = `/embed.html#https://${ip}.ip.nowgg.fun/apps/a/19900/b.html`;
+      } else {
+        console.warn('No IP, iframe not set.');
+        document.body.innerHTML = '<p style="color:white;padding:20px">Unable to determine proxy prefix (no IP). Try loading from the main site.</p>';
+      }
+    });
+  </script>
+</body>
+</html>

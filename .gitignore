@@ -3,6 +3,7 @@ node_modules/
 npm-debug.log*
 yarn.lock
 pnpm-lock.yaml
+package-lock.json
 
 # Env
 .env
@@ -14,9 +15,8 @@ logs/
 tmp/
 
 # Excluded large content
-science/
+static/public/science/
 
 # OS junk
 .DS_Store
 Thumbs.db
-science/

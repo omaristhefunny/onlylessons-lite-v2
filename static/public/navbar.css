@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap');
+
+.navbar {
+    font-family: 'Figtree', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0,0,0,0.85);
+    border-bottom: 2px solid #FF8C00; /* orange */
+    box-shadow: 0 0 20px #FF8C00; /* orange glow */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    gap: 2rem;
+}
+
+.logo {
+    height: 30px;
+    margin-right: 1rem;
+}
+
+.logo-text {
+    color: #FF8C00; /* orange */
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 
+        0 0 5px #FF8C00,
+        0 0 10px #FF8C00; /* orange glow */
+}
+
+.navbar-right a {
+    display: flex;
+    align-items: center;
+    color: #FF8C00; /* orange */
+    text-decoration: none;
+    gap: 0.5rem;
+    transition: 0.2s ease-in-out;
+}
+
+.navbar-right a:hover {
+    color: #FF3B3B; /* Christmas red */
+    text-shadow: 
+        0 0 5px #FF3B3B,
+        0 0 15px #FF3B3B; /* red glow */
+    transform: scale(1.1);
+}
+
+.navbar-right img {
+    height: 20px;
+    width: 20px;
+}
+
+.navbar-right .label {
+    font-weight: bold;
+}
+
+/* Adjust container margin to account for navbar */
+.container {
+    margin-left: 0 !important;
+    width: 100% !important;
+    margin-top: 70px;
+}
+
+/* Dropdown styles */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    color: #FF8C00;
+    text-decoration: none;
+    gap: 0.5rem;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.dropdown-toggle:hover {
+    color: #FF3B3B;
+    text-shadow: 0 0 5px #FF3B3B, 0 0 15px #FF3B3B;
+    transform: scale(1.1);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid #FF8C00;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #FF8C00;
+    min-width: 150px;
+    padding: 8px 0;
+    z-index: 1001;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 16px;
+    color: #FF8C00;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background: rgba(255, 140, 0, 0.2);
+    color: #FF3B3B;
+}

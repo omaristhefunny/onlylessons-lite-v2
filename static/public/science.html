@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link id="favicon" rel="icon" href="images/nreds.png" type="image/x-icon">
+<title>Study.com</title>
+<link rel="stylesheet" href="stylesbeta.css">
+<link rel="stylesheet" href="navbar.css">
+<script
+  type="text/javascript"
+  src="https://privacyspell.com/a8/70/d9/a870d9fda4207d56f8ecc15f9793f7b0.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://privacyspell.com/eb/29/fd/eb29fd2b306b86a8d5b683df6e1e2a29.js"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden; background: #000;">
+<div id="particles-js" style="position: fixed; width: 100%; height: 100%; z-index: -1;"></div>
+
+<div class="navbar">
+    <div class="navbar-left">
+        <img src="images/blue girl.gif" alt="Kernel's Logo" class="logo">
+        <span class="logo-text">suntree-network</span>
+    </div>
+    <div class="navbar-right">
+        <a href="/main.html">
+            <img src="png/house-solid.svg" alt="Home">
+            <span class="label">Home</span>
+        </a>
+        <a href="/g" class="active">
+            <img src="png/gamepad-solid.svg" alt="Games">
+            <span class="label">Games</span>
+        </a>
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle">
+            <span class="label">Other ▼</span>
+          </a>
+          <div class="dropdown-menu">
+            <a href="partners.html">Partners</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="dmca.html">DMCA</a>
+          </div>
+        </div>
+    </div>
+</div>
+
+<iframe id="game-frame" src="games.html" allowtransparency="true"></iframe>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const embedUrl = urlParams.get('embed');
+if (embedUrl) {
+  // Append the parent's hash to the iframe src (for embed.html#url pattern)
+  const hash = window.location.hash;
+  document.getElementById('game-frame').src = embedUrl + hash;
+}
+
+let particlesEnabled = true;
+function initParticles() {
+  if (!particlesEnabled) return;
+  particlesJS("particles-js", {
+  "particles": {
+    "number": {
+      "value": 150,
+      "density": { "enable": true, "value_area": 900 }
+    },
+    "color": { "value": "#ffffff" },
+    "shape": {
+      "type": "circle"
+    },
+    "opacity": {
+      "value": 0.8,
+      "random": true
+    },
+    "size": {
+      "value": 3,
+      "random": true
+    },
+    "move": {
+      "direction": "bottom",
+      "speed": 1.2,
+      "random": true,
+      "straight": false,
+      "out_mode": "out",
+      "bounce": false
+    },
+    "line_linked": { "enable": false }
+  },
+  "interactivity": {
+    "events": {
+      "onhover": { "enable": false },
+      "onclick": { "enable": false }
+    }
+  },
+  "retina_detect": true
+});
+
+}
+initParticles();
+
+
+const toggleBtn = document.getElementById("toggle-sidebar");
+if (toggleBtn) {
+  toggleBtn.addEventListener("click", () => {
+    const sidebar = document.getElementById("sidebar");
+    const iframe = document.getElementById("game-frame");
+
+    if (sidebar.classList.contains("hidden")) {
+      sidebar.classList.remove("hidden");
+      iframe.style.left = "220px";
+      iframe.style.width = "calc(100% - 220px)";
+      toggleBtn.textContent = "Hide Sidebar";
+    } else {
+    sidebar.classList.add("hidden");
+    iframe.style.left = "0";
+    iframe.style.width = "100%";
+    toggleBtn.textContent = "Show Sidebar";
+  }
+  });
+}
+
+window.addEventListener("message", (e) => {
+  if (e.data.type === "uiToggle") {
+    const sidebar = document.getElementById('sidebar');
+    const iframe = document.getElementById("game-frame");
+
+    if (e.data.hideSidebar) {
+      sidebar.classList.add('hidden');
+      iframe.style.left = "0";
+      iframe.style.width = "100%";
+    } else {
+      sidebar.classList.remove('hidden');
+      iframe.style.left = "220px";
+      iframe.style.width = "calc(100% - 220px)";
+    }
+
+    if (e.data.disableParticles) {
+      particlesEnabled = false;
+      document.getElementById("particles-js").style.display = "none";
+    } else {
+      particlesEnabled = true;
+      document.getElementById("particles-js").style.display = "block";
+      initParticles();
+    }
+  }
+});
+</script>
+<script src="loading.js"></script>
+
+</body>
+</html>
