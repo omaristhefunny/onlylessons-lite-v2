@@ -1,0 +1,24 @@
+name: Approval Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Tests
+        run: |
+          echo "Running tests..."
+          # Add your test commands here
+
+      - name: Require Approval
+        if: ${{ github.event.pull_request.merged == false }}
+        run: |
+          echo "Waiting for approval..."
+          # This step ensures the PR is reviewed before merging
