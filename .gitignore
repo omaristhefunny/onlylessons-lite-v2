@@ -1,0 +1,22 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# Env
+.env
+.env.*
+
+# Runtime
+logs/
+.cache/
+tmp/
+
+# Excluded large content
+science/
+
+# OS junk
+.DS_Store
+Thumbs.db
+science/
