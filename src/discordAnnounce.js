@@ -1,15 +1,5 @@
-// Discord announce utility for PM2-friendly server
 import { Client, GatewayIntentBits } from "discord.js";
 import { EmbedBuilder } from "discord.js";
-
-// --- Discord Bot Setup ---
-// Add these to your .env file or environment variables:
-// DISCORD_TOKEN=<your bot token>
-// DISCORD_STAFF_CHANNEL_ID=<staff channel id>
-// DISCORD_ANNOUNCE_CHANNEL_ID=<announcements channel id>
-// DISCORD_ALLOWED_USER_IDS=<comma separated user ids>
-// DISCORD_SERVER_ID=<your server (guild) id>
-
 const STAFF_CHANNEL_ID = process.env.DISCORD_STAFF_CHANNEL_ID;
 const ANNOUNCE_CHANNEL_ID = process.env.DISCORD_ANNOUNCE_CHANNEL_ID;
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
@@ -53,7 +43,7 @@ client.on("messageCreate", async (msg) => {
 
 function sendToChannel(channelId, message) {
   if (!client.isReady()) return Promise.reject("Discord client not ready");
-  // Restrict to specific guild
+
   const guild = client.guilds.cache.get(GUILD_ID);
   if (!guild) return Promise.reject("Guild not found or bot not in guild");
   const channel = guild.channels.cache.get(channelId);
@@ -61,7 +51,7 @@ function sendToChannel(channelId, message) {
   return channel.send(message);
 }
 
-// Announce site up with a nice embed
+
 function announceUp() {
   const embed = new EmbedBuilder()
     .setColor(0x8000ff)
