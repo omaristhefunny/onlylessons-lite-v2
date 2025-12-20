@@ -5,6 +5,8 @@ import { publicPath } from "ultraviolet-static";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { join } from "node:path";
 import { hostname } from "node:os";
+import "dotenv/config";
+import "./discordAnnounce.js"; // Ensure bot command listener runs
 import cors from "cors";
 
 const bare = createBareServer("/bare/", {
@@ -103,7 +105,7 @@ if (isNaN(port)) port = 6767;
 server.on("listening", () => {
   const address = server.address();
 
-  console.log("Listening on:");
+  console.log("YAAAAYYYY WE ARE UP AND RUNNING TWIN :3");
   console.log(`\thttp://localhost:${address.port}`);
   console.log(`\thttp://${hostname()}:${address.port}`);
   console.log(
