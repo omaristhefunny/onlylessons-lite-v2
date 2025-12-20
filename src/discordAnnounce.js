@@ -8,19 +8,30 @@ import { EmbedBuilder } from "discord.js";
 // DISCORD_STAFF_CHANNEL_ID=<staff channel id>
 // DISCORD_ANNOUNCE_CHANNEL_ID=<announcements channel id>
 // DISCORD_ALLOWED_USER_IDS=<comma separated user ids>
-// DISCORD_GUILD_ID=<your server (guild) id>
+// DISCORD_SERVER_ID=<your server (guild) id>
 
 const STAFF_CHANNEL_ID = process.env.DISCORD_STAFF_CHANNEL_ID;
 const ANNOUNCE_CHANNEL_ID = process.env.DISCORD_ANNOUNCE_CHANNEL_ID;
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const ALLOWED_USER_IDS = (process.env.DISCORD_ALLOWED_USER_IDS || "").split(",").map(x => x.trim()).filter(Boolean);
-const GUILD_ID = process.env.DISCORD_GUILD_ID;
+const GUILD_ID = process.env.DISCORD_SERVER_ID;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
 let readyPromise;
 
-// Listen for '!restart' command in staff channel, only on the specified guild
+function discordReady() {
+  if (!readyPromise) {
+    readyPromise = new Promise((resolve, reject) => {
+      client.once("clientReady", resolve); 
+      client.once("error", reject);
+      client.login(DISCORD_TOKEN).catch(reject);
+    });
+  }
+  return readyPromise;
+}
+
+
 client.on("messageCreate", async (msg) => {
   if (
     msg.guild && msg.guild.id === GUILD_ID &&
@@ -28,15 +39,15 @@ client.on("messageCreate", async (msg) => {
     msg.content.trim() === "!restart" &&
     ALLOWED_USER_IDS.includes(msg.author.id)
   ) {
-    await msg.reply("Restarting site...");
+    await msg.reply("restarting... plese wait a moment :3");
     sendStaffLog(`Restart requested by ${msg.author.tag} (${msg.author.id})`).catch(() => {});
-    process.exit(1); // PM2 will auto-restart
+    process.exit(1); 
   } else if (
     msg.guild && msg.guild.id === GUILD_ID &&
     msg.channel.id === STAFF_CHANNEL_ID &&
-    msg.content.trim() === "!restart"
+    msg.content.trim() === "sn!restart"
   ) {
-    await msg.reply("You do not have permission to restart the site.");
+    await msg.reply("hey twin, what the FUCK are you trying to do?");
   }
 });
 
@@ -48,19 +59,24 @@ function sendToChannel(channelId, message) {
   const channel = guild.channels.cache.get(channelId);
   if (!channel) return Promise.reject("Channel not found in guild");
   return channel.send(message);
+}
+
 // Announce site up with a nice embed
 function announceUp() {
   const embed = new EmbedBuilder()
     .setColor(0x8000ff)
-    .setTitle('arcade.wtf Site Status')
-    .setDescription('✅ **Site is now up and running!**')
+    .setTitle('suntree-network status')
+    .setDescription(' **site is now up and running!**')
     .addFields(
       { name: 'Status', value: 'Online', inline: true },
       { name: 'Time', value: `<t:${Math.floor(Date.now()/1000)}:F>`, inline: true }
     )
-    .setFooter({ text: 'arcade.wtf notifications', iconURL: 'https://suntree-net.works/images/nreds.png' });
+    .setFooter({ text: 'suntree-network notifications', iconURL: 'https://suntree-net.works/images/nreds.png' });
   return sendToChannel(ANNOUNCE_CHANNEL_ID, { embeds: [embed] });
 }
+
+function sendStaffLog(log) {
+  return sendToChannel(STAFF_CHANNEL_ID, `Advanced Log: ${log}`);
 }
 
 export { discordReady, announceUp, sendStaffLog };

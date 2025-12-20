@@ -113,6 +113,16 @@ server.on("listening", () => {
       address.family === "IPv6" ? `[${address.address}]` : address.address
     }:${address.port}`
   );
+
+  // Discord announce
+  import("./discordAnnounce.js").then(mod => {
+    mod.discordReady()
+      .then(() => {
+        mod.announceUp().catch(e => console.error("Announce error:", e));
+        mod.sendStaffLog(`Server started on port ${address.port}`).catch(e => console.error("Staff log error:", e));
+      })
+      .catch(e => console.error("Discord login error:", e));
+  }).catch(e => console.error("Discord module error:", e));
 });
 
 process.on("SIGINT", shutdown);
