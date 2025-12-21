@@ -6,7 +6,7 @@ import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { join } from "node:path";
 import { hostname } from "node:os";
 import "dotenv/config";
-import "./discordAnnounce.js"; // Ensure bot command listener runs
+import cluster from "node:cluster";
 import cors from "cors";
 
 const bare = createBareServer("/bare/", {
@@ -114,15 +114,22 @@ server.on("listening", () => {
     }:${address.port}`
   );
 
-  // Discord announce
-  import("./discordAnnounce.js").then(mod => {
-    mod.discordReady()
-      .then(() => {
-        mod.announceUp().catch(e => console.error("Announce error:", e));
-        mod.sendStaffLog(`Server started on port ${address.port}`).catch(e => console.error("Staff log error:", e));
-      })
-      .catch(e => console.error("Discord login error:", e));
-  }).catch(e => console.error("Discord module error:", e));
+  if (process.env.NODE_APP_INSTANCE === '0') {
+    console.log('[Discord] Primary instance detected, loading bot...');
+    import("./discordAnnounce.js").then(mod => {
+      mod.discordReady()
+        .then(() => {
+          console.log('[Discord] Bot is ready and connected.');
+          mod.announceUp().then(() => {
+            console.log('[Discord] Announcement sent.');
+          }).catch(e => console.error("Announce error:", e));
+          mod.sendStaffLog(`Server started on port ${address.port}`).then(() => {
+            console.log('[Discord] Staff log sent.');
+          }).catch(e => console.error("Staff log error:", e));
+        })
+        .catch(e => console.error("Discord login error:", e));
+    }).catch(e => console.error("Discord module error:", e));
+  }
 });
 
 process.on("SIGINT", shutdown);
