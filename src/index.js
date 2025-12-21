@@ -8,6 +8,7 @@ import { hostname } from "node:os";
 import "dotenv/config";
 import cluster from "node:cluster";
 import cors from "cors";
+import { existsSync, writeFileSync } from "node:fs";
 
 const bare = createBareServer("/bare/", {
   connectionLimiter: {
@@ -115,20 +116,26 @@ server.on("listening", () => {
   );
 
   if (process.env.NODE_APP_INSTANCE === '0') {
-    console.log('[Discord] Primary instance detected, loading bot...');
-    import("./discordAnnounce.js").then(mod => {
-      mod.discordReady()
-        .then(() => {
-          console.log('[Discord] Bot is ready and connected.');
-          mod.announceUp().then(() => {
-            console.log('[Discord] Announcement sent.');
-          }).catch(e => console.error("Announce error:", e));
-          mod.sendStaffLog(`Server started on port ${address.port}`).then(() => {
-            console.log('[Discord] Staff log sent.');
-          }).catch(e => console.error("Staff log error:", e));
-        })
-        .catch(e => console.error("Discord login error:", e));
-    }).catch(e => console.error("Discord module error:", e));
+    const markerFile = "/tmp/arcade-discord-up.announced";
+    if (!existsSync(markerFile)) {
+      console.log('[Discord] Primary instance detected, loading bot...');
+      import("./discordAnnounce.js").then(mod => {
+        mod.discordReady()
+          .then(() => {
+            console.log('[Discord] Bot is ready and connected.');
+            mod.announceUp().then(() => {
+              console.log('[Discord] Announcement sent.');
+              writeFileSync(markerFile, String(Date.now()));
+            }).catch(e => console.error("Announce error:", e));
+            mod.sendStaffLog(`Server started on port ${address.port}`).then(() => {
+              console.log('[Discord] Staff log sent.');
+            }).catch(e => console.error("Staff log error:", e));
+          })
+          .catch(e => console.error("Discord login error:", e));
+      }).catch(e => console.error("Discord module error:", e));
+    } else {
+      console.log('[Discord] Announcement already sent, skipping.');
+    }
   }
 });
 
