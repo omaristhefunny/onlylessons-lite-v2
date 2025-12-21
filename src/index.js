@@ -9,6 +9,7 @@ import "dotenv/config";
 import cluster from "node:cluster";
 import cors from "cors";
 import { existsSync, writeFileSync } from "node:fs";
+import { unlinkSync } from "node:fs";
 
 const bare = createBareServer("/bare/", {
   connectionLimiter: {
@@ -144,6 +145,12 @@ process.on("SIGTERM", shutdown);
 
 function shutdown() {
   console.log("SIGTERM signal received: closing HTTP server");
+  try {
+    unlinkSync("/tmp/arcade-discord-up.announced");
+    console.log("[Discord] Announcement marker file deleted.");
+  } catch (e) {
+    if (e.code !== 'ENOENT') console.error("[Discord] Error deleting marker file:", e);
+  }
   server.close();
   bare.close();
   process.exit(0);
