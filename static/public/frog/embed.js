@@ -3,24 +3,23 @@
 function initEmbed() {
   let destination = "";
   
-  // Try to get URL from hash
+ 
   const hash = window.location.hash.slice(1);
   
   if (!hash) {
-    console.error("No URL found in hash. Expected format: embed.html#https://example.com");
-    document.getElementById('theh1').innerText = "No URL provided";
-    document.getElementById('thep').innerText = "Expected format: embed.html#https://example.com";
+    console.error("hey twin, sum went wrong here. heres how to do the thing embed.html#https://example.com");
+    document.getElementById('theh1').innerText = "no url found. if this is unexpected, report to @suntree.network on discord.";
+    document.getElementById('thep').innerText = "expected format: embed.html#https://example.com";
     return;
   }
   
   try {
-    // Decode the hash in case it's URL encoded
     const decodedHash = decodeURIComponent(hash);
     destination = new URL(decodedHash).toString();
   } catch (err) {
     console.error(`Bad # string or bad URL. Got error: ${err}`);
-    document.getElementById('theh1').innerText = "Invalid URL";
-    document.getElementById('thep').innerText = `Error: ${err.message}`;
+    document.getElementById('theh1').innerText = "invalid url, unable to load. if this is unexpected, report to @suntree.network on discord.";
+    document.getElementById('thep').innerText = `error: ${err.message}`;
     return;
   }
 
@@ -38,7 +37,7 @@ function initEmbed() {
     });
 }
 
-// Run when DOM is ready
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initEmbed);
 } else {
