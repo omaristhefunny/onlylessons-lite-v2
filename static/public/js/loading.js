@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
+        // Check for a forced video override via a custom key
+        const forcedVideo = localStorage.getItem('forceVideoOverride');
+        if (forcedVideo) {
+            if (forcedVideo === '1981.mp4') {
+                localStorage.setItem('force1981', 'true');
+            } else if (forcedVideo === 'conflicted.mov') {
+                localStorage.setItem('forceconflicted', 'true');
+            }
+            localStorage.removeItem('forceVideoOverride');
+            location.reload();
+            return;
+        }
     // Create loading screen elements dynamically
     const loadingScreen = document.createElement('div');
     loadingScreen.id = 'loading-screen';
@@ -24,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dabottom = document.createElement('div');
     dabottom.id = 'dabottom';
     dabottom.style.cssText = 'display: none; margin-top: 20px; color: #FF3B3B;';
-    dabottom.textContent = 'Loading...';
+    dabottom.textContent = 'this is TAKING TOO LONG.';
     
     
     const style = document.createElement('style');
@@ -92,42 +104,66 @@ document.addEventListener('DOMContentLoaded', function() {
         "endis",
         "if you leak a link, you are the reason why we can't have nice things. - kernel (cornball)",
         "if you leak ANY of my links i will find you. you won't wake up the next day. - kernel (corny ass)",
-        "if you have 4 or more filters, just go ahead and wrap it up for me. IM TALKING ABOUT YOU OOFER."
+        "if you have 4 or more filters, just go ahead and wrap it up for me. IM TALKING ABOUT YOU OOFER.",
+        "i remember u was conflicted."
     ];
     
+    // Determine which message and video (if any) to show
     const didYouKnow = randomtextstuff.findIndex(msg => msg.includes("did you know?"));
-    
-    let didYouKnowIndex;
+    const conflictedIndex = randomtextstuff.findIndex(msg => msg.includes("i remember u was conflicted."));
+
+    let chosenIndex;
+    let videoSrc = null;
     if (localStorage.getItem('force1981') === 'true') {
-        didYouKnowIndex = didYouKnow;
-        localStorage.removeItem('force1981'); 
+        chosenIndex = didYouKnow;
+        videoSrc = "images/1981.mp4";
+        localStorage.removeItem('force1981');
+    } else if (localStorage.getItem('forceconflicted') === 'true') {
+        chosenIndex = conflictedIndex;
+        videoSrc = "images/conflicted.mov";
+        localStorage.removeItem('forceconflicted');
     } else {
-        didYouKnowIndex = Math.floor(Math.random() * randomtextstuff.length);
+        chosenIndex = Math.floor(Math.random() * randomtextstuff.length);
+        // If random is didYouKnow or conflicted, set videoSrc accordingly
+        if (chosenIndex === didYouKnow) videoSrc = "images/1981.mp4";
+        if (chosenIndex === conflictedIndex) videoSrc = "images/conflicted.mov";
     }
-    
+
     let videoPlaying = false;
-    
+
     if (loadingScreen) {
-        messageforyou.innerText = randomtextstuff[didYouKnowIndex];
-        
-        if (didYouKnowIndex === didYouKnow) {
+        messageforyou.innerText = randomtextstuff[chosenIndex];
+
+        if (videoSrc) {
             videoPlaying = true;
-            ninentyeightyone.src = "images/1981.mp4";
+            ninentyeightyone.src = videoSrc;
             ninentyeightyone.style.display = "block";
             ninentyeightyone.play().catch(err => {
                 console.log("Autoplay blocked, user interaction required");
             });
-            
             ninentyeightyone.addEventListener('ended', function() {
                 loadingScreen.classList.add('fade-out');
                 loadingScreen.style.opacity = '0';
                 setTimeout(function() {
                     loadingScreen.style.display = 'none';
+        // Add Skip button
+        const skipBtn = document.createElement('button');
+        skipBtn.textContent = 'Skip';
+        skipBtn.style.cssText = 'margin-top: 16px; padding: 6px 18px; font-size: 15px; background: #ece9d8; border: 2px solid #0054e3; border-radius: 6px; color: #0054e3; font-family: Tahoma, sans-serif; cursor: pointer;';
+        skipBtn.onclick = function() {
+            loadingScreen.classList.add('fade-out');
+            loadingScreen.style.opacity = '0';
+            setTimeout(function() {
+                loadingScreen.style.display = 'none';
+                document.body.classList.remove('loading');
+            }, 300);
+        };
+        container.appendChild(skipBtn);
                     document.body.classList.remove('loading');
                 }, 500);
             });
         }
-        
+
         setTimeout(function() {
             document.getElementById('dabottom').style = null;
         }, 7000);
@@ -145,6 +181,48 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     } else {
-        alert("where the loading screen at (it's probably me just being dumb)")
+        alert("where the loading screen at (it's probably me just being dumb)");
     }
 });
+
+    let videoPlaying = false;
+
+    if (loadingScreen) {
+        messageforyou.innerText = randomtextstuff[chosenIndex];
+
+        if (videoSrc) {
+            videoPlaying = true;
+            ninentyeightyone.src = videoSrc;
+            ninentyeightyone.style.display = "block";
+            ninentyeightyone.play().catch(err => {
+                console.log("Autoplay blocked, user interaction required");
+            });
+            ninentyeightyone.addEventListener('ended', function() {
+                loadingScreen.classList.add('fade-out');
+                loadingScreen.style.opacity = '0';
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                    document.body.classList.remove('loading');
+                }, 500);
+            });
+        }
+
+        setTimeout(function() {
+            document.getElementById('dabottom').style = null;
+        }, 7000);
+        document.body.classList.add('loading');
+        window.addEventListener('load', function() {
+            if (!videoPlaying) {
+                setTimeout(function() {
+                    loadingScreen.classList.add('fade-out');
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(function() {
+                        loadingScreen.style.display = 'none';
+                        document.body.classList.remove('loading');
+                    }, 500);
+                }, 100);
+            }
+        });
+    } else {
+        alert("where the loading screen at (it's probably me just being dumb)");
+    }
