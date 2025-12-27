@@ -31,9 +31,9 @@
             <span class="label">Other ▼</span>
           </a>
           <div class="dropdown-menu">
-            <a href="partners.html">Partners</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="dmca.html">DMCA</a>
+            <a href="/other/partners.html">Partners</a>
+            <a href="/other/privacy.html">Privacy Policy</a>
+            <a href="/other/dmca.html">DMCA</a>
           </div>
         </div>
     </div>
@@ -46,7 +46,7 @@ const embedUrl = urlParams.get('embed');
 if (embedUrl) {
   // Append the parent's hash to the iframe src (for embed.html#url pattern)
   const hash = window.location.hash;
-  document.getElementById('notebook-frame').src = embedUrl + hash;
+  document.getElementById('game-frame').src = embedUrl + hash;
 }
 
 let particlesEnabled = true;
