@@ -115,7 +115,7 @@ server.on("listening", () => {
       address.family === "IPv6" ? `[${address.address}]` : address.address
     }:${address.port}`
   );
-
+ // unused discord stuff, cant remove because for some reason it bricks the entire fucking thing idk why
   if (process.env.NODE_APP_INSTANCE === '0') {
     const markerFile = "/tmp/arcade-discord-up.announced";
     if (!existsSync(markerFile)) {
