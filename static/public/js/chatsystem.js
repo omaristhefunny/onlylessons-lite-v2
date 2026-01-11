@@ -222,14 +222,7 @@ function getRandomName() {
 
  const nouns = ["bagel", "kitty", "guy", "muffin", "cat", "corndog", "keyboard", "salt", "gamer", "fish", "dog", "chicken", "nugget", "nerd", "face","paper","hotdog","burger","fries","drink","mouse","tiger","doofus","president","taylor_swift","discord_mod","policeman","spider","fridge","robot","rice","ninja","egg","sausage","girlfriend","boyfriend","bro","dude","sterling","turtle","toothbrush","peanut_butter","spider_man","vader","star","iron_man","destroyer","captain","michael_jordan","bull","maul","batman","alien","big_mac","stormtrooper","shield","mickey_mouse","zombie","ghost","snowman","turkey","jerky","mustard","tree","meme","baka","smuggler","bounty_hunter","officer","critical","copyright"];
   
-var num = Math.floor(Math.random() * 100);
-if(num == 69){
- return "The Ultimate Gamer"; 
-}
-var num2 = Math.floor(Math.random() * 1000000000000);
-if(num2 == 420){
- return "Dirty Dan"; 
-}
+
    
  return (
 
@@ -318,7 +311,7 @@ DOM.form.addEventListener('submit', sendMessage);
   function checkCoolDown () {
     const notOver = Date.now() - lastClick < coolDown
     if (notOver){
-    alert('ayo dude stop spamming');
+    alert('no spamming pls');
     }
     // using an alert it will block javascript loops
     return !notOver;
@@ -342,7 +335,7 @@ const value = DOM.input.value;
 
 
  }
-if(value.match(/(黑鬼|ass|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|por|nigas|pp|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|p0r|nigg)/gi)){
+if(value.match(/(黑鬼|ass|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|por|nigas|pp|incest|p0r|r@pe|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r @ pe @ ss)/gi)){
       alert('cmon man why you saying that kinda stuff?');
   return;
   }
@@ -453,7 +446,7 @@ function createMemberElement(member) {
 function updateMembersDOM() {
 
 
- DOM.membersCount.innerText = `${members.length} nerds in room:`;
+ DOM.membersCount.innerText = `${members.length} people online:`;
 
 
  DOM.membersList.innerHTML = '';
