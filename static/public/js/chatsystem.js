@@ -1,5 +1,3 @@
-// Chat system powered by ScaleDrone
-// https://www.scaledrone.com/
 
 
 
@@ -312,38 +310,8 @@ DOM.form.addEventListener('submit', sendMessage);
 
 
 
-function startScrolling(){
 
 
-let ID = setInterval(function() {
-
-
-  window.scrollBy(0, 2);
-
-
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-
-
-       // Reached end of page
-
-
-       stopScroll();
-
-
-    }
-
-
-  }, scrollInterval);
-
-
-return ID;
-
-
-
-
-
-
-}
   function startCoolDown () {
     lastClick = Date.now() // maybe useless function
   }
@@ -545,13 +513,7 @@ function createMessageElement(text, member) {
 
 
 
-function stopScroll() {
 
-
-clearInterval(scrollID);
-
-
-}
 
 
 
@@ -560,50 +522,14 @@ clearInterval(scrollID);
 
 
 function addMessageToListDOM(text, member) {
+  const el = DOM.messages;
+  const atBottom =
+    el.scrollTop + el.clientHeight >= el.scrollHeight - 5;
 
+  el.appendChild(createMessageElement(text, member));
 
-
-
-
- const el = DOM.messages;
-
-
- const wasTop = el.scrollTop === el.scrollHeight - el.clientHeight;
-
-
- el.appendChild(createMessageElement(text, member));
-
- if (wasTop) {
-
-
-   el.scrollTop = el.scrollHeight - el.clientHeight;
-
-
-  
-
-
- }
-
-
-      if(stopped == true) {
-
-
-      scrollID = startScrolling();
-
-
-      stopped = false;
-
-
-    }else {
-
-
-      stopScroll();
-
-
-      stopped = true;
-
-
-    }
-
+  if (atBottom) {
+    el.scrollTop = el.scrollHeight;
+  }
 
 }
