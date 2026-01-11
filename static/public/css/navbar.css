@@ -40,6 +40,10 @@
         0 0 10px #FF8C00; /* orange glow */
 }
 
+.navbar-left a {
+    text-decoration: none;
+}
+
 .navbar-right a {
     display: flex;
     align-items: center;
