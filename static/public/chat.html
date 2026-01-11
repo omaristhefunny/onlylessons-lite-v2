@@ -15,9 +15,36 @@
     <meta property="og:site_name" content="suntree-network"/>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3994010637386586"
          crossorigin="anonymous"></script>
+    <script src="https://cdn.scaledrone.com/scaledrone.min.js"></script>
+      <style>
+        body { font-family: Arial, sans-serif; background:#111; color:#eee; }
+        .chat { max-width: 800px; margin: 20px auto; }
+        .members { font-size: 14px; margin-bottom: 10px; }
+        .members-list .member { margin-right: 6px; display:inline-block; }
+        .messages {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            padding: 10px;
+            background:#000;
+            }
+        .message { margin: 6px 0; }
+        .message-form { display:flex; margin-top:10px; }
+        .message-form__input {
+            flex:1;
+            padding:10px;
+            background:#111;
+            color:#fff;
+            border:1px solid #333;
+            }
+        button { padding:10px; }
+  </style>
 </head>
 <body style="margin: 0; overflow: hidden; background: #000;">
     <div id="particles-js" style="position: fixed; width: 100%; height: 100%; z-index: -1;"></div>
+
+
+<!-- NAVBAR -->
 
     <div class="navbar">
         <div class="navbar-left">
@@ -49,11 +76,55 @@
         </div>
     </div>
 
-    <div class="container" style="width: 100%; height: 100vh; padding: 20px; padding-top: 80px; background-color: rgba(0,0,0,0.85); display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <h1 style="color: #FF8C00; text-align: center;">Chat</h1>
-        <p style="color: #aaa; text-align: center;">Coming soon...</p>
+
+
+
+    <!-- CHAT SYSTEM -->
+
+
+    <div class = "chat">
+        <div class="members">
+            <span class ="members-count"></span>
+            <div class="members-list"></div>
+        </div>
+
+
+        <div class="messages"></div>
+
+
+        
+        <form class="message-form">
+            <input class="message-form__input" placeholder="Type your message here..." autocomplete="off"/>
+            <button type="submit">Send</button>
+        </form>
     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="chatsystem.js"></script>
+
+
+
+    <!-- PARTICLES-->
     <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
     <script>
         let particlesEnabled = true;
