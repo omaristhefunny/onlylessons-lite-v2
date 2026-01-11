@@ -314,7 +314,6 @@ DOM.form.addEventListener('submit', (e) => {
 
 
 
-
   function startCoolDown () {
     lastClick = Date.now() // maybe useless function
   }
@@ -328,9 +327,8 @@ DOM.form.addEventListener('submit', (e) => {
   }
 
 
-function sendMessage() {
-
-
+function sendMessage(event) {
+  event.preventDefault();
 
   
     if (checkCoolDown()) {
