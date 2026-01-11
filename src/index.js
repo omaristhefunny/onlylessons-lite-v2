@@ -59,6 +59,7 @@ const routes = [
   { path: "/", file: "index.html" },
   { path: "/g", file: "science.html" },
   { path: "/p", file: "partners.html" },
+  { path: "/c", file: "chat.html" },
   { path: "/404", file: "404.html" },
   { path: "/606,", file: "proxy.html" },
 ];
