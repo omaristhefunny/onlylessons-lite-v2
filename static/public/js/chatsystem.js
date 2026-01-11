@@ -304,7 +304,10 @@ const DOM = {
 
 
 
-DOM.form.addEventListener('submit', sendMessage);
+DOM.form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  sendMessage();
+});
 
 
 
