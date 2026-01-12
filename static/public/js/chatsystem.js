@@ -196,7 +196,7 @@ function handleUsernameSubmit(event) {
   }
   
   // Hide username form and show chat
-  DOM.nameForm.style.display = 'none';
+  DOM.nameModal.style.display = 'none';
   DOM.form.style.display = 'flex';
   DOM.input.focus();
   
@@ -288,6 +288,8 @@ const DOM = {
  nameInput: document.querySelector('#nameInput'),
 
  nameForm: document.querySelector('#nameForm'),
+
+ nameModal: document.querySelector('#nameModal'),
 
 };
 
