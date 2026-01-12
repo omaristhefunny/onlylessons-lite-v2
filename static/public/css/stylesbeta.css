@@ -371,3 +371,41 @@ body.science-page {
   z-index: 5;
   background: transparent;
 }
+
+
+/* Name Modal Styles */
+.name-Modal{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,.75);
+    display:flex; align-items:center; justify-content:center;
+    z-index:9999;
+  }
+  .name-modal_Box{
+    width:min(420px, 92vw);
+    background:#111; color:#fff;
+    border:1px solid #333;
+    border-radius:12px;
+    padding:18px;
+    font-family: Arial, sans-serif;
+  }
+  .name-modal_Box h2{ margin:0 0 12px; font-size:18px; }
+  .name-modal_Box input{
+    width:100%;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #333;
+    background:#000; color:#fff;
+    box-sizing:border-box;
+  }
+  .name-modal_Submit{
+    display:flex; gap:10px;
+    margin-top:12px;
+  }
+  .name-modal_Submit button{
+    flex:1;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #333;
+    background:#222; color:#fff;
+    cursor:pointer;
+  }

@@ -23,7 +23,7 @@ const CLIENT_ID = 'wKcdMOWeqJEOFvos';
 
 
 
-
+let members = [];
 
 
 let drone = new ScaleDrone(CLIENT_ID, {
@@ -32,7 +32,7 @@ let drone = new ScaleDrone(CLIENT_ID, {
  data: { // Will be sent out as clientData via events
 
 
-   name: getRandomName(),
+   name: nameInput || getRandomName(),
 
 
    color: getRandomColor(),
@@ -42,15 +42,6 @@ let drone = new ScaleDrone(CLIENT_ID, {
 
 
 });
-
-
-
-
-
-
-
-let members = [];
-
 
 
 
@@ -289,6 +280,8 @@ const DOM = {
  form: document.querySelector('.message-form'),
 
 
+nameInput: document.querySelector('#nameInput'),
+
 };
 
 
@@ -320,7 +313,10 @@ DOM.form.addEventListener('submit', sendMessage);
 
 function sendMessage(event) {
   event.preventDefault();
-
+    if (!drone) {
+      alert('Not connected yet.');
+      return;
+    }
   
     if (checkCoolDown()) {
       startCoolDown()
