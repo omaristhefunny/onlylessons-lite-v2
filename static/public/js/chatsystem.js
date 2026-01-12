@@ -1,30 +1,20 @@
-
-// why is all so spaced out :broken_heart:
-
-  const coolDown = 750 // 5s cooldown
-  let lastClick = Date.now() - coolDown // to start fresh
+  const coolDown = 750 
+  let lastClick = Date.now() - coolDown 
   
 let stopped = true;
 
 
-let scrollSpeed = 1; // 1 - Fast | 2 - Medium | 3 - Slow
+let scrollSpeed = 1; 
 
 
 let scrollInterval = scrollSpeed * 3;
 
-
-// PS! Replace this with your own channel ID
-
-
-// If you use this channel ID your app will stop working in the future
-
-
-const CLIENT_ID = 'wKcdMOWeqJEOFvos';
+const CLIENT_ID = '7OMFE0FTMoeauXyG';
 
 
 
 let members = [];
-let drone = null; // Will be initialized after user enters username
+let drone = null; 
 
 function initializeDrone(username) {
   drone = new ScaleDrone(CLIENT_ID, {
@@ -144,11 +134,6 @@ function initializeDrone(username) {
 
 
    } else {
-
-
-     // Message is from server
-
-
    }
 
 
@@ -157,32 +142,11 @@ function initializeDrone(username) {
 
 });
 
-
-
-
-
-
-
 drone.on('close', event => {
-
-
  console.log('Connection was closed', event);
-
-
 });
-
-
-
-
-
-
-
 drone.on('error', error => {
-
-
  console.error(error);
-
-
 });
 }
 
@@ -199,16 +163,9 @@ function handleUsernameSubmit(event) {
   DOM.nameModal.style.display = 'none';
   DOM.form.style.display = 'flex';
   DOM.input.focus();
-  
-  // Initialize drone with the chosen username
+
   initializeDrone(username);
 }
-
-
-
-
-
-
 
 function getRandomName() {
 
