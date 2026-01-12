@@ -190,11 +190,6 @@ function handleUsernameSubmit(event) {
   event.preventDefault();
   const username = DOM.nameInput.value.trim();
   
-  if (!username) {
-    alert('Please enter a username!');
-    return;
-  }
-  
   if (username.length > 20) {
     alert('Username must be 20 characters or less!');
     return;
@@ -324,93 +319,48 @@ DOM.form.style.display = 'none'; // Hide chat until username is submitted
 
 function sendMessage(event) {
   event.preventDefault();
-    if (!drone) {
-      alert('Not connected yet.');
-      return;
-    }
   
-    if (checkCoolDown()) {
-      startCoolDown()
-    
-const value = DOM.input.value;
-
-
- if (value === '') {
-
-
-   return;
-
-
- }
-if(value.match(/(黑鬼|ass|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|por|nigas|pp|incest|p0r|r@pe|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r@pe@ss|r @ pe @ ss)/gi)){
-      alert('cmon man why you saying that kinda stuff?');
-  return;
+  if (!drone) {
+    alert('Not connected yet.');
+    return;
   }
-      
-        if(value.length > 100){
-          alert('my guy, that message is too big.. just like your mom gottem')
-      return; 
+  
+  if (!checkCoolDown()) {
+    return; // Cooldown check will show alert if triggered
   }
- DOM.input.value = '';
-
-
- drone.publish({
-
-
-   room: 'observable-room',
-
-
-   message: value,
-
-
- });
-
-      if (value == "2 + 2 = 4" || value == "2+2=4"){
-drone = new ScaleDrone(CLIENT_ID, {
-
-
- data: { // Will be sent out as clientData via events
-
-
-   name: "The One",
-
-
-   color: getRandomColor(),
-
-
- },
-
-
-});
- drone.publish({
-
-
-   room: 'observable-room',
-
-
-   message: "It is coming...",
-
-
- });
-        drone = new ScaleDrone(CLIENT_ID, {
-
-
- data: { // Will be sent out as clientData via events
-
-
-   name: getRandomName(),
-
-
-   color: getRandomColor(),
-
-
- },
-
-
-});
-      }
-      // do your stuff with arguments here
-    }
+  
+  startCoolDown();
+  
+  const value = DOM.input.value;
+  
+  if (value === '') {
+    return;
+  }
+  
+  if(value.match(/(黑鬼|ass|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|por|nigas|pp|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|p0r|nigg)/gi)){
+    alert('cmon man why you saying that kinda stuff?');
+    return;
+  }
+  
+  if(value.length > 100){
+    alert('my guy, that message is too big.. just like your mom gottem');
+    return; 
+  }
+  
+  DOM.input.value = '';
+  
+  drone.publish({
+    room: 'observable-room',
+    message: value,
+  });
+  
+  // Easter egg: special message for "2 + 2 = 4"
+  if (value == "2 + 2 = 4" || value == "2+2=4"){
+    drone.publish({
+      room: 'observable-room',
+      message: "It is coming...",
+    });
+  }
 }
 
  
