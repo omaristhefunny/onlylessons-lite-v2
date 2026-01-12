@@ -273,7 +273,7 @@
 
 
           if (!("serviceWorker" in navigator)) {
-            window.location.href = "calculus.html?url=" + encodeURIComponent(raw);
+            window.location.href = "/c?url=" + encodeURIComponent(raw);
             return;
           }
 
@@ -401,7 +401,7 @@
 
               
               sessionStorage.setItem("encodedUrl", __uv$config.encodeUrl(url));
-              location.href = "calculus.html";
+              location.href = "/c";
             });
         });
       }
