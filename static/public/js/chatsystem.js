@@ -1,7 +1,7 @@
 
 // why is all so spaced out :broken_heart:
 
-  const coolDown = 1500 // 5s cooldown
+  const coolDown = 750 // 5s cooldown
   let lastClick = Date.now() - coolDown // to start fresh
   
 let stopped = true;
