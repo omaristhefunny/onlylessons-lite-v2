@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link id="favicon" rel="icon" href="images/nreds.png" type="image/x-icon">
-    <title>Chat | suntree-network</title>
+      <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
     <link rel="stylesheet" href="css/stylesbeta.css">
     <link rel="stylesheet" href="css/navbar.css">
-    <meta name="description" content="Chat and communicate with others on suntree-network">
-    <meta property="og:title" content="Chat | suntree-network"/>
-    <meta property="og:description" content="Chat and communicate with others on suntree-network"/>
-    <meta property="og:url" content="https://suntree-net.worksm/c"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="suntree-network"/>
+<meta
+        name="description"
+        content="IXL is the world's most popular subscription-based learning site for K–12. Used by over 17 million students, IXL provides personalized learning in more than 17,000 topics, covering math, language arts, science, social studies, and Spanish. Interactive questions, awards, and certificates keep kids motivated as they master skills."/>
+<meta property="og:title" content="IXL | Math, Language Arts, Science, Social Studies, and Spanish"/>
+<meta
+  property="og:description"
+  content="IXL is the world's most popular subscription-based learning site for K–12. Used by over 17 million students, IXL provides personalized learning in more than 17,000 topics, covering math, language arts, science, social studies, and Spanish. Interactive questions, awards, and certificates keep kids motivated as they master skills."
+/>
+<meta property="og:url" content="https://suntree-net.worksm"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="IXL Learning"/>
+  <meta property="og:image"
+     content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/general_us.png"/>
+<meta property="og:image"
+    content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/math_us.png"/>
+<meta property="og:image"
+    content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/ela_us.png"/>
+<meta property="og:image"
+  content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/square_og_ixl.png"/>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3994010637386586"
          crossorigin="anonymous"></script>
     <script src="https://cdn.scaledrone.com/scaledrone.min.js"></script>
@@ -44,10 +57,6 @@
 </head>
 <body style="margin: 0; overflow: hidden; background: #000;">
     <div id="particles-js" style="position: fixed; width: 100%; height: 100%; z-index: -1;"></div>
-
-
-<!-- NAVBAR -->
-
     <div class="navbar">
         <div class="navbar-left">
             <img src="images/blue girl.gif" alt="Kernel's Logo" class="logo">
@@ -77,174 +86,35 @@
             </div>
         </div>
     </div>
-
-
-
-
-    <!-- CHAT  -->
-
-
     <div class = "chat">
         <div class="members">
             <span class ="members-count"></span>
             <div class="members-list"></div>
         </div>
-
-
         <div class="messages"></div>
-
-
-        
         <form class="message-form">
             <input class="message-form__input" placeholder="Type your message here..." autocomplete="off"/>
             <button type="submit">Send</button>
         </form>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script src="/js/chatsystem.js"></script>
-
-
-
-    <!-- PARTICLES-->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-    <script>
-        let particlesEnabled = true;
-        function initParticles() {
-            if (!particlesEnabled) return;
-            particlesJS("particles-js", {
-                "particles": {
-                    "number": {
-                        "value": 150,
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
-                    },
-                    "color": {
-                        "value": "#ffffff"
-                    },
-                    "shape": {
-                        "type": "circle",
-                        "stroke": {
-                            "width": 0,
-                            "color": "#000000"
-                        }
-                    },
-                    "opacity": {
-                        "value": 0.5,
-                        "random": false,
-                        "anim": {
-                            "enable": false,
-                            "speed": 1,
-                            "opacity_min": 0,
-                            "sync": false
-                        }
-                    },
-                    "size": {
-                        "value": 3,
-                        "random": true,
-                        "anim": {
-                            "enable": false,
-                            "speed": 40,
-                            "size_min": 0.1,
-                            "sync": false
-                        }
-                    },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#ffffff",
-                        "opacity": 0.4,
-                        "width": 1
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 6,
-                        "direction": "none",
-                        "random": false,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false,
-                        "attract": {
-                            "enable": false,
-                            "rotateX": 600,
-                            "rotateY": 1200
-                        }
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "repulse"
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "push"
-                        },
-                        "resize": true
-                    },
-                    "modes": {
-                        "grab": {
-                            "distance": 400,
-                            "line_linked": {
-                                "opacity": 1
-                            }
-                        },
-                        "bubble": {
-                            "distance": 400,
-                            "size": 40,
-                            "duration": 2,
-                            "opacity": 8,
-                            "speed": 3
-                        },
-                        "repulse": {
-                            "distance": 200,
-                            "duration": 0.4
-                        },
-                        "push": {
-                            "particles_nb": 4
-                        },
-                        "remove": {
-                            "particles_nb": 2
-                        }
-                    }
-                },
-                "retina_detect": true,
-                "background": {
-                    "color": "#000",
-                    "image": "",
-                    "position": "50% 50%",
-                    "repeat": "no-repeat",
-                    "size": "cover"
-                }
-            });
-        }
-        window.addEventListener("load", function() {
-            initParticles();
-        });
-    </script>
+<script src="/js/chatsystem.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="/js/vanta.dots.min.js"></script>
+<script>
+VANTA.DOTS({
+  el: "#particles-js",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  scale: 1.00,
+  scaleMobile: 1.00,
+  color: 0xff4800,
+  color2: 0x7bff20,
+  backgroundColor: 0x0,
+  showLines: false
+})
+</script>
 </body>
 </html>
