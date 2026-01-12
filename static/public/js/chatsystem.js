@@ -24,31 +24,17 @@ const CLIENT_ID = 'wKcdMOWeqJEOFvos';
 
 
 let members = [];
+let drone = null; // Will be initialized after user enters username
 
+function initializeDrone(username) {
+  drone = new ScaleDrone(CLIENT_ID, {
+    data: {
+      name: username || getRandomName(),
+      color: getRandomColor(),
+    },
+  });
 
-let drone = new ScaleDrone(CLIENT_ID, {
-
-
- data: { // Will be sent out as clientData via events
-
-
-   name: nameInput || getRandomName(),
-
-
-   color: getRandomColor(),
-
-
- },
-
-
-});
-
-
-
-
-
-
-drone.on('open', error => {
+  drone.on('open', error => {
 
 
  if (error) {
@@ -198,6 +184,30 @@ drone.on('error', error => {
 
 
 });
+}
+
+function handleUsernameSubmit(event) {
+  event.preventDefault();
+  const username = DOM.nameInput.value.trim();
+  
+  if (!username) {
+    alert('Please enter a username!');
+    return;
+  }
+  
+  if (username.length > 20) {
+    alert('Username must be 20 characters or less!');
+    return;
+  }
+  
+  // Hide username form and show chat
+  DOM.nameForm.style.display = 'none';
+  DOM.form.style.display = 'flex';
+  DOM.input.focus();
+  
+  // Initialize drone with the chosen username
+  initializeDrone(username);
+}
 
 
 
@@ -280,17 +290,18 @@ const DOM = {
  form: document.querySelector('.message-form'),
 
 
-nameInput: document.querySelector('#nameInput'),
+ nameInput: document.querySelector('#nameInput'),
+
+ nameForm: document.querySelector('#nameForm'),
 
 };
 
 
 
-
-
-
-
+// Event listeners
+DOM.nameForm.addEventListener('submit', handleUsernameSubmit);
 DOM.form.addEventListener('submit', sendMessage);
+DOM.form.style.display = 'none'; // Hide chat until username is submitted
 
 
 
