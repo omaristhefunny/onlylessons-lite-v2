@@ -57,6 +57,7 @@ function toIPv4(ip) {
 
 const routes = [
   { path: "/", file: "index.html" },
+  { path: "/s", file: "calculus.html"},
   { path: "/g", file: "science.html" },
   { path: "/p", file: "partners.html" },
   { path: "/c", file: "chat.html" },
