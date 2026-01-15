@@ -20,7 +20,7 @@ const DOM = {
   registerPassword: document.querySelector("#registerPass"),
 
   // Chat
-  chatPanel: document.querySelector("#chatPanel"),
+  chat: document.querySelector("#chat"),
   membersCount: document.querySelector(".members-count"),
   membersList: document.querySelector(".members-list"),
   messages: document.querySelector(".messages"),
@@ -39,12 +39,12 @@ function setAuthMessage(msg) {
 
 function showAuth() {
   DOM.authPanel.style.display = "block";
-  DOM.chatPanel.style.display = "none";
+  DOM.chat.style.display = "none";
 }
 
 function showChat() {
   DOM.authPanel.style.display = "none";
-  DOM.chatPanel.style.display = "block";
+  DOM.chat.style.display = "block";
   DOM.input.focus();
 }
 
