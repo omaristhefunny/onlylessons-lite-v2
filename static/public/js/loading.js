@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check for a forced video override via a custom key
     const forcedVideo = localStorage.getItem('forceVideoOverride');
     if (forcedVideo) {
-        if (forcedVideo === '1981.mp4') {
-            localStorage.setItem('force1981', 'true');
+        if (forcedVideo === 'tripleT.mp4') {
+            localStorage.setItem('forcetripleT', 'true');
         }
         localStorage.removeItem('forceVideoOverride');
         location.reload();
@@ -109,19 +109,20 @@ document.addEventListener('DOMContentLoaded', function() {
         "if you leak a link, you are the reason why we can't have nice things. - kernel (cornball)",
         "if you leak ANY of my links i will find you. you won't wake up the next day. - kernel (corny ass)",
         "if you have 4 or more filters, just go ahead and wrap it up for me. IM TALKING ABOUT YOU OOFER.",
+        "son"
     ];
-    const didYouKnow = randomtextstuff.findIndex(msg => msg.includes("did you know?"));
+    const didYouKnow = randomtextstuff.findIndex(msg => msg.includes("son"));
 
     let chosenIndex;
     let videoSrc = null;
-    if (localStorage.getItem('force1981') === 'true') {
+    if (localStorage.getItem('forcetripleT') === 'true') {
         chosenIndex = didYouKnow;
-        videoSrc = "images/1981.mp4";
-        localStorage.removeItem('force1981');
+        videoSrc = "images/tripleT.mp4";
+        localStorage.removeItem('forcetripleT');
     } else {
         chosenIndex = Math.floor(Math.random() * randomtextstuff.length);
         // If random is didYouKnow, set videoSrc accordingly
-        if (chosenIndex === didYouKnow) videoSrc = "images/1981.mp4";
+        if (chosenIndex === didYouKnow) videoSrc = "images/tripleT.mp4";
     }
 
     let videoPlaying = false;
