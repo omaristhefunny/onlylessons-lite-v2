@@ -79,9 +79,8 @@ async function api(path, options = {}) {
 function initializeDrone(username) {
   // Defensive: don’t allow multiple connections
   if (drone) {
-    try { drone.close(); } catch {}
-    drone = null;
-    alert('Please Wait')
+    console.warn("ScaleDrone already initialized");
+    return;
   }
 
   drone = new ScaleDrone(CLIENT_ID, {
