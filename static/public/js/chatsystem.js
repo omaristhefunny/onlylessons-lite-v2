@@ -12,12 +12,12 @@ const DOM = {
   authMsg: document.querySelector("#authMsg"),
 
   loginForm: document.querySelector("#loginForm"),
-  loginUsername: document.querySelector("#loginUsername"),
-  loginPassword: document.querySelector("#loginPassword"),
+  loginUsername: document.querySelector("#loginUser"),
+  loginPassword: document.querySelector("#loginPass"),
 
   registerForm: document.querySelector("#registerForm"),
-  registerUsername: document.querySelector("#registerUsername"),
-  registerPassword: document.querySelector("#registerPassword"),
+  registerUsername: document.querySelector("#registerUser"),
+  registerPassword: document.querySelector("#registerPass"),
 
   // Chat
   chatPanel: document.querySelector("#chatPanel"),
@@ -177,8 +177,8 @@ DOM.registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   setAuthMessage("");
 
-  const username = DOM.registerUser.value.trim();
-  const password = DOM.registerPass.value;
+  const username = DOM.registerUsername.value.trim();
+  const password = DOM.registerPassword.value;
 
   try {
     const data = await api("/register", {
