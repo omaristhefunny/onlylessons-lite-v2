@@ -157,8 +157,8 @@ DOM.loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   setAuthMessage("");
 
-  const username = DOM.loginUsername.value.trim();
-  const password = DOM.loginPassword.value;
+  const username = DOM.loginUser.value.trim();
+  const password = DOM.loginPass.value;
 
   try {
     const data = await api("/login", {
@@ -177,8 +177,8 @@ DOM.registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   setAuthMessage("");
 
-  const username = DOM.registerUsername.value.trim();
-  const password = DOM.registerPassword.value;
+  const username = DOM.registerUser.value.trim();
+  const password = DOM.registerPass.value;
 
   try {
     const data = await api("/register", {
