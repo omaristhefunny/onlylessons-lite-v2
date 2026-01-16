@@ -291,7 +291,7 @@ DOM.form.addEventListener("submit", (event) => {
 
 
 function isDevUser(username) {
-  const devUsers = ['tilly', 'aubree_lat'];
+  const devUsers = ['tilly', 'aubree_lat', 'windows'];
   return devUsers.includes(username.toLowerCase());
 }
 
