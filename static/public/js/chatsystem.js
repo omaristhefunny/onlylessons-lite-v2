@@ -31,6 +31,7 @@ const DOM = {
 // ---------------- STATE ----------------
 let drone = null;
 let members = [];
+let isAuthed = false;
 
 // ---------------- HELPERS ----------------
 function setAuthMessage(msg) {
@@ -77,28 +78,55 @@ async function api(path, options = {}) {
 
 // ---------------- CHAT (ScaleDrone) ----------------
 function initializeDrone(username) {
+  isAuthed = false;
+
+
+
   // Defensive: don’t allow multiple connections
   if (drone) {
     console.warn("ScaleDrone already initialized");
     return;
   }
 
-  drone = new ScaleDrone(CLIENT_ID, {
+    drone = new ScaleDrone(CLIENT_ID, {
     data: {
       name: username,
       color: getRandomColor(),
     },
   });
 
-  drone.on("open", (error) => {
+  drone.on("open", async (error) => {
     if (error) {
-      console.error(error);
-      setAuthMessage("Chat connection failed.");
-      showAuth();
+      console.error("Scaledrone open error:", error);
       return;
     }
 
-    console.log("Connected to Scaledrone");
+    try {
+      const r = await fetch(
+        `${API_BASE}/jwt?clientId=${encodeURIComponent(drone.clientId)}`,
+        { credentials: "include" }
+      );
+
+      if (!r.ok) {
+        const t = await r.text();
+        throw new Error(`JWT failed: ${r.status} ${t}`);
+      }
+
+      const token = await r.text();
+      drone.authenticate(token);
+    } catch (e) {
+      console.error("JWT/auth fetch failed:", e);
+    }
+  });
+
+  drone.on("authenticate", (error) => {
+    if (error) {
+      console.error("Scaledrone authenticate error:", error);
+      return;
+    }
+
+    isAuthedToScaleDrone = true;
+    console.log("ScaleDrone authenticated");
 
     const room = drone.subscribe("observable-room");
 
@@ -128,8 +156,8 @@ function initializeDrone(username) {
     });
   });
 
-  drone.on("error", (error) => console.error(error));
-  drone.on("close", (event) => console.log("Scaledrone closed", event));
+  drone.on("error", (error) => console.error("Scaledrone error:", error));
+  drone.on("close", (event) => console.log("Scaledrone close:", event));
 }
 
 // ---------------- AUTH FLOW ----------------
@@ -200,7 +228,10 @@ DOM.form.addEventListener("submit", (event) => {
     alert("Not connected yet.");
     return;
   }
-
+  if (!isAuthedToScaleDrone) {
+  alert("Still authenticating… wait a second and try again.");
+  return;
+}
   const value = DOM.input.value.trim();
   if (!value) return;
 
