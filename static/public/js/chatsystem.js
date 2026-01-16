@@ -254,7 +254,7 @@ DOM.form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   if (!drone) {
-    alert("Not connected yet.");
+    alert("its not connected yet, hold on nerd");
     return;
   }
   if (!isAuthedToScaleDrone) {
@@ -272,7 +272,7 @@ DOM.form.addEventListener("submit", (event) => {
 
   const value = DOM.input.value.trim();
   if (!value) return;
-  if (value.match(/(黑鬼|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|nigas|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|p0r|nigg)/gi)) {
+  if (value.match(/(黑鬼|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|nigas|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|endis|p0r|nigg)/gi)) {
     alert('cmon man why you saying that kinda stuff?');
     return;
   }
