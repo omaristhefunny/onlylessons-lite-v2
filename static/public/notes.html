@@ -52,60 +52,40 @@
     outline: none;
   }
 
-  .game-grid {
+.game-grid {
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
-    gap: 20px; 
-    padding: 20px; 
+    gap: 10px;           /* smaller gap between cards */
+    padding: 10px;       /* less padding around the grid */
     flex: 1; 
-  }
+}
 
-  @media (max-width: 900px) {
-    .game-grid {
-      grid-template-columns: repeat(2, 1fr); 
-    }
-  }
-
-  @media (max-width: 500px) {
-    .game-grid {
-      grid-template-columns: 1fr; 
-    }
-  }
-
-  .notecard { 
+.notecard { 
     background: #331a00; 
     border: 2px solid #FF8C00; 
-    border-radius: 10px; 
+    border-radius: 8px; 
     text-align: center; 
     cursor: pointer; 
     transition: 0.2s; 
     overflow: hidden; 
-  }
+    font-size: 14px;     /* slightly smaller text */
+}
 
-  .notecard:hover { 
-    transform: scale(1.05); 
-    box-shadow: 0 0 20px #FF3B3B; 
-    border-color: #FF3B3B; 
-  }
+.notecard img { 
+    width: 100%;            
+    height: auto;           
+    max-height: 120px;      /* smaller max height */
+    object-fit: contain;    
+    border-radius: 8px 8px 0 0; 
+    background: #331a00;   
+}
 
-  .notecard img { 
-    width: 100%; 
-    height: 150px;            
-    object-fit: cover;        
-    border-radius: 10px 10px 0 0; 
-  }
-
-  .notecard h3 {
-    margin: 10px 0;
+.notecard h3 {
+    margin: 5px 0;         /* smaller margin */
     color: #FF8C00; 
-  }
+    font-size: 14px;       /* smaller heading */
+}
 
-  .loading-text {
-    color: #FF8C00;
-    text-align: center;
-    padding: 20px;
-    font-size: 18px;
-  }
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3994010637386586" crossorigin="anonymous"></script>
 </head>
@@ -119,6 +99,9 @@
   <div class="notecard" onclick="launch('/apps/a/19900/b.html')">
     <img src="images/roblox powered by fa.png" alt="life is roblox"><h3>Roblox</h3>
   </div>
+    <select id="filterOptions" onchange="filterGames2()">
+    <option value="none">(SELECT TAG)</option>
+  </select>
   <div class="loading-text">Loading games...</div>
 </div>
 
@@ -269,15 +252,16 @@ function displayGames(gamesToDisplay) {
         
         // Handle click based on URL type
         gameCard.addEventListener('click', () => {
-            if (game.url.startsWith("http")) {
-                window.open(game.url, "_blank");
-            } else {
-                const gameUrl = game.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
-                // For numbered games, they're in science folder
-                const finalUrl = gameUrl.match(/^\d+\.html$/) ? `html/${gameUrl}` : gameUrl;
-                window.location.href = `iframe.html?url=${encodeURIComponent(finalUrl)}`;
-            }
-        });
+    if (game.url.startsWith("http")) {
+        window.open(game.url, "_blank");
+    } else {
+        const gameUrl = game.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
+        // If it's just a number.html, put it in the html folder, otherwise leave as is
+        const finalUrl = gameUrl.match(/^\d+\.html$/) ? `html/${gameUrl}` : gameUrl;
+        window.location.href = finalUrl; // <-- direct redirect
+    }
+});
+
         
         gameGrid.appendChild(gameCard);
     });
