@@ -277,8 +277,8 @@ DOM.form.addEventListener("submit", (event) => {
     return;
   }
 
-  if (value.length > 50) {
-    alert('my guy, that message is too big.. just like your mom gottem');
+  if (value.length > 150) {
+    alert('my guy, that message is too big.');
     return;
   }
   DOM.input.value = "";
