@@ -198,8 +198,8 @@ DOM.loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   setAuthMessage("");
 
-  const username = DOM.loginUser.value.trim();
-  const password = DOM.loginPass.value;
+  const username = DOM.loginUsername.value.trim();
+  const password = DOM.loginPassword.value;
 
   try {
     const data = await api("/login", {
