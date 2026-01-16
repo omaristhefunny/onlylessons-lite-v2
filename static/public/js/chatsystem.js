@@ -234,15 +234,7 @@ DOM.registerForm.addEventListener("submit", async (event) => {
   }
 });
 
-DOM.logoutButton.addEventListener("click", async () => {
-  try {
-    await api("/logout", { method: "POST" });
-  } catch (e) {
-    console.error("Logout failed:", e);
-  }
-  location.reload();
-});
-  
+
 // ---------------- SEND MESSAGE ----------------
 DOM.form.addEventListener("submit", (event) => {
   event.preventDefault();
