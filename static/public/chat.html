@@ -32,7 +32,7 @@
       color: #eee;
     }
 
-    /* Chat Styles */
+    
     .chat {
       max-width: 800px;
       margin: 20px auto;
@@ -94,7 +94,7 @@
       box-shadow: 0 0 10px rgba(47, 128, 237, 0.5);
     }
 
-    /* Auth Panel Styles */
+    
     #authPanel {
       position: fixed;
       top: 50%;
@@ -146,7 +146,7 @@
       text-align: center;
     }
 
-    /* Notification Banner */
+    
     h3 {
       position: fixed;
       top: 75px;
@@ -160,7 +160,7 @@
       z-index: 50;
     }
 
-    /* Particles background */
+    
     #particles-js {
       position: fixed;
       width: 100%;
@@ -168,7 +168,7 @@
       z-index: -1;
     }
 
-    /* Utility Classes */
+    
     .dark-mode-textbox {
       padding: 10px;
       border: 1px solid #444;
@@ -194,7 +194,7 @@
     .red-text { color: #ff0000; }
     .yellow-text { color: rgb(255, 255, 0); }
 
-    /* Developer Name Styles */
+    
     @keyframes rainbow {
       0% { color: #ff0000; }
       16% { color: #ff7f00; }
@@ -255,7 +255,7 @@
 
   <h3>We are deeply sorry for the chat downtime. Thank you for using our site. ❤️</h3>
 
-  <!-- Auth Panel -->
+  
   <div id="authPanel">
     <h2>Login</h2>
     <form id="loginForm">
@@ -276,7 +276,7 @@
     <p id="authMsg"></p>
   </div>
 
-  <!-- Chat System -->
+ 
   <div id="chat" class="chat">
     <div class="members">
       <span class="members-count"></span>
@@ -292,26 +292,24 @@
   <script src="/js/chatsystem.js"></script>
 
   <script>
-    // Developer name detection and styling
     function isDevUser(username) {
-      const devUsers = ['tilly', 'aubreelat'];
+      const devUsers = ['tilly', 'aubree_lat'];
       return devUsers.includes(username.toLowerCase());
     }
 
     function styleDevUsername(element) {
-      // Get the text content
       const text = element.textContent || element.innerText;
       
-      // Try to find username at the start of the message (before colon)
+  
       const colonIndex = text.indexOf(':');
       if (colonIndex > 0) {
         const username = text.substring(0, colonIndex).trim();
         
         if (isDevUser(username)) {
-          // Split the message into username and rest
+          
           const restOfMessage = text.substring(colonIndex);
           
-          // Replace with styled version
+          
           element.innerHTML = `<span class="dev-name">${username}</span><span class="dev-crown">👑</span>${restOfMessage}`;
           return true;
         }
@@ -319,25 +317,25 @@
       return false;
     }
 
-    // Override or wrap the message rendering function
+    
     document.addEventListener('DOMContentLoaded', function() {
-      // Watch for new messages being added
+      
       const messagesContainer = document.querySelector('.messages');
       if (messagesContainer) {
         const observer = new MutationObserver(function(mutations) {
           mutations.forEach(function(mutation) {
             mutation.addedNodes.forEach(function(node) {
               if (node.nodeType === 1) {
-                // Check if it's a message div or contains messages
+                
                 if (node.classList && node.classList.contains('message')) {
                   styleDevUsername(node);
                 } else {
-                  // Check child divs
+                  
                   const messages = node.querySelectorAll('.message');
                   messages.forEach(msg => styleDevUsername(msg));
                 }
               } else if (node.nodeType === 3) {
-                // Text node - check parent
+                
                 if (node.parentElement && node.parentElement.classList.contains('message')) {
                   styleDevUsername(node.parentElement);
                 }
@@ -352,14 +350,14 @@
           characterData: true
         });
 
-        // Style existing messages on load
+        
         setTimeout(function() {
           const existingMessages = messagesContainer.querySelectorAll('.message');
           existingMessages.forEach(msg => styleDevUsername(msg));
         }, 500);
       }
 
-      // Also style usernames in the members list
+      
       const membersListContainer = document.querySelector('.members-list');
       if (membersListContainer) {
         const membersObserver = new MutationObserver(function(mutations) {
@@ -378,7 +376,7 @@
           characterData: true
         });
 
-        // Initial check for existing members
+        
         setTimeout(function() {
           const members = membersListContainer.querySelectorAll('.member');
           members.forEach(function(member) {
@@ -392,7 +390,7 @@
     });
   </script>
 
-  <!-- Background -->
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="/js/vanta.dots.min.js"></script>
   <script>

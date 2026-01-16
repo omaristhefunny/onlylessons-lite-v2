@@ -1,15 +1,14 @@
-// ---------------- CONFIG ----------------
+
 const CLIENT_ID = "wKcdMOWeqJEOFvos";
 const coolDown = 500;
 let lastClick = Date.now() - coolDown;
 
-// If your API is on the same domain, keep API_BASE = "".
-// If your API is on a different domain/port, set it like: "https://yourdomain.com:7642"
+
 const API_BASE = "/api";
 
-// ---------------- DOM ----------------
+
 const DOM = {
-  // Auth
+  
   authPanel: document.querySelector("#authPanel"),
   authMsg: document.querySelector("#authMsg"),
 
@@ -23,7 +22,7 @@ const DOM = {
 
   logoutButton: document.querySelector("#logoutButton"),
 
-  // Chat
+
   chat: document.querySelector("#chat"),
   membersCount: document.querySelector(".members-count"),
   membersList: document.querySelector(".members-list"),
@@ -32,12 +31,12 @@ const DOM = {
   form: document.querySelector(".message-form"),
 };
 
-// ---------------- STATE ----------------
+
 let drone = null;
 let members = [];
 let isAuthed = false;
 
-// ---------------- HELPERS ----------------
+
 function setAuthMessage(msg) {
   DOM.authMsg.textContent = msg || "";
 }
@@ -60,7 +59,7 @@ function checkCoolDown() {
   if (notOver) {
     alert('no spamming pls');
   }
-  // using an alert it will block javascript loops
+  
   return !notOver;
 }
 async function api(path, options = {}) {
@@ -70,7 +69,7 @@ async function api(path, options = {}) {
       "Content-Type": "application/json",
       ...(options.headers || {}),
     },
-    // THIS is what makes cookies/sessions work in fetch
+    
     credentials: "include",
   });
 
@@ -90,13 +89,13 @@ async function api(path, options = {}) {
   return data;
 }
 
-// ---------------- CHAT (ScaleDrone) ----------------
+
 function initializeDrone(username) {
   isAuthed = false;
 
 
 
-  // Defensive: don’t allow multiple connections
+
   if (drone) {
     console.warn("ScaleDrone already initialized");
     return;
@@ -174,7 +173,7 @@ function initializeDrone(username) {
   drone.on("close", (event) => console.log("Scaledrone close:", event));
 }
 
-// ---------------- AUTH FLOW ----------------
+
 async function boot() {
   setAuthMessage("");
 
@@ -235,7 +234,7 @@ DOM.registerForm.addEventListener("submit", async (event) => {
 });
 
 
-// ---------------- SEND MESSAGE ----------------
+
 DOM.form.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -249,7 +248,7 @@ DOM.form.addEventListener("submit", (event) => {
   }
 
   if (!checkCoolDown()) {
-    return; // Cooldown check will show alert if triggered
+    return; 
   }
 
   startCoolDown();
@@ -275,7 +274,7 @@ DOM.form.addEventListener("submit", (event) => {
   });
 });
 
-// ---------------- MEMBER + MESSAGE RENDER ----------------
+
 function createMemberElement(member) {
   const { name, color } = member.clientData;
 
@@ -312,5 +311,5 @@ function getRandomColor() {
   return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
 }
 
-// Start the page
+
 boot();
