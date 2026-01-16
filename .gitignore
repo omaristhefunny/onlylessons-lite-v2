@@ -16,6 +16,7 @@ tmp/
 
 # Excluded large content
 static/public/science/
+static/public/html/
 
 # OS junk
 .DS_Store
