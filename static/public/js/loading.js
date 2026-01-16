@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const skipBtn = document.createElement('button');
     skipBtn.id = 'loading-skip-btn';
     skipBtn.textContent = 'Skip';
-    skipBtn.style.cssText = 'display: none; margin-top: 16px; padding: 6px 18px; font-size: 15px; background: #ece9d8; border: 2px solid #0054e3; border-radius: 6px; color: #0054e3; font-family: Tahoma, sans-serif; cursor: pointer;';
+    skipBtn.style.cssText = 'display: none; margin-top: 16px; padding: 6px 18px; font-size: 15px; background: #000000; border: 2px solid #ff7b00; border-radius: 6px; color: #ff7b00; font-family: Quicksand, sans-serif; cursor: pointer;';
 
     const style = document.createElement('style');
     style.textContent = `
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "shh, they dont know about this trick... I HAVE A GUN :D",
         "I love my bf so MUUUCHHH AHHH <3 - aubree",
         "endis",
-        "if you leak a link, you are the reason why we can't have nice things. - kernel (cornball)",
+        "son you do not know triple t like dat",
         "if you leak ANY of my links i will find you. you won't wake up the next day. - kernel (corny ass)",
         "if you have 4 or more filters, just go ahead and wrap it up for me. IM TALKING ABOUT YOU OOFER.",
         "son"
