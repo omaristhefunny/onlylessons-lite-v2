@@ -1,5 +1,7 @@
 // ---------------- CONFIG ----------------
 const CLIENT_ID = "wKcdMOWeqJEOFvos";
+const coolDown = 500;
+let lastClick = Date.now() - coolDown;
 
 // If your API is on the same domain, keep API_BASE = "".
 // If your API is on a different domain/port, set it like: "https://yourdomain.com:7642"
@@ -48,7 +50,17 @@ function showChat() {
   DOM.chat.style.display = "block";
   DOM.input.focus();
 }
-
+function startCoolDown() {
+  lastClick = Date.now();
+}
+function checkCoolDown() {
+  const notOver = Date.now() - lastClick < coolDown
+  if (notOver) {
+    alert('no spamming pls');
+  }
+  // using an alert it will block javascript loops
+  return !notOver;
+}
 async function api(path, options = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
     ...options,
@@ -88,7 +100,7 @@ function initializeDrone(username) {
     return;
   }
 
-    drone = new ScaleDrone(CLIENT_ID, {
+  drone = new ScaleDrone(CLIENT_ID, {
     data: {
       name: username,
       color: getRandomColor(),
@@ -229,13 +241,27 @@ DOM.form.addEventListener("submit", (event) => {
     return;
   }
   if (!isAuthedToScaleDrone) {
-  alert("Still authenticating… wait a second and try again.");
-  return;
-}
+    alert("Still authenticating… wait a second and try again.");
+    return;
+  }
+
+  if (!checkCoolDown()) {
+    return; // Cooldown check will show alert if triggered
+  }
+
+  startCoolDown();
+
+
+
   const value = DOM.input.value.trim();
   if (!value) return;
-   if(value.match(/(黑鬼|ass|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|por|nigas|pp|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|p0r|nigg)/gi)){
+  if (value.match(/(黑鬼|ass|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|por|nigas|pp|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|p0r|nigg)/gi)) {
     alert('cmon man why you saying that kinda stuff?');
+    return;
+  }
+
+  if (value.length > 50) {
+    alert('my guy, that message is too big.. just like your mom gottem');
     return;
   }
   DOM.input.value = "";
