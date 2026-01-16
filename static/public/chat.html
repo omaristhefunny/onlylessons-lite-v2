@@ -18,22 +18,21 @@
   <meta property="og:site_name" content="IXL Learning" />
   <meta property="og:image"
     content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/general_us.png" />
-  <meta property="og:image"
-    content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/math_us.png" />
-  <meta property="og:image"
-    content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/ela_us.png" />
-  <meta property="og:image"
-    content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/square_og_ixl.png" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3994010637386586"
     crossorigin="anonymous"></script>
   <script src="https://cdn.scaledrone.com/scaledrone.min.js"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
-      background: #111;
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      font-family: 'Quicksand', Arial, sans-serif;
       color: #eee;
     }
 
+    /* Chat Styles */
     .chat {
       max-width: 800px;
       margin: 20px auto;
@@ -42,6 +41,7 @@
     .members {
       font-size: 14px;
       margin-bottom: 10px;
+      color: #eee;
     }
 
     .members-list .member {
@@ -74,16 +74,155 @@
       background: #111;
       color: #fff;
       border: 1px solid #333;
+      border-radius: 5px;
+      outline: none;
     }
 
     button {
+      padding: 10px 20px;
+      background-image: linear-gradient(45deg, rgb(25, 0, 255), rgb(0, 0, 0), rgb(0, 255, 0), rgb(47, 0, 255));
+      background-size: 400%;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(47, 128, 237, 0.5);
+    }
+
+    /* Auth Panel Styles */
+    #authPanel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.9);
+      border: 2px solid #FF8C00;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 0 20px #FF8C00;
+      z-index: 100;
+      min-width: 300px;
+    }
+
+    #authPanel h2, #authPanel h4 {
+      color: #FF8C00;
+      text-shadow: 0 0 10px #FF8C00;
+      margin-bottom: 15px;
+    }
+
+    #authPanel input {
+      width: 100%;
       padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #111;
+      color: #fff;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    #authPanel input:focus {
+      border-color: #FF8C00;
+      background-color: #000;
+      box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+    }
+
+    #authPanel hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    #authMsg {
+      color: #FFB347;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* Notification Banner */
+    h3 {
+      position: fixed;
+      top: 75px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #eee;
+      margin: 0;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 50;
+    }
+
+    /* Particles background */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Utility Classes */
+    .dark-mode-textbox {
+      padding: 10px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #333;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    .dark-mode-textbox::placeholder {
+      color: #999;
+    }
+
+    .dark-mode-textbox:focus {
+      border-color: #007bff;
+      background-color: #111;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .green-text { color: #00fe2f; }
+    .red-text { color: #ff0000; }
+    .yellow-text { color: rgb(255, 255, 0); }
+
+    /* Developer Name Styles */
+    @keyframes rainbow {
+      0% { color: #ff0000; }
+      16% { color: #ff7f00; }
+      33% { color: #ffff00; }
+      50% { color: #00ff00; }
+      66% { color: #0000ff; }
+      83% { color: #8b00ff; }
+      100% { color: #ff0000; }
+    }
+
+    .dev-name {
+      animation: rainbow 3s linear infinite;
+      font-weight: bold;
+      text-shadow: 0 0 10px currentColor;
+    }
+
+    .dev-crown {
+      display: inline-block;
+      margin-left: 5px;
+      font-size: 1.2em;
+      filter: drop-shadow(0 0 5px gold);
     }
   </style>
 </head>
 
-<body style="margin: 0; overflow: hidden; background: #000;">
-  <div id="particles-js" style="position: fixed; width: 100%; height: 100%; z-index: -1;"></div>
+<body>
+  <div id="particles-js"></div>
+  
   <div class="navbar">
     <div class="navbar-left">
       <img src="images/blue girl.gif" alt="Kernel's Logo" class="logo">
@@ -114,7 +253,8 @@
     </div>
   </div>
 
-<h3 style="  position: fixed;    top: 100px;   left: 0;   width: 100%;    text-align: center;  color: #eee;">We are deeply sorry for the chat downtime. Everything should be operational again. ❤️</h3>
+  <h3>We are deeply sorry for the chat downtime. Thank you for using our site. ❤️</h3>
+
   <!-- Auth Panel -->
   <div id="authPanel">
     <h2>Login</h2>
@@ -134,8 +274,8 @@
     </form>
 
     <p id="authMsg"></p>
-
   </div>
+
   <!-- Chat System -->
   <div id="chat" class="chat">
     <div class="members">
@@ -147,19 +287,112 @@
       <input class="message-form__input" placeholder="Type your message here..." autocomplete="off" />
       <button type="submit">Send</button>
     </form>
-
   </div>
+
   <script src="/js/chatsystem.js"></script>
 
+  <script>
+    // Developer name detection and styling
+    function isDevUser(username) {
+      const devUsers = ['tilly', 'aubreelat'];
+      return devUsers.includes(username.toLowerCase());
+    }
 
+    function styleDevUsername(element) {
+      // Get the text content
+      const text = element.textContent || element.innerText;
+      
+      // Try to find username at the start of the message (before colon)
+      const colonIndex = text.indexOf(':');
+      if (colonIndex > 0) {
+        const username = text.substring(0, colonIndex).trim();
+        
+        if (isDevUser(username)) {
+          // Split the message into username and rest
+          const restOfMessage = text.substring(colonIndex);
+          
+          // Replace with styled version
+          element.innerHTML = `<span class="dev-name">${username}</span><span class="dev-crown">👑</span>${restOfMessage}`;
+          return true;
+        }
+      }
+      return false;
+    }
 
+    // Override or wrap the message rendering function
+    document.addEventListener('DOMContentLoaded', function() {
+      // Watch for new messages being added
+      const messagesContainer = document.querySelector('.messages');
+      if (messagesContainer) {
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+              if (node.nodeType === 1) {
+                // Check if it's a message div or contains messages
+                if (node.classList && node.classList.contains('message')) {
+                  styleDevUsername(node);
+                } else {
+                  // Check child divs
+                  const messages = node.querySelectorAll('.message');
+                  messages.forEach(msg => styleDevUsername(msg));
+                }
+              } else if (node.nodeType === 3) {
+                // Text node - check parent
+                if (node.parentElement && node.parentElement.classList.contains('message')) {
+                  styleDevUsername(node.parentElement);
+                }
+              }
+            });
+          });
+        });
 
+        observer.observe(messagesContainer, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
 
+        // Style existing messages on load
+        setTimeout(function() {
+          const existingMessages = messagesContainer.querySelectorAll('.message');
+          existingMessages.forEach(msg => styleDevUsername(msg));
+        }, 500);
+      }
 
+      // Also style usernames in the members list
+      const membersListContainer = document.querySelector('.members-list');
+      if (membersListContainer) {
+        const membersObserver = new MutationObserver(function(mutations) {
+          const members = membersListContainer.querySelectorAll('.member');
+          members.forEach(function(member) {
+            const username = member.textContent.trim();
+            if (isDevUser(username) && !member.querySelector('.dev-crown')) {
+              member.innerHTML = `<span class="dev-name">${username}</span><span class="dev-crown">👑</span>`;
+            }
+          });
+        });
 
+        membersObserver.observe(membersListContainer, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
 
+        // Initial check for existing members
+        setTimeout(function() {
+          const members = membersListContainer.querySelectorAll('.member');
+          members.forEach(function(member) {
+            const username = member.textContent.trim();
+            if (isDevUser(username) && !member.querySelector('.dev-crown')) {
+              member.innerHTML = `<span class="dev-name">${username}</span><span class="dev-crown">👑</span>`;
+            }
+          });
+        }, 500);
+      }
+    });
+  </script>
 
-   <!-- Background -->
+  <!-- Background -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="/js/vanta.dots.min.js"></script>
   <script>
