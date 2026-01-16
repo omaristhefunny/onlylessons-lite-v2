@@ -6,6 +6,21 @@ let lastClick = Date.now() - coolDown;
 
 const API_BASE = "/api";
 
+// Inject rainbow animation styles
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes rainbow {
+    0% { color: #ff0000; }
+    16% { color: #ff7f00; }
+    33% { color: #ffff00; }
+    50% { color: #00ff00; }
+    66% { color: #0000ff; }
+    83% { color: #8b00ff; }
+    100% { color: #ff0000; }
+  }
+`;
+document.head.appendChild(style);
+
 
 const DOM = {
   
@@ -275,13 +290,24 @@ DOM.form.addEventListener("submit", (event) => {
 });
 
 
+function isDevUser(username) {
+  const devUsers = ['tilly', 'aubree_lat'];
+  return devUsers.includes(username.toLowerCase());
+}
+
 function createMemberElement(member) {
   const { name, color } = member.clientData;
 
   const el = document.createElement("div");
-  el.appendChild(document.createTextNode(name));
   el.className = "member";
-  el.style.color = color;
+  
+  if (isDevUser(name)) {
+    el.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${name}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
+  } else {
+    el.appendChild(document.createTextNode(name));
+    el.style.color = color;
+  }
+  
   return el;
 }
 
