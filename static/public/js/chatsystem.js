@@ -21,6 +21,8 @@ const DOM = {
   registerUsername: document.querySelector("#registerUser"),
   registerPassword: document.querySelector("#registerPass"),
 
+  logoutButton: document.querySelector("#logoutButton"),
+
   // Chat
   chat: document.querySelector("#chat"),
   membersCount: document.querySelector(".members-count"),
@@ -232,6 +234,15 @@ DOM.registerForm.addEventListener("submit", async (event) => {
   }
 });
 
+DOM.logoutButton.addEventListener("click", async () => {
+  try {
+    await api("/logout", { method: "POST" });
+  } catch (e) {
+    console.error("Logout failed:", e);
+  }
+  location.reload();
+});
+  
 // ---------------- SEND MESSAGE ----------------
 DOM.form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -255,7 +266,7 @@ DOM.form.addEventListener("submit", (event) => {
 
   const value = DOM.input.value.trim();
   if (!value) return;
-  if (value.match(/(黑鬼|ass|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|por|nigas|pp|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|p0r|nigg)/gi)) {
+  if (value.match(/(黑鬼|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|nigas|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|p0r|nigg)/gi)) {
     alert('cmon man why you saying that kinda stuff?');
     return;
   }
