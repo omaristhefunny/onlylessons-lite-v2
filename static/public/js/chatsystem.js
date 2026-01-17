@@ -50,7 +50,7 @@ const DOM = {
 let drone = null;
 let members = [];
 let isAuthed = false;
-
+let verifiedUsername = null;
 
 function setAuthMessage(msg) {
   DOM.authMsg.textContent = msg || "";
@@ -118,8 +118,7 @@ function initializeDrone(username) {
 
   drone = new ScaleDrone(CLIENT_ID, {
     data: {
-      name: username,
-      color: getRandomColor(),
+      anon: true,
     },
   });
 
