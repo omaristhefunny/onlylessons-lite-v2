@@ -208,12 +208,7 @@ identityReady = true;
       updateMembersDOM();
     });
 
-    room.on("data", (text, member) => {
-        console.log("MSG FROM member.id =", member && member.id, "text =", text);
 
-      if (member) addMessageToListDOM(text, member);
-      
-    });
   });
 
   drone.on("error", (error) => console.error("Scaledrone error:", error));
@@ -355,7 +350,7 @@ DOM.form.addEventListener("submit", (event) => {
 DOM.logoutButton.addEventListener("click", async (event) => {
   event.preventDefault();
   try {
-    await api("/logout", { 
+    await api("/logout", {
        method: "POST",
        body: JSON.stringify({ clientId: drone.clientId})
        });
