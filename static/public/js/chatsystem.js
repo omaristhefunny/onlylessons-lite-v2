@@ -281,14 +281,26 @@ DOM.registerForm.addEventListener("submit", async (event) => {
 async function getVerifiedUsername(clientId) {
   if (userCache.has(clientId)) return userCache.get(clientId);
 
-  const r = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
-    credentials: "include",
-  });
-  const data = await r.json();
+  // Try multiple times with delays, as presence mapping might not be immediate
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt > 0) {
+      // Wait before retrying (100ms, 300ms, etc)
+      await new Promise(resolve => setTimeout(resolve, 100 * (attempt + 1)));
+    }
 
-  if (data.users && data.users[clientId]) {
-    userCache.set(clientId, data.users[clientId]);
-    return data.users[clientId];
+    try {
+      const r = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
+        credentials: "include",
+      });
+      const data = await r.json();
+
+      if (data.users && data.users[clientId]) {
+        userCache.set(clientId, data.users[clientId]);
+        return data.users[clientId];
+      }
+    } catch (e) {
+      console.error("whois fetch error:", e);
+    }
   }
 
   return "Unknown";
