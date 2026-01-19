@@ -334,7 +334,7 @@ async function createMessageElement(text, member) {
   el.className = "message";
 
   const nameEL = document.createElement("div");
-  nameEL.className = "member";
+  const nameEL.className = "member";
 
 
   const clientId = member && member.id ? member.id : null;
