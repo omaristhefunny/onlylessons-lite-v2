@@ -61,6 +61,7 @@ function setAuthMessage(msg) {
 function showAuth() {
   DOM.authPanel.style.display = "block";
   DOM.chat.style.display = "none";
+  DOM.logoutButton.style.display = "none";
 }
 
 function showChat() {
@@ -188,6 +189,7 @@ identityReady = true;
     room.on("open", (error) => {
       if (error) console.error(error);
       else console.log("Joined room");
+      DOM.logoutButton.style.display = "block";
     });
 
     room.on("members", (m) => {
@@ -367,7 +369,6 @@ if (drone) {
   identityReady = false;
   isAuthedToScaleDrone = false;
 }
-
 });
 function isDevUser(username) {
   if (!username) return false;
