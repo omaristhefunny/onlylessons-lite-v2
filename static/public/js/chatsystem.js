@@ -50,6 +50,7 @@ const DOM = {
 let drone = null;
 let members = [];
 let isAuthed = false;
+let identityReady = false;
 let verifiedUsername = null;
 const userCache = new Map();
 
@@ -152,18 +153,33 @@ function initializeDrone(username) {
       console.error("Scaledrone authenticate error:", error);
       return;
     }
- // REGISTER presence AFTER auth (clientId is definitely valid here)
-  const r = await fetch("/api/presence", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ clientId: drone.clientId }),
-  });
+identityReady = false;
+//presence
+const pres = await fetch("/api/presence", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  credentials: "include",
+  body: JSON.stringify({ clientId: drone.clientId }),
+});
 
-  if (!r.ok) {
-    console.error("presence failed:", r.status, await r.text());
-    return;
-  }
+if (!pres.ok) {
+  console.error("presence failed:", pres.status, await pres.text());
+  return;
+}
+
+// Confirm the mapping exists before proceeding
+const w = await fetch("/api/whois?ids=" + encodeURIComponent(drone.clientId), {
+  credentials: "include",
+});
+const who = await w.json();
+
+if (!who.users || !who.users[drone.clientId]) {
+  console.error("whois not ready yet:", who);
+  return;
+}
+
+identityReady = true;
+
     isAuthedToScaleDrone = true;
     console.log("ScaleDrone authenticated");
 
@@ -286,6 +302,10 @@ DOM.form.addEventListener("submit", (event) => {
     alert("its not connected yet, hold on nerd");
     return;
   }
+  if (!identityReady) {
+  alert("hold on nerd ur not ready ");
+  return;
+}
   if (!isAuthedToScaleDrone) {
     alert("Still authenticating… wait a second and try again.");
     return;
