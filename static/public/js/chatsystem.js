@@ -352,7 +352,8 @@ DOM.form.addEventListener("submit", (event) => {
   });
 });
 
-DOM.logoutButton.addEventListener("click", async () => {
+DOM.logoutButton.addEventListener("click", async (event) => {
+  event.preventDefault();
   try {
     await api("/logout", { 
        method: "POST",
@@ -361,7 +362,6 @@ DOM.logoutButton.addEventListener("click", async () => {
   } catch(e) {
     console.error("Logout failed:", e);
 
-    window.location.reload();
   }
 
 showAuth();
