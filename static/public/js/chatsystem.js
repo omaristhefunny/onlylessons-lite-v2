@@ -180,7 +180,10 @@ function initializeDrone(username) {
     });
 
     room.on("data", (text, member) => {
+        console.log("MSG FROM member.id =", member && member.id, "text =", text);
+
       if (member) addMessageToListDOM(text, member);
+      
     });
   });
 
