@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
         "if you leak ANY of my links i will find you. you won't wake up the next day. - kernel (corny ass)",
         "if you have 4 or more filters, just go ahead and wrap it up for me. IM TALKING ABOUT YOU OOFER.",
         "son",
-        "reminder that solo (roman easton) is a 13 year old who thinks hes god having my address as blackmail when hes just a larp skid loser with no life and has cp on his drive. (BARS 🗣️🔥)"
     ];
     const didYouKnow = randomtextstuff.findIndex(msg => msg.includes("son"));
 
