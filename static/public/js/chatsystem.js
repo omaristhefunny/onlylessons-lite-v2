@@ -279,16 +279,22 @@ DOM.registerForm.addEventListener("submit", async (event) => {
 });
 // verified user thingie 
 async function getVerifiedUsername(clientId) {
-  if (userCache.has(clientId)) return userCache.get(clientId);
-
-  const r = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
-    credentials: "include",
-  });
-  const data = await r.json();
-
-  if (data.users && data.users[clientId]) {
+if (data.users && data.users[clientId]) {
     userCache.set(clientId, data.users[clientId]);
     return data.users[clientId];
+  }
+
+  // Retry once after a short delay (presence may not be set yet)
+  await new Promise(r => setTimeout(r, 300));
+
+  const r2 = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
+    credentials: "include",
+  });
+  const data2 = await r2.json();
+
+  if (data2.users && data2.users[clientId]) {
+    userCache.set(clientId, data2.users[clientId]);
+    return data2.users[clientId];
   }
 
   return "Unknown";
@@ -346,19 +352,19 @@ function isDevUser(username) {
 }
 
 function createMemberElement(member) {
-  const { name, color } = member.clientData || {};
-  const displayName = name || "Unknown";
-
   const el = document.createElement("div");
   el.className = "member";
-  
-  if (isDevUser(displayName)) {
-    el.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${displayName}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
-  } else {
-    el.appendChild(document.createTextNode(displayName));
-    el.style.color = color;
+
+  const clientId = member && member.id ? member.id : null;
+
+  el.textContent = clientId ? "Loading…" : "Unknown";
+
+  if (clientId) {
+    getVerifiedUsername(clientId).then((name) => {
+      el.textContent = name;
+    });
   }
-  
+
   return el;
 }
 
@@ -368,35 +374,38 @@ function updateMembersDOM() {
   members.forEach((m) => DOM.membersList.appendChild(createMemberElement(m)));
 }
 
-async function createMessageElement(text, member) {
+function createMessageElement(text, member) {
   const el = document.createElement("div");
   el.className = "message";
 
   const nameEl = document.createElement("div");
   nameEl.className = "member";
+  nameEl.textContent = "Loading…";
 
+  const msgEl = document.createElement("div");
+  msgEl.textContent = text;
+
+  el.appendChild(nameEl);
+  el.appendChild(msgEl);
 
   const clientId = member && member.id ? member.id : null;
 
   if (!clientId) {
     nameEl.textContent = "Unknown";
   } else {
-    nameEl.textContent = await getVerifiedUsername(clientId);
+    getVerifiedUsername(clientId).then((name) => {
+      nameEl.textContent = name;
+    });
   }
-  const msgEl = document.createElement("div");
-  msgEl.textContent = text;
 
-
-  el.appendChild(nameEl);
-  el.appendChild(msgEl);
   return el;
 }
 
-async function addMessageToListDOM(text, member) {
+ function addMessageToListDOM(text, member) {
   const el = DOM.messages;
   const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 5;
 
-  el.appendChild(await createMessageElement(text, member));
+  el.appendChild(createMessageElement(text, member));
   if (atBottom) el.scrollTop = el.scrollHeight;
 }
 
