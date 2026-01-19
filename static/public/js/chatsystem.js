@@ -208,7 +208,12 @@ identityReady = true;
       updateMembersDOM();
     });
 
+    room.on("data", (text, member) => {
+        console.log("MSG FROM member.id =", member && member.id, "text =", text);
 
+      if (member) addMessageToListDOM(text, member);
+      
+    });
   });
 
   drone.on("error", (error) => console.error("Scaledrone error:", error));
