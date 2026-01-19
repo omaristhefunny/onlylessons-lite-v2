@@ -291,19 +291,6 @@ async function getVerifiedUsername(clientId) {
     return data.users[clientId];
   }
 
-  // Retry once after a short delay (presence may not be set yet)
-  await new Promise(re => setTimeout(re, 300));
-
-  const r2 = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
-    credentials: "include",
-  });
-  const data2 = await r2.json();
-
-  if (data2.users && data2.users[clientId]) {
-    userCache.set(clientId, data2.users[clientId]);
-    return data2.users[clientId];
-  }
-
   return "Unknown";
 }
 
@@ -367,7 +354,11 @@ function createMemberElement(member) {
 
   if (clientId) {
     getVerifiedUsername(clientId).then((name) => {
-      el.textContent = name;
+      if (isDevUser(name)) {
+        el.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${name}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
+      } else {
+        el.textContent = name;
+      }
     });
   }
   return el;
@@ -399,7 +390,11 @@ function createMessageElement(text, member) {
     nameEl.textContent = "Unknown";
   } else {
     getVerifiedUsername(clientId).then((name) => {
-      nameEl.textContent = name;
+      if (isDevUser(name)) {
+        nameEl.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${name}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
+      } else {
+        nameEl.textContent = name;
+      }
     });
   }
 
