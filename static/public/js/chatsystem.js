@@ -51,6 +51,7 @@ let drone = null;
 let members = [];
 let isAuthed = false;
 let verifiedUsername = null;
+const userCache = new Map();
 
 function setAuthMessage(msg) {
   DOM.authMsg.textContent = msg || "";
@@ -246,8 +247,20 @@ DOM.registerForm.addEventListener("submit", async (event) => {
     setAuthMessage(e.message);
   }
 });
+// verified user thingie 
+async function getVerifiedUsername(clientId) {
+  if (userCache.has(clientId)) return userCache.get(clientId);
 
+  const r = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
+    credentials: "include",
+  });
 
+  const data = await r.json();
+
+  const username = (data.users && data.users[clientId]) ? data.users[clientId] : "Unknown";
+  userCache.set(clientId, username);
+  return username;
+}
 
 DOM.form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -316,19 +329,35 @@ function updateMembersDOM() {
   members.forEach((m) => DOM.membersList.appendChild(createMemberElement(m)));
 }
 
-function createMessageElement(text, member) {
+async function createMessageElement(text, member) {
   const el = document.createElement("div");
-  el.appendChild(createMemberElement(member));
-  el.appendChild(document.createTextNode(text));
   el.className = "message";
+
+  const nameEL = document.createElement("div");
+  nameEL.className = "member";
+
+
+  const clientId = member && member.id ? member.id : null;
+
+  if (!clientId) {
+    nameEl.textContent = "Unknown";
+  } else {
+    nameEl.textContent = await getVerifiedUsername(clientId);
+  }
+  const msgEl = document.createElement("div");
+  msgEl.textContent = text;
+
+
+  el.appendChild(nameEL);
+  el.appendChild(msgEl);
   return el;
 }
 
-function addMessageToListDOM(text, member) {
+async function addMessageToListDOM(text, member) {
   const el = DOM.messages;
   const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 5;
 
-  el.appendChild(createMessageElement(text, member));
+  el.appendChild(await createMessageElement(text, member));
   if (atBottom) el.scrollTop = el.scrollHeight;
 }
 
