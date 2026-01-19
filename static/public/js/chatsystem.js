@@ -257,13 +257,16 @@ async function getVerifiedUsername(clientId) {
   const r = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
     credentials: "include",
   });
-
   const data = await r.json();
 
-  const username = (data.users && data.users[clientId]) ? data.users[clientId] : "Unknown";
-  userCache.set(clientId, username);
-  return username;
+  if (data.users && data.users[clientId]) {
+    userCache.set(clientId, data.users[clientId]);
+    return data.users[clientId];
+  }
+
+  return "Unknown";
 }
+
 
 DOM.form.addEventListener("submit", (event) => {
   event.preventDefault();
