@@ -360,6 +360,8 @@ DOM.logoutButton.addEventListener("click", async () => {
        });
   } catch(e) {
     console.error("Logout failed:", e);
+
+    window.location.reload();
   }
 
 showAuth();
