@@ -145,7 +145,17 @@
       margin-top: 10px;
       text-align: center;
     }
-
+    #logout {
+      position: fixed;
+      bottom: 10px;
+      background-color: rgba(255, 140, 0, 0.8);
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 100;
+    }
     
     h3 {
       position: fixed;
@@ -286,7 +296,7 @@
       <button type="submit">Send</button>
     </form>
   </div>
-
+<span id="logout">Logout</span>
 
   <script src="/js/chatsystem.js"></script>
 
