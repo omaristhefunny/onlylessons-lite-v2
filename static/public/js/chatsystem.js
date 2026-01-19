@@ -303,20 +303,22 @@ DOM.form.addEventListener("submit", (event) => {
 
 
 function isDevUser(username) {
+  if (!username) return false;
   const devUsers = ['tilly', 'aubree_lat', 'windows'];
   return devUsers.includes(username.toLowerCase());
 }
 
 function createMemberElement(member) {
-  const { name, color } = member.clientData;
+  const { name, color } = member.clientData || {};
+  const displayName = name || "Unknown";
 
   const el = document.createElement("div");
   el.className = "member";
   
-  if (isDevUser(name)) {
-    el.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${name}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
+  if (isDevUser(displayName)) {
+    el.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${displayName}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
   } else {
-    el.appendChild(document.createTextNode(name));
+    el.appendChild(document.createTextNode(displayName));
     el.style.color = color;
   }
   
