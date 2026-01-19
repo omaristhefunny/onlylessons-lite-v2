@@ -279,13 +279,20 @@ DOM.registerForm.addEventListener("submit", async (event) => {
 });
 // verified user thingie 
 async function getVerifiedUsername(clientId) {
-if (data.users && data.users[clientId]) {
+  if (userCache.has(clientId)) return userCache.get(clientId);
+
+  const r = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
+    credentials: "include",
+  });
+  const data = await r.json();
+
+  if (data.users && data.users[clientId]) {
     userCache.set(clientId, data.users[clientId]);
     return data.users[clientId];
   }
 
   // Retry once after a short delay (presence may not be set yet)
-  await new Promise(r => setTimeout(r, 300));
+  await new Promise(re => setTimeout(re, 300));
 
   const r2 = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
     credentials: "include",
@@ -356,7 +363,6 @@ function createMemberElement(member) {
   el.className = "member";
 
   const clientId = member && member.id ? member.id : null;
-
   el.textContent = clientId ? "Loading…" : "Unknown";
 
   if (clientId) {
@@ -364,7 +370,6 @@ function createMemberElement(member) {
       el.textContent = name;
     });
   }
-
   return el;
 }
 
