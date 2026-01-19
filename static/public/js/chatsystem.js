@@ -350,7 +350,25 @@ DOM.form.addEventListener("submit", (event) => {
   });
 });
 
+DOM.logoutButton.addEventListener("click", async () => {
+  try {
+    await api("/logout", { 
+       method: "POST",
+       body: JSON.stringify({ clientId: drone.clientId})
+       });
+  } catch(e) {
+    console.error("Logout failed:", e);
+  }
 
+showAuth();
+if (drone) {
+  drone.close();
+  drone = null;
+  identityReady = false;
+  isAuthedToScaleDrone = false;
+}
+
+});
 function isDevUser(username) {
   if (!username) return false;
   const devUsers = ['tilly', 'aubree_lat', 'windows'];
@@ -424,6 +442,10 @@ function createMessageElement(text, member) {
 function getRandomColor() {
   return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
 }
+
+
+
+
 
 
 boot();
