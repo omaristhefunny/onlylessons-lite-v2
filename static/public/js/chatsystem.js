@@ -333,7 +333,7 @@ async function createMessageElement(text, member) {
   const el = document.createElement("div");
   el.className = "message";
 
-  const nameEL = document.createElement("div");
+  const nameEl = document.createElement("div");
   nameEl.className = "member";
 
 
@@ -348,7 +348,7 @@ async function createMessageElement(text, member) {
   msgEl.textContent = text;
 
 
-  el.appendChild(nameEL);
+  el.appendChild(nameEl);
   el.appendChild(msgEl);
   return el;
 }
