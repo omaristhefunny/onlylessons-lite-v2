@@ -147,12 +147,23 @@ function initializeDrone(username) {
     }
   });
 
-  drone.on("authenticate", (error) => {
+  drone.on("authenticate", async (error) => {
     if (error) {
       console.error("Scaledrone authenticate error:", error);
       return;
     }
+ // REGISTER presence AFTER auth (clientId is definitely valid here)
+  const r = await fetch("/api/presence", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ clientId: drone.clientId }),
+  });
 
+  if (!r.ok) {
+    console.error("presence failed:", r.status, await r.text());
+    return;
+  }
     isAuthedToScaleDrone = true;
     console.log("ScaleDrone authenticated");
 
