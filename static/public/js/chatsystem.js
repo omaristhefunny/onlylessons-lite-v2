@@ -103,7 +103,16 @@ async function api(path, options = {}) {
 
   return data;
 }
+async function loadIdentity() {
+  const r = await fetch("/api/me", { credentials: "include" });
+  const data = await r.json();
 
+  if (!data.loggedIn) {
+    throw new Error("Not logged in");
+  }
+
+  verifiedUsername = data.username;
+}
 
 function initializeDrone(username) {
   isAuthed = false;
@@ -127,7 +136,12 @@ function initializeDrone(username) {
       console.error("Scaledrone open error:", error);
       return;
     }
-
+    await fetch("/api/presence", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ clientId: drone.clientId }),
+  });
     try {
       const r = await fetch(
         `${API_BASE}/jwt?clientId=${encodeURIComponent(drone.clientId)}`,
@@ -195,6 +209,7 @@ async function boot() {
     const me = await api("/me", { method: "GET" });
 
     if (me.loggedIn) {
+      await loadIdentity();
       showChat();
       initializeDrone(me.username);
     } else {
