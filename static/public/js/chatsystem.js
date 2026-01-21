@@ -50,7 +50,9 @@ const DOM = {
 let drone = null;
 let members = [];
 let isAuthed = false;
+let identityReady = false;
 let verifiedUsername = null;
+const userCache = new Map();
 
 function setAuthMessage(msg) {
   DOM.authMsg.textContent = msg || "";
@@ -59,6 +61,7 @@ function setAuthMessage(msg) {
 function showAuth() {
   DOM.authPanel.style.display = "block";
   DOM.chat.style.display = "none";
+  DOM.logoutButton.style.display = "none";
 }
 
 function showChat() {
@@ -160,11 +163,37 @@ function initializeDrone(username) {
     }
   });
 
-  drone.on("authenticate", (error) => {
+  drone.on("authenticate", async (error) => {
     if (error) {
       console.error("Scaledrone authenticate error:", error);
       return;
     }
+identityReady = false;
+//presence
+const pres = await fetch("/api/presence", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  credentials: "include",
+  body: JSON.stringify({ clientId: drone.clientId }),
+});
+
+if (!pres.ok) {
+  console.error("presence failed:", pres.status, await pres.text());
+  return;
+}
+
+// Confirm the mapping exists before proceeding
+const w = await fetch("/api/whois?ids=" + encodeURIComponent(drone.clientId), {
+  credentials: "include",
+});
+const who = await w.json();
+
+if (!who.users || !who.users[drone.clientId]) {
+  console.error("whois not ready yet:", who);
+  return;
+}
+
+identityReady = true;
 
     isAuthedToScaleDrone = true;
     console.log("ScaleDrone authenticated");
@@ -174,6 +203,7 @@ function initializeDrone(username) {
     room.on("open", (error) => {
       if (error) console.error(error);
       else console.log("Joined room");
+      DOM.logoutButton.style.display = "block";
     });
 
     room.on("members", (m) => {
@@ -193,7 +223,10 @@ function initializeDrone(username) {
     });
 
     room.on("data", (text, member) => {
+        console.log("MSG FROM member.id =", member && member.id, "text =", text);
+
       if (member) addMessageToListDOM(text, member);
+      
     });
   });
 
@@ -261,7 +294,34 @@ DOM.registerForm.addEventListener("submit", async (event) => {
     setAuthMessage(e.message);
   }
 });
+// verified user thingie 
+async function getVerifiedUsername(clientId) {
+  if (userCache.has(clientId)) return userCache.get(clientId);
 
+  // Try multiple times with delays, as presence mapping might not be immediate
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt > 0) {
+      // Wait before retrying (100ms, 300ms, etc)
+      await new Promise(resolve => setTimeout(resolve, 100 * (attempt + 1)));
+    }
+
+    try {
+      const r = await fetch(`/api/whois?ids=${encodeURIComponent(clientId)}`, {
+        credentials: "include",
+      });
+      const data = await r.json();
+
+      if (data.users && data.users[clientId]) {
+        userCache.set(clientId, data.users[clientId]);
+        return data.users[clientId];
+      }
+    } catch (e) {
+      console.error("whois fetch error:", e);
+    }
+  }
+
+  return "Unknown";
+}
 
 
 DOM.form.addEventListener("submit", (event) => {
@@ -271,6 +331,10 @@ DOM.form.addEventListener("submit", (event) => {
     alert("its not connected yet, hold on nerd");
     return;
   }
+  if (!identityReady) {
+  alert("hold on nerd ur not ready ");
+  return;
+}
   if (!isAuthedToScaleDrone) {
     alert("Still authenticating… wait a second and try again.");
     return;
@@ -286,7 +350,7 @@ DOM.form.addEventListener("submit", (event) => {
 
   const value = DOM.input.value.trim();
   if (!value) return;
-  if (value.match(/(黑鬼|cum|retard|bitch|shit|cunt|cock|dick|fuck|shit|nigger|nigga|pussy|nazi|whore|faggot|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|nigas|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|endis|p0r|nigg)/gi)) {
+  if (value.match(/(黑鬼|cum|retard|bitch|shit|cunt|cock|dick|fuck|doxbin|shit|nigger|nigga|pussy|nazi|whore|faggot|:\/\/|http:\/\/|https:\/\/|handjob|penis|cock|pussy|sex|hitler|niger|titties|gay|tit|boob|@ss|c0ck|b!tch|pu\$\$y|nigas|incest|p0r|rape|r@pe|slut|threesum|foursum|twosum|shiz|slut|endis|p0r|nigg)/gi)) {
     alert('cmon man why you saying that kinda stuff?');
     return;
   }
@@ -302,26 +366,49 @@ DOM.form.addEventListener("submit", (event) => {
     message: value,
   });
 });
+// LOGOUTTTTTT
+DOM.logoutButton.addEventListener("click", async (event) => {
+  event.preventDefault();
+  try {
+    await api("/logout", {
+       method: "POST",
+       body: JSON.stringify({ clientId: drone.clientId})
+       });
+  } catch(e) {
+    console.error("Logout failed:", e);
 
+  }
 
+showAuth();
+if (drone) {
+  drone.close();
+  drone = null;
+  identityReady = false;
+  isAuthedToScaleDrone = false;
+}
+});
 function isDevUser(username) {
+  if (!username) return false;
   const devUsers = ['tilly', 'aubree_lat', 'windows'];
   return devUsers.includes(username.toLowerCase());
 }
 
 function createMemberElement(member) {
-  const { name, color } = member.clientData;
-
   const el = document.createElement("div");
   el.className = "member";
-  
-  if (isDevUser(name)) {
-    el.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${name}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
-  } else {
-    el.appendChild(document.createTextNode(name));
-    el.style.color = color;
+
+  const clientId = member && member.id ? member.id : null;
+  el.textContent = clientId ? "Loading…" : "Unknown";
+
+  if (clientId) {
+    getVerifiedUsername(clientId).then((name) => {
+      if (isDevUser(name)) {
+        el.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${name}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
+      } else {
+        el.textContent = name;
+      }
+    });
   }
-  
   return el;
 }
 
@@ -333,13 +420,36 @@ function updateMembersDOM() {
 
 function createMessageElement(text, member) {
   const el = document.createElement("div");
-  el.appendChild(createMemberElement(member));
-  el.appendChild(document.createTextNode(text));
   el.className = "message";
+
+  const nameEl = document.createElement("div");
+  nameEl.className = "member";
+  nameEl.textContent = "Loading…";
+
+  const msgEl = document.createElement("div");
+  msgEl.textContent = text;
+
+  el.appendChild(nameEl);
+  el.appendChild(msgEl);
+
+  const clientId = member && member.id ? member.id : null;
+
+  if (!clientId) {
+    nameEl.textContent = "Unknown";
+  } else {
+    getVerifiedUsername(clientId).then((name) => {
+      if (isDevUser(name)) {
+        nameEl.innerHTML = `<span style="animation: rainbow 3s linear infinite; font-weight: bold; text-shadow: 0 0 10px currentColor;">${name}</span><span style="display: inline-block; margin-left: 5px; font-size: 1.2em; filter: drop-shadow(0 0 5px gold);">👑</span>`;
+      } else {
+        nameEl.textContent = name;
+      }
+    });
+  }
+
   return el;
 }
 
-function addMessageToListDOM(text, member) {
+ function addMessageToListDOM(text, member) {
   const el = DOM.messages;
   const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 5;
 
@@ -350,6 +460,10 @@ function addMessageToListDOM(text, member) {
 function getRandomColor() {
   return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
 }
+
+
+
+
 
 
 boot();
