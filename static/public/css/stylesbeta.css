@@ -27,7 +27,7 @@ body {
 .title {
   margin-bottom: 30px;
   font-size: 2rem;
-  animation: fadeIn 1s ease-in-out;
+  animation: fadeInDown 0.8s ease-out;
 }
 .subtitle {
   margin-bottom: 20px;
@@ -139,6 +139,17 @@ body {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -421,9 +432,9 @@ body.science-page {
   }
 
 .app-button {
-  animation: fadeIn 1s ease-in-out;
+  animation: fadeInDown 0.8s ease-out;
 }
 
 #uv-form {
-  animation: fadeIn 1s ease-in-out 0.2s both;
+  animation: fadeInDown 0.8s ease-out 0.2s both;
 }
