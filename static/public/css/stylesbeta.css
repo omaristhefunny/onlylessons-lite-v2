@@ -432,9 +432,9 @@ body.science-page {
   }
 
 .app-button {
-  animation: fadeInDown 0.8s ease-out;
+  animation: fadeInDown 2s ease-out;
 }
 
 #uv-form {
-  animation: fadeInDown 0.8s ease-out 0.2s both;
+  animation: fadeInDown 2s ease-out 0.5s both;
 }
