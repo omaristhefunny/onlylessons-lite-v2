@@ -25,9 +25,9 @@ body {
 }
 
 .title {
-  margin-bottom: 30px;
-  font-size: 2rem;
-  animation: fadeInDown 0.8s ease-out;
+  margin-bottom: 45%;
+  font-size: 4rem;
+  animation: fadeInDown 2s ease-out;
 }
 .subtitle {
   margin-bottom: 20px;
