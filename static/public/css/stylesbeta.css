@@ -25,7 +25,7 @@ body {
 }
 
 .title {
-  margin-bottom: 45%;
+  margin-bottom: 10%;
   font-size: 4rem;
   animation: fadeInDown 2s ease-out;
 }
