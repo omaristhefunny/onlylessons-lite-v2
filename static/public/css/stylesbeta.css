@@ -25,8 +25,8 @@ body {
 }
 
 .title {
-  margin-bottom: 10%;
-  font-size: 8rem;
+  margin-bottom: 4.5%;
+  font-size: 6rem;
   animation: fadeInDown 1s ease-out;
 }
 .subtitle {
@@ -58,9 +58,8 @@ body {
   padding: 10px;
   border: 1px solid #444;
   border-radius: 5px;
-  font-size: 20px;
-  width: 500px;
-  height: 40px;
+  font-size: 14px;
+  width: 250px;
   background-color: #333;
   color: #fff;
   outline: none;
