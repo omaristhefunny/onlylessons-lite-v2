@@ -25,7 +25,7 @@ body {
 }
 
 .title {
-  margin-bottom: 4.5%;
+  margin-bottom: 2%;
   font-size: 6rem;
   animation: fadeInDown 1s ease-out;
 }
@@ -437,4 +437,9 @@ body.science-page {
 
 #uv-form {
   animation: fadeInDown 2s ease-out 0.2s both;
+}
+.announcement {
+  color: red;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease-out 0.5s both;
 }
