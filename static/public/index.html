@@ -126,57 +126,11 @@
       <input id="homework-chapter" value="https://duckduckgo.com/?t=h_&ia=web&q=" type="hidden">
       <input id="homework-material" type="text" placeholder="search here" class="form__input">
     </form>
-    <button id="AboutBlank">Open in about:blank Window</button>
+  
   </div>
 
   <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 999;"></div>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   <script>
-const BB = document.querySelector("#AboutBlank");
-        function openGame() {
-
-            var win = window.open();
-            var url = "https://suntree.network"
-            var iframe = win.document.createElement('iframe');
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.border = "none";
-            iframe.src = url;
-            iframe.onload = function() {
-                if (iframe.contentDocument && iframe.contentDocument.body.innerHTML.includes("ERR_BLOCKED_BY_CLIENT")) {
-                    alert("Content blocked by client!");
-                    win.close(); 
-                }
-            };
-            win.document.body.appendChild(iframe);;
-        }
-BB.addEventListener("click", async (event) => {
-    event.preventDefault();
-    openGame();
-    console.log("Opened in about:blank");
-});
-</script>
-
-
-  
-  
-  
   <script>  
-    window.addEventListener('load', function() {
-      showUpdatePopup();
-    });
-
     const canvas = document.getElementById("particles");
     const ctx = canvas.getContext("2d");
 
