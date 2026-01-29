@@ -157,8 +157,6 @@ const BB = document.querySelector("#AboutBlank");
                 if (iframe.contentDocument && iframe.contentDocument.body.innerHTML.includes("ERR_BLOCKED_BY_CLIENT")) {
                     alert("Content blocked by client!");
                     win.close(); 
-                } else {
-                    window.location.href = "https://clever.com/";
                 }
             };
             win.document.body.appendChild(iframe);
