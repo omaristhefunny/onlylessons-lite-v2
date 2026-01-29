@@ -109,9 +109,9 @@ document.addEventListener('DOMContentLoaded', function() {
         "Lets take a look... 👀 👀 👀 👀 👀 👀",
         "shh, they dont know about this trick... I HAVE A GUN :D",
         "I love my bf so MUUUCHHH AHHH <3 - aubree",
-        "endis",
+        "if you are associated with anything related to ajh, or endis. go ahead and leave. PLEASE. - aubree.",
         "son you do not know triple t like dat",
-        "if you leak ANY of my links i will find you. you won't wake up the next day. - kernel (corny ass)",
+        "frogiee1 my beloved ",
         "if you have 4 or more filters, just go ahead and wrap it up for me. IM TALKING ABOUT YOU OOFER.",
         "son",
     ];
