@@ -175,8 +175,7 @@ body.index-page,
 body.partners-page {
   margin: 0;
   padding: 0;
-  display: flex;
-  background: #000;
+  background: rgba(0, 0, 0, 0);
   overflow: hidden;
   height: 100vh;
 }
@@ -332,6 +331,7 @@ body.partners-page {
   justify-content: center;
   gap: 32px;
   margin-top: 30px;
+  position: relative;
   width: 100%;
   max-width: 800px;
 }
