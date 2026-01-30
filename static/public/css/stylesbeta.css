@@ -314,8 +314,8 @@ body.partners-page {
 /* Partners Page Specific */
 .container.partners-container {
   margin-left: 220px;
-  width: calc(100% - 220px);
-  height: 100vh;
+  width: calc(100% - 120px);
+  height: 110vh;
   padding: 20px;
   background-color: rgba(0,0,0,0.85);
   display: flex;
