@@ -18,7 +18,6 @@
     
     <style>
         :root {
-    /* Black & Orange Theme */
     --primary: #ff6b00;
     --primary-hover: #ff8533;
     --primary-light: rgba(255, 107, 0, 0.15);
@@ -69,8 +68,6 @@ header, main, #zoneViewer, #popupOverlay {
     position: relative;
     z-index: 10;
 }
-
-/* Header */
 header {
     background: transparent;
     border-bottom: none;
@@ -140,14 +137,14 @@ header {
     background: var(--surface-hover);
 }
 
-/* Main Content */
+
 main {
     margin: 0 auto;
     padding: 1rem 2rem 3rem;
     max-width: 1400px;
 }
 
-/* Zone Grid */
+
 #container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -223,7 +220,7 @@ main {
     color: var(--primary);
 }
 
-/* Zone Viewer */
+
 #zoneViewer {
     position: fixed;
     inset: 0;
@@ -239,7 +236,7 @@ main {
     to { transform: translateY(0); }
 }
 
-/* Island-style Zone Header */
+
 .zone-header {
     position: absolute;
     top: 20px;
@@ -551,7 +548,7 @@ main {
     box-shadow: var(--shadow-glow);
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .header-content {
         padding: 1.5rem 1rem 1rem;
@@ -628,11 +625,11 @@ main {
                 <input type="text" id="searchBar" placeholder="Search zones..." oninput="filterZones()">
                 <select id="sortOptions" onchange="sortZones()">
                     <option value="name">Name</option>
-                    <option value="id">ID (Date)</option>
-                    <option value="popular">Popular</option>
+                    <option value="id">id</option>
+                    <option value="popular">popular</option>
                 </select>
                 <select id="filterOptions" onchange="filterZones2()">
-                    <option value="none">(SELECT TAG)</option>
+                    <option value="none">Tag</option>
                 </select>
             </div>
         </div>
@@ -725,7 +722,7 @@ function toTitleCase(str) {
     );
 }
 
-// Toggle header visibility
+
 function toggleHeader() {
     const header = document.getElementById('zoneHeader');
     const toggleBtn = document.getElementById('toggleHeaderBtn');
@@ -733,7 +730,7 @@ function toggleHeader() {
     toggleBtn.textContent = header.classList.contains('collapsed') ? '▲' : '▼';
 }
 
-// Make header draggable
+
 let isDragging = false;
 let currentX;
 let currentY;
@@ -795,7 +792,7 @@ function setTranslate(xPos, yPos, el) {
     el.style.transform = `translate(${xPos}px, ${yPos}px)`;
 }
 
-// Add event listeners for dragging when zone viewer opens
+
 document.addEventListener('DOMContentLoaded', () => {
     const dragHandle = document.getElementById('dragHandle');
     
@@ -839,8 +836,8 @@ async function listZones() {
         const response = await fetch(zonesURL+"?t="+Date.now());
         const json = await response.json();
         
-        // Filter out unwanted zones by ID
-        const patcher = [-1]; // Add IDs to block here
+ 
+        const patcher = [-1,596]; 
         zones = json.filter(zone => !patcher.includes(zone.id));
         
         await fetchPopularity();
