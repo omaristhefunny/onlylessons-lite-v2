@@ -204,6 +204,7 @@ body.partners-page {
   height: 100%;
   z-index: -1;
   background: #000;
+  pointer-events: none;
 }
 
 .sidebar {
