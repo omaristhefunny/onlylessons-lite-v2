@@ -1,14 +1,17 @@
 import { createBareServer } from "@tomphttp/bare-server-node";
 import express from "express";
 import { createServer } from "node:http";
-import { publicPath } from "ultraviolet-static";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { hostname } from "node:os";
 import { config } from "dotenv";
 import cors from "cors";
 
-config({ path: join(process.cwd(), ".env") });
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const publicPath = join(__dirname, "../static/public");
+
+config({ path: join(__dirname, "../.env") });
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 

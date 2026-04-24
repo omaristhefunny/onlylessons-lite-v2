@@ -17,11 +17,9 @@
 		"@tomphttp/bare-server-node": "^2.0.5",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.0",
-		"express": "^4.21.2",
-		"ultraviolet-static": "file:static"
+		"express": "^4.21.2"
 	},
 	"devDependencies": {},
 	"packageManager": "pnpm@9.12.2",
-	"main": "index.js",
 	"type": "module"
 }
