@@ -2,7 +2,7 @@
 /**
  * Distributed with Ultraviolet and compatible with most configurations.
  */
-const stockSW = "/frog/sw.js";
+const stockSW = "/lessons/sw.js";
 
 /**
  * List of hostnames that are allowed to run serviceworkers on http:

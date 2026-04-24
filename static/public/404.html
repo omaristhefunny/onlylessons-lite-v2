@@ -1,28 +1,125 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link id="favicon" rel="icon" href="images/nreds.png" type="image/x-icon">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/stylesbeta.css">
-  
+  <title>OnlyLessons | 404</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #0d1a2d 50%, #0a1628 100%);
+      min-height: 100vh;
+      color: #e0e7ff;
+    }
+
+    .error-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      height: calc(100vh - 56px);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .error-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .error-code {
+      font-size: 8rem;
+      font-weight: 700;
+      color: rgba(59, 130, 246, 0.15);
+      line-height: 1;
+      user-select: none;
+      letter-spacing: -4px;
+    }
+
+    .error-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #60a5fa 0%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .error-desc {
+      font-size: 1rem;
+      color: rgba(59, 130, 246, 0.7);
+      max-width: 420px;
+      line-height: 1.7;
+    }
+
+    .error-btn {
+      margin-top: 16px;
+      padding: 14px 40px;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+      border: none;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    .error-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+    }
+
+    @media (max-width: 480px) {
+      .error-code {
+        font-size: 5rem;
+        letter-spacing: -2px;
+      }
+      .error-title {
+        font-size: 1.4rem;
+      }
+      .error-desc {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="boxes">
-      <div class="box">
-        <h2>where are you going kro</h2>
-        <p>were you trying to use the proxy but got here? press the button below to fix the error and get access to whatever you were looking up</p>
-            <button class="button" onclick="history.back()">Go Back</button>
-
-
-          </tr>
-        </table>
-      </div>
-    </div>
+  <div class="error-wrapper">
+    <div class="error-icon">🔗</div>
+    <div class="error-code">404</div>
+    <p class="error-title">Where are you going?</p>
+    <p class="error-desc">Were you trying to use the proxy but ended up here? Press the button below to go back and try again.</p>
+    <button class="error-btn" onclick="history.back()">Go Back</button>
   </div>
-
-  
+  <script src="js/ads.js"></script>
+  <script src="js/settings.js"></script>
 </body>
 </html>

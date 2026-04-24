@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -14,7 +13,7 @@
         border: none;
         margin: 0;
     }
-    body, html { margin: 0; height: 100%; }
+    body, html { margin: 0; height: 100%; background: #000000; }
   </style>
 </head>
 <body>
@@ -25,6 +24,7 @@
             const res = await fetch('/ip');
             if (!res.ok) throw new Error('fetch failed');
 
+
             const ip = await res.text();
             sessionStorage.setItem("prefix", ip)
             return ip
@@ -33,6 +33,7 @@
             return null;
           }
         }
+
 
     window.addEventListener('DOMContentLoaded', async () => {
       const ip = await directsetip();

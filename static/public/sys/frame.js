@@ -11,14 +11,14 @@ function isUrl(val = "") {
   }
   function loadNewPage(url) {
     document.getElementById("uv-address-searchbar").blur();
-    window.navigator.serviceWorker.register("/frog/sw.js", {
-      scope: "/frog/ixl/",
+    window.navigator.serviceWorker.register("/lessons/sw.js", {
+      scope: "/lessons/ixl/",
     });
     if (!isUrl(url)) url = "https://www.google.com/search?hl=en-us&q=" + url;
     else if (!(url.startsWith("https://") || url.startsWith("http://")))
       url = "https://" + url;
     let urlEncoded = __uv$config.encodeUrl(url);
-    urlEncoded = "/frog/ixl/" + urlEncoded;
+    urlEncoded = "/lessons/ixl/" + urlEncoded;
     const iframe = document.getElementById("iframeid");
     if (iframe) {
       iframe.src = urlEncoded;
@@ -26,7 +26,7 @@ function isUrl(val = "") {
     if (url === "http://api.v6.wiki/") {
       url = "gms://roblox";
     } else if (
-      url === "https://api.v6.wiki/apps/frogiee1/69420/custom-thingy-loader.html"
+      url === "https://api.v6.wiki/apps/lessonsiee1/69420/custom-thingy-loader.html"
     ) {
       url = "gms://android";
     }
@@ -55,7 +55,7 @@ function isUrl(val = "") {
   
   window.addEventListener("load", function () {
     let encodedUrl = sessionStorage.getItem("encodedUrl");
-    encodedUrl = "/frog/ixl/" + encodedUrl;
+    encodedUrl = "/lessons/ixl/" + encodedUrl;
     console.log(encodedUrl);
     const iframe = document.getElementById("iframeid");
     if (iframe) {
@@ -79,7 +79,7 @@ function isUrl(val = "") {
             url = "http://api.v6.wiki/";
           } else if (url === "gms://android") {
             url =
-              "https://api.v6.wiki/apps/frogiee1/69420/custom-thingy-loader.html";
+              "https://api.v6.wiki/apps/lessonsiee1/69420/custom-thingy-loader.html";
           }
           loadNewPage(url);
         }
@@ -87,7 +87,7 @@ function isUrl(val = "") {
       if (
         searchBar.value === "https://api.v6.wiki/" ||
         searchBar.value ===
-          "https://api.v6.wiki/apps/frogiee1/69420/custom-thingy-loader.html"
+          "https://api.v6.wiki/apps/lessonsiee1/69420/custom-thingy-loader.html"
       ) {
         document.getElementById("iframeid").sandbox =
           "allow-scripts allow-pointer-lock allow-forms allow-same-origin allow-downloads";
@@ -95,7 +95,7 @@ function isUrl(val = "") {
           searchBar.value = "gms://roblox";
         } else if (
           searchBar.value ===
-          "https://api.v6.wiki/apps/frogiee1/69420/custom-thingy-loader.html"
+          "https://api.v6.wiki/apps/lessonsiee1/69420/custom-thingy-loader.html"
         ) {
           searchBar.value = "gms://android";
         }

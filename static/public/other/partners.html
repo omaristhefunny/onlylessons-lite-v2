@@ -1,109 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link id="favicon" rel="icon" href="images/nreds.png" type="image/x-icon">
   <meta charset="UTF-8">
-  <title>Study.com</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/stylesbeta.css">
+  <title>Partners | OnlyLessons</title>
+  <link rel="icon" href="images/onlylessons.png" type="image/x-icon">
   <link rel="stylesheet" href="../css/navbar.css">
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3994010637386586"
-     crossorigin="anonymous"></script>
-     <script src="https://pl28535093.effectivegatecpm.com/aa/03/cb/aa03cb5003372c000be360e36afdb58b.js"></script>
-<style>
-.credits-card {
-  background: #111;
-  border: 1.5px solid #FF8C00;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #FF8C00;
-  padding: 20px;
-  text-align: center;
-  width: 280px;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-.credits-card h2 {
-  margin-bottom: 15px;
-  margin-top: 0;
-  color: #FF8C00;
-  font-size: 1.3em;
-}
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      padding-top: 80px;
+    }
 
-.person-card-thing-idfk {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin: 10px 0;
-  padding: 8px;
-  background: rgba(255, 140, 0, 0.05);
-  border-radius: 8px;
-  transition: background 0.2s;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-}
+    body.has-navbar-left {
+      padding-top: 0 !important;
+    }
 
-.person-card-thing-idfk:hover {
-  background: rgba(255, 140, 0, 0.1);
-}
+    .container {
+      padding: 20px !important;
+      max-width: 900px !important;
+      margin: 0 auto !important;
+      text-align: center !important;
+    }
 
-.person-card-thing-idfk img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #FF8C00;
-}
+    .main-content {
+      display: flex;
+      gap: 60px;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: center;
+      width: 100%;
+    }
 
-.person-card-thing-idfk p {
-  margin: 0;
-  text-align: left;
-  flex: 1;
-  font-size: 0.95em;
-}
+    .left-column {
+      flex: 0 0 auto;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.credits-divider {
-  border: none;
-  border-top: 1px solid #FF8C00;
-  margin: 15px 0;
-  opacity: 0.3;
-}
+    .right-column {
+      flex: 0 0 auto;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.teto-corner {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 80px;
-  height: auto;
-  z-index: 1000;
-  opacity: 0.9;
-}
-</style>
+    .section {
+      width: 100%;
+      text-align: center;
+    }
+
+    .section-title {
+      text-align: center !important;
+    }
+
+    .page-title {
+      text-align: center;
+    }
+
+    .page-subtitle {
+      text-align: center;
+    }
+
+    .section-title {
+      text-align: left;
+    }
+
+    canvas#particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 650px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 15px;
+      color: #e3dedc;
+      text-shadow: 0 0 30px rgba(227, 222, 220, 0.5);
+    }
+
+    .page-subtitle {
+      text-align: center;
+      color: rgba(227, 222, 220, 0.6);
+      margin-bottom: 50px;
+      font-size: 1rem;
+    }
+
+    .section {
+      margin-bottom: 55px;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(227, 222, 220, 0.25);
+      color: #e3dedc;
+      text-align: center;
+    }
+
+    /* Partners Grid */
+    .partners-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 320px;
+      align-items: center;
+    }
+
+    .partner-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(227, 222, 220, 0.15);
+      border-radius: 18px;
+      padding: 15px 20px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .partner-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: #e3dedc;
+      box-shadow: 0 20px 50px rgba(227, 222, 220, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .partner-card img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid rgba(227, 222, 220, 0.3);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .partner-card p {
+      color: #e3dedc;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* Credits Grid */
+    .credits-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(227, 222, 220, 0.15);
+      border-radius: 18px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .credit-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      min-width: auto;
+      white-space: nowrap;
+    }
+
+    .credit-items-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .credit-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      min-width: auto;
+      white-space: nowrap;
+    }
+
+    .credit-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateX(5px);
+    }
+
+    .partner-card:hover img {
+      border-color: #e3dedc;
+      box-shadow: 0 0 25px rgba(227, 222, 220, 0.4);
+    }
+
+    .partner-card p {
+      color: #e3dedc;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    /* Credits Grid */
+    .credits-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(227, 222, 220, 0.15);
+      border-radius: 18px;
+      padding: 25px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .credit-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      min-width: 200px;
+    }
+
+    .credit-items-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .credits-card:hover {
+      border-color: rgba(227, 222, 220, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .credits-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: #e3dedc;
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(227, 222, 220, 0.15);
+    }
+
+    .credit-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 14px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .credit-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateX(5px);
+    }
+
+    .credit-item img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e3dedc;
+      transition: all 0.3s ease;
+    }
+
+    .credit-item:hover img {
+      box-shadow: 0 0 20px rgba(227, 222, 220, 0.4);
+    }
+
+    .credit-item .info {
+      flex: 1;
+    }
+
+    .credit-item .name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #e3dedc;
+    }
+
+    .credit-item .role {
+      font-size: 0.8rem;
+      color: rgba(227, 222, 220, 0.6);
+      margin-top: 3px;
+    }
+
+    /* Donate Card */
+    .donate-card {
+      background: linear-gradient(135deg, rgba(227, 222, 220, 0.12) 0%, rgba(227, 222, 220, 0.04) 100%);
+      border: 2px solid rgba(227, 222, 220, 0.4);
+      border-radius: 18px;
+      padding: 15px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      max-width: 320px;
+      justify-content: center;
+    }
+
+    .donate-card:hover {
+      transform: scale(1.03);
+      border-color: #e3dedc;
+      box-shadow: 0 0 40px rgba(227, 222, 220, 0.35);
+    }
+
+    .donate-card img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      margin-bottom: 0;
+      border: 2px solid rgba(227, 222, 220, 0.3);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .donate-card:hover img {
+      border-color: #e3dedc;
+    }
+
+    .donate-card p {
+      color: #e3dedc;
+      font-weight: 600;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .donate-card .subtitle {
+      color: rgba(227, 222, 220, 0.6);
+      font-size: 0.8rem;
+      margin-top: 0;
+      margin-left: 10px;
+    }
+
+    /* Footer */
+    .credits-footer {
+      text-align: center;
+      padding: 35px;
+      color: rgba(227, 222, 220, 0.5);
+      font-size: 0.95rem;
+      margin-top: 20px;
+    }
+  </style>
 </head>
-
 <body>
   <canvas id="particles"></canvas>
-  <img src="/images/teto.gif" alt="Teto" class="teto-corner">
 
- <div class="navbar">
+  <div class="navbar" id="mainNavbar">
     <div class="navbar-left">
-      <img src="/images/blue girl.gif" alt="Kernel's Logo" class="logo">
-      <a href="/" class ="active">
-      <span class="logo-text">suntree-network</span>
-      </a>
     </div>
     <div class="navbar-right">
-      <a href="/" class="active">
-        <span class="label">Home</span>
+      <a href="/main.html" title="Home">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
       </a>
-      <a href="/chat.html">
-        <span class="label">Chat</span>
-        </a>
-      <a href="/g">
-        <span class="label">ɢɑᴍᴇѕ</span>
+      <a href="/chat.html" title="Music">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </a>
+      <a href="/g" title="Lessons">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      </a>
+      <a href="/spanish.html" title="Apps">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+      </a>
+      <a href="/studying.html" title="AI">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+      </a>
+      <a href="/settings.html" title="Settings">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
       </a>
       <div class="dropdown">
-        <a href="#" class="dropdown-toggle">
-          <span class="label">Other ▼</span>
+        <a href="#" class="dropdown-toggle active" title="More">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
         </a>
         <div class="dropdown-menu">
           <a href="/other/partners.html">Partners</a>
@@ -115,130 +425,163 @@
   </div>
 
   <div class="container">
-    <h1>credits + partners <3</h1>
-    <div style="display: flex; gap: 20px; align-items: flex-start;">
-      <div class="partners-list" style="margin-bottom: 20px; flex: 1;">
-        <div class="partner-card">
-          <a href="https://frogiesarcade.win" target="_blank" rel="noopener">
-            <img src="/images/fa.png" alt="frogie's arcade">
-          </a>
-          <div>Frogie's Arcade (credits)</div>
+    <h1 class="page-title">Partners & Credits</h1>
+    <p class="page-subtitle">Thank you to our partners and contributors</p>
+
+    <div class="main-content">
+      <!-- Left Column: Partners & Support -->
+      <div class="left-column">
+        <!-- Partners Section -->
+        <div class="section">
+          <h2 class="section-title">Our Partners</h2>
+          <div class="partners-grid">
+            <a href="https://gn-math.dev" target="_blank" rel="noopener" class="partner-card">
+              <img src="/images/gnmath.gif" alt="gn-math">
+              <p>gn-math</p>
+            </a>
+          </div>
         </div>
-        <div class="partner-card">
-          <a href="https://gn-math.dev" target="_blank" rel="noopener">
-            <img src="/images/gnmath.gif" alt="gn-math">
+
+        <!-- Donate Section -->
+        <div class="section">
+          <h2 class="section-title">Support Us</h2>
+          <a href="https://buy.stripe.com/eVqfZh22I1qD7Q248R9sk08" target="_blank" rel="noopener" class="donate-card">
+            <img src="/images/stripe.png" alt="Donate">
+            <div>
+              <p>Donate with Stripe</p>
+              <p class="subtitle">Click to support OnlyLessons</p>
+            </div>
           </a>
-          <div>gn-math (credits)</div>
-        </div>
-      
-          
-        <div class="partner-card">
-          <a href="https://play.qatual.com" target="_blank" rel="noopener">
-            <img src="/images/solocentrallogo.png" alt="wtv">
-          </a>
-          <div>solo central</div>
         </div>
       </div>
 
-      <div style="flex-shrink: 0;">
-        <div class="credits-card">
-          <h2>general credits!</h2>
-          <a href="https://aubree.lat" target="_blank" rel="noopener" class="person-card-thing-idfk">
-            <img src="/images/aubreelat.jpg" alt="aubree.lat" onerror="this.src='/images/nreds.png'">
-            <p>aubree.lat : Owner + Developer</p>
-          </a>
-          <div class="person-card-thing-idfk">
-            <img src="/images/spiek.gif" alt="root" onerror="this.src='images/nreds.png'">
-            <p>Tilly : Lead Dev</p>
+      <!-- Right Column: Credits -->
+      <div class="right-column">
+        <div class="section">
+          <h2 class="section-title">Credits</h2>
+          <div class="credits-card">
+            <h3 style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(227, 222, 220, 0.15);">General Credits</h3>
+            <div class="credit-items-row" style="flex-direction: column; align-items: flex-start;">
+              <a href="https://discord.gg/suntree" target="_blank" rel="noopener" class="credit-item">
+                <img src="/images/omar.gif" alt="Omar" onerror="this.src='/images/ixl.png'">
+                <div class="info">
+                  <div class="name">Omar Ali</div>
+                  <div class="role">Owner & Developer</div>
+                </div>
+              </a>
+              <a href="https://kramerscustoms.com" target="_blank" rel="noopener" class="credit-item">
+                <img src="/images/kcg.gif" alt="Kramer" onerror="this.src='/images/ixl.png'">
+                <div class="info">
+                  <div class="name">Kramer's Customs</div>
+                  <div class="role">FiveM Store</div>
+                </div>
+              </a>
+              <div class="credit-item">
+                <img src="/images/bado.png" alt="Hassan" onerror="this.src='images/ixl.png'">
+                <div class="info">
+                  <div class="name">Hassan Ali</div>
+                  <div class="role">Co-Owner & Developer</div>
+                </div>
+              </div>
+              <a href="https://discord.gg/kch" target="_blank" rel="noopener" class="credit-item">
+                <img src="/images/glungu.png" alt="Abdullah" onerror="this.src='images/ixl.png'">
+                <div class="info">
+                  <div class="name">Abdullah</div>
+                  <div class="role">General Developer</div>
+                </div>
+              </a>
+              <div class="credit-item">
+                <img src="/images/download.jpg" alt="Reid" onerror="this.src='images/ixl.png'">
+                <div class="info">
+                  <div class="name">Reid</div>
+                  <div class="role">FiveM & Ex-Developer</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <a href="https://archlinux.wtf" target="_blank" rel="noopener" class="person-card-thing-idfk">
-            <img src="/images/blue girl.gif" alt="archlinux.wtf" onerror="this.src='/images/nreds.png'">
-            <p>arch : Co-Owner + Dev.</p>
-          </a>
-          <div class="credits-divider"></div>
-          <a href="https://frogiee.one" target="_blank" rel="noopener" class="person-card-thing-idfk">
-            <img src="/images/frogiee1 pfp.webp" alt="frogiee1" onerror="this.src='images/nreds.png'">
-            <p>frogiee1 : Ultraviolet and vps setup + roblox</p>
-          </a>
-          <div class="person-card-thing-idfk">
-            <img src="/images/milo.webp" alt="millymilo000" onerror="this.src='images/nreds.png'">
-            <p>millymilo000 : nations server inspiration + eaglercraftX help</p>
-          </div>
-          <p>thank you for helping with suntree network</p>
         </div>
       </div>
     </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="credits-footer">Big thanks to all of our developers to make OnlyLessons possible!</p>
   </div>
-  <script src="../js/ads.js"></script>
+
   <script>
-    
-
     const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let snowflakes = [];
-
-class Snowflake {
-  constructor() {
-    this.reset();
-  }
-
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * -canvas.height; // spawn above screen
-    this.size = Math.random() * 3 + 1;
-    this.speedY = Math.random() * 2 + 0.5;  // fall speed
-    this.speedX = Math.random() * 1 - 0.5;  // slight drift
-    this.opacity = Math.random() * 0.7 + 0.3;
-  }
-
-  update() {
-    this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3; // natural drifting
-    this.y += this.speedY;
-
-    if (this.y > canvas.height) {
-      this.reset();
-      this.y = -10;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-  }
+    resizeCanvas();
 
-  draw() {
-    ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
+    let snowflakes = [];
 
-function initSnow() {
-  snowflakes = [];
-  for (let i = 0; i < 150; i++) {
-    snowflakes.push(new Snowflake());
-  }
-}
+    class Snowflake {
+      constructor() {
+        this.reset();
+      }
 
-function animateSnow() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  snowflakes.forEach(flake => {
-    flake.update();
-    flake.draw();
-  });
-  requestAnimationFrame(animateSnow);
-}
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedY = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.opacity = Math.random() * 0.7 + 0.3;
+      }
 
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  initSnow();
-});
+      update() {
+        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3;
+        this.y += this.speedY;
 
-initSnow();
-animateSnow();
+        if (this.y > canvas.height) {
+          this.reset();
+          this.y = -10;
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initSnow() {
+      snowflakes = [];
+      for (let i = 0; i < 150; i++) {
+        snowflakes.push(new Snowflake());
+      }
+    }
+
+    function animateSnow() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      snowflakes.forEach(flake => {
+        flake.update();
+        flake.draw();
+      });
+      requestAnimationFrame(animateSnow);
+    }
+
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      initSnow();
+    });
+
+    initSnow();
+    animateSnow();
   </script>
-<script src="/js/loading.js"></script>
-
+  <script src="/js/ads.js"></script>
+  <script src="/js/loading.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/panic.js"></script>
 </body>
 </html>

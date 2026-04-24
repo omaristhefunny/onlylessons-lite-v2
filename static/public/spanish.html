@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apps | OnlyLessons</title>
+  <link id="favicon" rel="icon" href="images/onlylessons.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000;
+      color: #87CEEB;
+      min-height: 100vh;
+      overflow-x: auto;
+    }
+
+    canvas#particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .container {
+      padding: 100px 40px 40px;
+      max-width: 1400px;
+      margin: 0 auto !important;
+      position: relative;
+      z-index: 1;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .page-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #87CEEB;
+      margin-bottom: 35px;
+      letter-spacing: -1px;
+    }
+
+    /* Search Bar */
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto 35px !important;
+      position: relative;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(135, 206, 235, 0.03);
+      border: 1px solid rgba(135, 206, 235, 0.1);
+      border-radius: 50px;
+      padding: 14px 28px;
+      gap: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar:focus-within {
+      border-color: rgba(135, 206, 235, 0.4);
+      box-shadow: 0 0 30px rgba(135, 206, 235, 0.1);
+      background: rgba(135, 206, 235, 0.05);
+      transform: scale(1.02);
+    }
+
+    .search-bar svg {
+      width: 22px;
+      height: 22px;
+      color: rgba(135, 206, 235, 0.5);
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #87CEEB;
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: rgba(135, 206, 235, 0.35);
+    }
+
+    .search-hint {
+      font-size: 11px;
+      color: rgba(135, 206, 235, 0.5);
+      background: rgba(135, 206, 235, 0.08);
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* Category Tabs */
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .category-tab {
+      padding: 12px 28px;
+      background: rgba(135, 206, 235, 0.02);
+      border: 1px solid rgba(135, 206, 235, 0.1);
+      border-radius: 30px;
+      color: rgba(135, 206, 235, 0.6);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .category-tab:hover {
+      background: rgba(135, 206, 235, 0.08);
+      border-color: rgba(135, 206, 235, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .category-tab.active {
+      background: rgba(135, 206, 235, 0.1);
+      border-color: rgba(135, 206, 235, 0.3);
+      color: #87CEEB;
+    }
+
+    /* Apps Grid */
+    .apps-section {
+      margin-bottom: 50px;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(135, 206, 235, 0.1);
+      color: rgba(135, 206, 235, 0.9);
+    }
+
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .app-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      padding: 24px 16px;
+      border-radius: 20px;
+      background: rgba(135, 206, 235, 0.02);
+      border: 1px solid rgba(135, 206, 235, 0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(135, 206, 235, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .app-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      border-color: rgba(135, 206, 235, 0.25);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(135, 206, 235, 0.1);
+      background: rgba(135, 206, 235, 0.05);
+    }
+
+    .app-card:hover::before {
+      opacity: 1;
+    }
+
+    .app-card img {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 2px solid rgba(135, 206, 235, 0.15);
+      margin-bottom: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .app-card:hover img {
+      border-color: rgba(135, 206, 235, 0.4);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      transform: scale(1.1) rotate(3deg);
+    }
+
+    .app-card span {
+      color: rgba(135, 206, 235, 0.85);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .app-card:hover span {
+      color: #87CEEB;
+      transform: scale(1.05);
+    }
+
+    .app-card.hidden {
+      display: none;
+    }
+
+    /* Add App Button */
+    .add-app-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      border-radius: 20px;
+      background: rgba(135, 206, 235, 0.02);
+      border: 2px dashed rgba(135, 206, 235, 0.15);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 140px;
+    }
+
+    .add-app-card:hover {
+      border-color: rgba(135, 206, 235, 0.4);
+      background: rgba(135, 206, 235, 0.05);
+      transform: translateY(-8px) scale(1.05);
+      border-style: solid;
+    }
+
+    .add-app-card .plus-icon {
+      font-size: 2.5rem;
+      color: rgba(135, 206, 235, 0.4);
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .add-app-card:hover .plus-icon {
+      color: #87CEEB;
+      transform: scale(1.2) rotate(90deg);
+    }
+
+    .add-app-card span {
+      color: rgba(135, 206, 235, 0.5);
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+
+    .add-app-card:hover span {
+      color: #87CEEB;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-overlay.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal {
+      background: rgba(10, 10, 10, 0.98);
+      border: 1px solid rgba(135, 206, 235, 0.15);
+      border-radius: 24px;
+      padding: 36px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal h3 {
+      color: #87CEEB;
+      font-size: 1.5rem;
+      margin-bottom: 28px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(135, 206, 235, 0.1);
+      border-radius: 14px;
+      background: rgba(135, 206, 235, 0.03);
+      color: #87CEEB;
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .modal input:focus {
+      border-color: rgba(135, 206, 235, 0.4);
+      background: rgba(135, 206, 235, 0.05);
+      box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.1);
+    }
+
+    .modal input::placeholder {
+      color: rgba(135, 206, 235, 0.4);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .modal button {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .modal .save-btn {
+      background: rgba(135, 206, 235, 0.15);
+      border: 1px solid rgba(135, 206, 235, 0.3);
+      color: #87CEEB;
+    }
+
+    .modal .save-btn:hover {
+      background: rgba(135, 206, 235, 0.25);
+      border-color: rgba(135, 206, 235, 0.4);
+    }
+
+    .modal .cancel-btn {
+      background: transparent;
+      border: 1px solid rgba(135, 206, 235, 0.15);
+      color: rgba(135, 206, 235, 0.7);
+    }
+
+    .modal .cancel-btn:hover {
+      border-color: rgba(135, 206, 235, 0.3);
+      color: #87CEEB;
+    }
+
+    /* Delete button on custom apps */
+    .delete-app {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 20px;
+      height: 20px;
+      background: rgba(239, 68, 68, 0.8);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-card:hover .delete-app {
+      display: flex;
+    }
+
+    .app-card {
+      position: relative;
+    }
+
+    /* No results */
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: rgba(135, 206, 235, 0.6);
+      display: none;
+    }
+
+    .no-results.visible {
+      display: block;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(135, 206, 235, 0.2); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(135, 206, 235, 0.3); }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <div class="navbar" id="mainNavbar">
+    <div class="navbar-left">
+    </div>
+    <div class="navbar-right">
+      <a href="/main.html" title="Home">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </a>
+      <a href="/chat.html" title="Music">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </a>
+      <a href="/g" title="Lessons">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      </a>
+      <a href="/spanish.html" class="active" title="Apps">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+      </a>
+      <a href="/studying.html" title="AI">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+      </a>
+      <a href="/settings.html" title="Settings">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      </a>
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" title="More">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </a>
+        </a>
+        <div class="dropdown-menu">
+          <a href="/other/partners.html">Partners</a>
+          <a href="/other/privacy.html">Privacy Policy</a>
+          <a href="/other/dmca.html">DMCA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Apps</h1>
+      
+      <div class="search-container">
+        <div class="search-bar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Search apps...">
+          <span class="search-hint">Ctrl+K</span>
+        </div>
+      </div>
+
+      <div class="category-tabs">
+        <button class="category-tab active" data-category="all">All</button>
+        <button class="category-tab" data-category="social">Social</button>
+        <button class="category-tab" data-category="streaming">Streaming</button>
+        <button class="category-tab" data-category="gaming">Gaming</button>
+        <button class="category-tab" data-category="ai">AI</button>
+        <button class="category-tab" data-category="emulators">Emulators</button>
+        <button class="category-tab" data-category="cloud">Cloud Gaming</button>
+      </div>
+    </div>
+
+    <div class="apps-grid" id="appsGrid">
+      <!-- Add App Button -->
+      <div class="add-app-card" onclick="openModal()">
+        <span class="plus-icon">+</span>
+        <span>Add App</span>
+      </div>
+
+      <!-- Predefined Apps -->
+      <a href="/g?embed=embed-wrapper.html" class="app-card" data-category="gaming">
+        <img src="images/roblox.png" alt="Roblox">
+        <span>Roblox</span>
+      </a>
+      <a href="/g?embed=embed.html#https://www.xbox.com/en-US/play/fortnite" class="app-card" data-category="gaming">
+        <img src="images/xbox.png" alt="Fortnite">
+        <span>Fortnite</span>
+      </a>
+      <a href="embed.html#https://discord.com/app" class="app-card" data-category="social">
+        <img src="images/discord.png" alt="Discord">
+        <span>Discord</span>
+      </a>
+      <a href="/g?embed=embed.html#https://tiktok.com/" class="app-card" data-category="social">
+        <img src="images/tiktok.png" alt="TikTok">
+        <span>TikTok</span>
+      </a>
+      
+      <!-- Streaming -->
+      <a href="/g?embed=embed.html#https://bcine.app" class="app-card" data-category="streaming">
+        <img src="images/bcine.webp" alt="BCine">
+        <span>BCine</span>
+      </a>
+      <a href="/g?embed=embed.html#https://youtube.com" class="app-card" data-category="streaming">
+        <img src="images/youtube.png" alt="YouTube">
+        <span>YouTube</span>
+      </a>
+      <a href="/g?embed=embed.html#https://watch.spencerdevs.xyz" class="app-card" data-category="streaming">
+        <img src="images/movies.jpg" alt="SpenFlix">
+        <span>SpenFlix</span>
+      </a>
+      <a href="/g?embed=embed.html#https://streamex.net" class="app-card" data-category="streaming">
+        <img src="images/movies2.png" alt="StreamX">
+        <span>StreamX</span>
+      </a>
+      <a href="/g?embed=embed.html#https://popcornmovies.org/" class="app-card" data-category="streaming">
+        <img src="images/popcorn.png" alt="Popcorn">
+        <span>Popcorn Movies</span>
+      </a>
+      <a href="/g?embed=embed.html#https://sanuflix-web-v2.pages.dev/" class="app-card" data-category="streaming">
+        <img src="images/sanuflix.png" alt="Sanuflix">
+        <span>Sanuflix</span>
+      </a>
+      <a href="/g?embed=embed.html#https://filmex.to/" class="app-card" data-category="streaming">
+        <img src="images/film.png" alt="Filmex">
+        <span>Filmex</span>
+      </a>
+      
+      <!-- AI -->
+      <a href="/g?embed=embed.html#https://chatgpt.com" class="app-card" data-category="ai">
+        <img src="images/ai.png" alt="ChatGPT">
+        <span>ChatGPT</span>
+      </a>
+      <a href="/studying.html" class="app-card" data-category="ai">
+        <img src="images/ai.png" alt="AI">
+        <span>AI</span>
+      </a>
+      
+      <!-- Gaming -->
+      <a href="/g?embed=embed.html#https://coolmathgames.com/" class="app-card" data-category="gaming">
+        <img src="images/coolmath.png" alt="Cool Math">
+        <span>Cool Math Lessons</span>
+      </a>
+      <a href="/g?embed=embed.html#https://crazygames.com/" class="app-card" data-category="gaming">
+        <img src="images/CRAZY.webp" alt="Crazy Lessons">
+        <span>Crazy Lessons</span>
+      </a>
+      <a href="/g?embed=embed.html#https://now.gg" class="app-card" data-category="gaming">
+        <img src="images/now.png" alt="Now.gg">
+        <span>Now.gg</span>
+      </a>
+      <a href="/g?embed=embed.html#https://nowgg.fun" class="app-card" data-category="gaming">
+        <img src="images/forgie.webp" alt="Nowgg.fun">
+        <span>Nowgg.fun</span>
+      </a>
+      
+      <!-- Emulators -->
+      <a href="/g?embed=embed.html#https://emulatorjs.org/" class="app-card" data-category="emulators">
+        <img src="images/emulator.webp" alt="EmulatorJS">
+        <span>EmulatorJS</span>
+      </a>
+      
+      <!-- Cloud Gaming -->
+      <a href="/g?embed=embed.html#https://luna.amazon.com/" class="app-card" data-category="cloud">
+        <img src="images/amazonluna.webp" alt="Amazon Luna">
+        <span>Amazon Luna</span>
+      </a>
+      <a href="/g?embed=embed.html#https://cloud.boosteroid.com/auth/start" class="app-card" data-category="cloud">
+        <img src="images/boosteroid.webp" alt="Boosteroid">
+        <span>Boosteroid</span>
+      </a>
+      <a href="/g?embed=embed.html#https://ghostvcsa.lucianmandru.ro/" class="app-card" data-category="cloud">
+        <img src="images/ghost.png" alt="Ghost">
+        <span>Ghost</span>
+      </a>
+    </div>
+
+    <p class="no-results" id="noResults">No apps found matching your search.</p>
+  </div>
+
+  <script>
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const appCards = document.querySelectorAll('.app-card');
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const noResults = document.getElementById('noResults');
+
+    let currentCategory = 'all';
+
+    function filterApps() {
+      const searchTerm = searchInput.value.toLowerCase();
+      let visibleCount = 0;
+
+      appCards.forEach(card => {
+        const name = card.querySelector('span').textContent.toLowerCase();
+        const category = card.dataset.category;
+        
+        const matchesSearch = name.includes(searchTerm);
+        const matchesCategory = currentCategory === 'all' || category === currentCategory;
+        
+        if (matchesSearch && matchesCategory) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      noResults.classList.toggle('visible', visibleCount === 0);
+    }
+
+    searchInput.addEventListener('input', filterApps);
+
+    // Category tabs
+    categoryTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        categoryTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentCategory = tab.dataset.category;
+        filterApps();
+      });
+    });
+
+    // Ctrl+K to focus search
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    // Snowflake animation
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+
+    let snowflakes = [];
+
+    class Snowflake {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedY = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.opacity = Math.random() * 0.7 + 0.3;
+      }
+
+      update() {
+        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3;
+        this.y += this.speedY;
+
+        if (this.y > canvas.height) {
+          this.reset();
+          this.y = -10;
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(135, 206, 235, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initSnow() {
+      snowflakes = [];
+      for (let i = 0; i < 150; i++) {
+        snowflakes.push(new Snowflake());
+      }
+    }
+
+    function animateSnow() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      snowflakes.forEach(flake => {
+        flake.update();
+        flake.draw();
+      });
+      requestAnimationFrame(animateSnow);
+    }
+
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      initSnow();
+    });
+
+    initSnow();
+    animateSnow();
+  </script>
+
+  <!-- Add App Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h3>Add Custom App</h3>
+      <input type="text" id="appTitle" placeholder="App Name" required>
+      <input type="url" id="appUrl" placeholder="URL (e.g., https://example.com)" required>
+      <input type="url" id="appImage" placeholder="Image URL (optional)">
+      <div class="modal-buttons">
+        <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+        <button class="save-btn" onclick="saveCustomApp()">Add App</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Custom apps management
+    const CUSTOM_APPS_KEY = 'onlylessons_custom_apps';
+
+    function getCustomApps() {
+      const apps = localStorage.getItem(CUSTOM_APPS_KEY);
+      return apps ? JSON.parse(apps) : [];
+    }
+
+    function saveCustomApps(apps) {
+      localStorage.setItem(CUSTOM_APPS_KEY, JSON.stringify(apps));
+    }
+
+    function renderCustomApps() {
+      const customApps = getCustomApps();
+      const grid = document.getElementById('appsGrid');
+      
+      // Remove existing custom app elements
+      document.querySelectorAll('.custom-app').forEach(el => el.remove());
+      
+      // Add custom apps before the add button
+      const addButton = document.querySelector('.add-app-card');
+      
+      customApps.forEach((app, index) => {
+        const card = document.createElement('a');
+        card.href = '/g?embed=embed.html#' + app.url;
+        card.className = 'app-card custom-app';
+        card.dataset.category = 'custom';
+        
+        const appTitle = app.title || '?';
+        const imgUrl = app.image || 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect fill="#1a1a1a" width="80" height="80" rx="16"/><text x="40" y="50" text-anchor="middle" fill="#87CEEB" font-size="30">'+appTitle.charAt(0)+'</text></svg>');
+        
+        card.innerHTML = `
+          <img src="${imgUrl}" alt="${appTitle}">
+          <span>${appTitle}</span>
+          <button class="delete-app" onclick="deleteCustomApp(event, ${index})">×</button>
+        `;
+        
+        grid.insertBefore(card, addButton.nextSibling);
+      });
+    }
+
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('show');
+      document.getElementById('appTitle').focus();
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+      document.getElementById('appTitle').value = '';
+      document.getElementById('appUrl').value = '';
+      document.getElementById('appImage').value = '';
+    }
+
+    function saveCustomApp() {
+      const title = document.getElementById('appTitle').value.trim();
+      let url = document.getElementById('appUrl').value.trim();
+      const image = document.getElementById('appImage').value.trim();
+      
+      if (!title || !url) {
+        alert('Please fill in the app name and URL');
+        return;
+      }
+      
+      // Add https if missing
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      
+      const customApps = getCustomApps();
+      customApps.push({ title, url, image });
+      saveCustomApps(customApps);
+      
+      renderCustomApps();
+      closeModal();
+    }
+
+    function deleteCustomApp(event, index) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      if (confirm('Remove this app?')) {
+        const customApps = getCustomApps();
+        customApps.splice(index, 1);
+        saveCustomApps(customApps);
+        renderCustomApps();
+      }
+    }
+
+    // Close modal on outside click
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Render custom apps on load
+    setTimeout(renderCustomApps, 0);
+
+    // Add "custom" category to tabs
+    const categoryTabsContainer = document.querySelector('.category-tabs');
+    const customTab = document.createElement('button');
+    customTab.className = 'category-tab';
+    customTab.dataset.category = 'custom';
+    customTab.textContent = 'Custom';
+    categoryTabsContainer.appendChild(customTab);
+
+    // Update filter function to handle custom apps
+    const originalFilterApps = filterApps;
+    filterApps = function() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const appCards = document.querySelectorAll('.app-card');
+      let visibleCount = 0;
+
+      appCards.forEach(card => {
+        const name = card.querySelector('span')?.textContent.toLowerCase() || '';
+        const category = card.dataset.category;
+        
+        const matchesSearch = name.includes(searchTerm);
+        const matchesCategory = currentCategory === 'all' || category === currentCategory;
+        
+        if (matchesSearch && matchesCategory) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      noResults.classList.toggle('visible', visibleCount === 0);
+    };
+  </script>
+
+  <script src="/js/ads.js"></script>
+  <script src="/js/loading.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/panic.js"></script>
+</body>
+</html>

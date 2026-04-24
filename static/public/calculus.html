@@ -3,15 +3,15 @@
 <head>
      <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui, shrink-to-fit=yes">
-      <title>Study.com | Calculus</title>
+      <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
       <link href="/css/search.css" rel="stylesheet" type="text/css" />
       <link href="/sys/alert.css" rel="stylesheet" type="text/css" />
       <link rel="manifest" href="manifest.json"/>
-      <link rel="icon" href="/images/thosewhodrinkeggnog.png">
-      <meta property="og:title" content="study.com">
+      <link rel="icon" href="/images/ixl.png">
+      <meta property="og:title" content="IXL | Math, Language Arts, Science, Social Studies, and Spanish">
       <meta name="theme-color" content="#00ffa6">
       <meta name="msapplication-TileColor" content="#00ffa6">
-      <meta property="og:image" content="/images/thosewhodrinkeggnog.png">
+      <meta property="og:image" content="/images/ixl.png">
       <meta name="description" content="the games just for you">
       <script src="/sys/login.js"></script>
       <script src="/sys/index.js"></script>
@@ -34,7 +34,6 @@
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css'></script>
     <script src='/jquery-1.11.1.min.js'></script>
     <header>
-        <img class="logo" src="/images/blue girl.gif" onclick="window.location.href='/';">
         <form id="homework-searchbar">
             <input id="homework-chapter" value="https://duckduckgo.com/?t=h_&ia=web&q=" type="hidden"/> 
             <input id="homework-lookupbar" type="text" placeholder="search something" class="form__input"/>
@@ -54,8 +53,8 @@
             height: 0
         }
     </style>
-    <script src="/frog/bundle.js" defer></script>
-    <script src="/frog/config.js?cdn" defer></script>
+    <script src="/lessons/bundle.js" defer></script>
+    <script src="/lessons/config.js?cdn" defer></script>
     <script>
           function fn_reload(){
               var iframe = document.getElementById('iframeid');
@@ -90,7 +89,7 @@ function checkIframeURL() {
             lastURL = currentURL;
 const websitePath = currentURL
         .replace(window.location.origin, "")
-        .replace("/frog/ixl/", "");
+        .replace("/lessons/ixl/", "");
       localStorage.setItem("decoded", websitePath);
       const decodedValue = __uv$config.decodeUrl(websitePath);
       const searchBar = document.getElementById("homework-lookupbar");
@@ -140,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             // Encode and load the URL
             let urlEncoded = __uv$config.encodeUrl(url);
-            urlEncoded = "/frog/ixl/" + urlEncoded;
+            urlEncoded = "/lessons/ixl/" + urlEncoded;
             
             const iframe = document.getElementById("iframeid");
             if (iframe) {
@@ -236,6 +235,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       });
     </script>
+    <script src="/js/loading.js"></script>
+    <script src="/js/ads.js"></script>
+    <script src="/js/settings.js"></script>
 
 </body>
 

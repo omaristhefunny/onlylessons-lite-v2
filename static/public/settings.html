@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Settings | OnlyLessons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OnlyLessons settings"/>
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="module" src="/js/alert.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    canvas#particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .container {
+      padding: 120px 20px 60px;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      position: relative;
+      z-index: 1;
+      left: 0;
+      right: 0;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #e3dedc;
+      text-shadow: 0 0 20px rgba(227, 222, 220, 0.5);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .page-subtitle {
+      color: rgba(227, 222, 220, 0.6);
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    /* Settings Grid */
+    .settings-grid {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 25px;
+      width: 100%;
+      align-items: center;
+    }
+
+    /* Settings Card */
+    .settings-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(227, 222, 220, 0.15);
+      border-radius: 20px;
+      padding: 28px;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .settings-card:hover {
+      border-color: rgba(227, 222, 220, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(227, 222, 220, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e3dedc;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: rgba(227, 222, 220, 0.5);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Setting Row */
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .setting-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .setting-label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(227, 222, 220, 0.8);
+    }
+
+    /* Select */
+    .setting-select {
+      padding: 10px 35px 10px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(227, 222, 220, 0.2);
+      border-radius: 10px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s ease;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e3dedc' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+
+    .setting-select:focus {
+      border-color: #e3dedc;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .setting-select option {
+      background: #111;
+      color: #fff;
+    }
+
+    /* Button */
+    .setting-btn {
+      padding: 12px 24px;
+      background: rgba(227, 222, 220, 0.1);
+      border: 1px solid rgba(227, 222, 220, 0.3);
+      border-radius: 10px;
+      color: #e3dedc;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .setting-btn:hover {
+      background: rgba(227, 222, 220, 0.2);
+      border-color: #e3dedc;
+      box-shadow: 0 0 20px rgba(227, 222, 220, 0.2);
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 28px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(227, 222, 220, 0.2);
+      border-radius: 28px;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-slider::before {
+      position: absolute;
+      content: "";
+      width: 20px;
+      height: 20px;
+      left: 3px;
+      bottom: 3px;
+      background: rgba(227, 222, 220, 0.5);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: rgba(227, 222, 220, 0.3);
+      border-color: #e3dedc;
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(22px);
+      background: #e3dedc;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(227, 222, 220, 0.3);
+      color: #e3dedc;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .wallpaper-preview.active {
+      border-color: #87CEEB !important;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <div class="navbar" id="mainNavbar">
+    <div class="navbar-left">
+    </div>
+    <div class="navbar-right">
+      <a href="/main.html" title="Home">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </a>
+      <a href="/chat.html" title="Music">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </a>
+      <a href="/g" title="Lessons">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      </a>
+      <a href="/spanish.html" title="Apps">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+      </a>
+      <a href="/studying.html" title="AI">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+      </a>
+      <a href="/settings.html" class="active" title="Settings">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      </a>
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" title="More">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </a>
+        <div class="dropdown-menu">
+          <a href="/other/partners.html">Partners</a>
+          <a href="/other/privacy.html">Privacy Policy</a>
+          <a href="/other/dmca.html">DMCA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Settings</h1>
+      <p class="page-subtitle">Customize your experience</p>
+    </div>
+
+    <div class="settings-grid">
+      <!-- Tab Cloak -->
+      <div class="settings-card">
+        <div class="card-header">
+          <div class="card-icon">🎭</div>
+          <h2 class="card-title">Tab Cloak</h2>
+        </div>
+        <p class="card-desc">Disguise this tab to look like another site. Takes effect immediately and persists across sessions.</p>
+        <div class="setting-row">
+          <span class="setting-label">Cloak as</span>
+          <select class="setting-select" id="tabCloakSelect">
+            <option value="quizlet">Quizlet</option>
+            <option value="google">Google</option>
+            <option value="google-classroom">Google Classroom</option>
+            <option value="google-docs">Google Docs</option>
+            <option value="khan-academy">Khan Academy</option>
+            <option value="wikipedia">Wikipedia</option>
+            <option value="youtube">YouTube</option>
+            <option value="outlook">Outlook</option>
+            <option value="ixl">IXL</option>
+            <option value="peardeck">Pear Deck</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- About Blank -->
+      <div class="settings-card">
+        <div class="card-header">
+          <div class="card-icon">🔒</div>
+          <h2 class="card-title">Open in about:blank</h2>
+        </div>
+        <p class="card-desc">Open sites inside an about:blank or blob URL to avoid detection in your browser history.</p>
+        <div class="setting-row">
+          <span class="setting-label">Open type</span>
+          <select class="setting-select" id="abTypeSelect">
+            <option value="blank">about:blank</option>
+            <option value="blob">blob</option>
+          </select>
+        </div>
+        <button class="setting-btn" id="abOpenBtn">Open</button>
+      </div>
+
+      <!-- Ads -->
+      <div class="settings-card">
+        <div class="card-header">
+          <div class="card-icon">📺</div>
+          <h2 class="card-title">Ads</h2>
+        </div>
+        <p class="card-desc">Enable or disable ads on the site. Keep them on to support OnlyLessons!</p>
+        <div class="setting-row">
+          <span class="setting-label">Enable ads</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="adsToggle">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Navbar Position -->
+      <div class="settings-card">
+        <div class="card-header">
+          <div class="card-icon">🔝</div>
+          <h2 class="card-title">Navbar Position</h2>
+        </div>
+        <p class="card-desc">Choose where the navigation bar appears on the page.</p>
+        <div class="setting-row">
+          <span class="setting-label">Position</span>
+          <select class="setting-select" id="navbarPosition">
+            <option value="top">Top</option>
+            <option value="left">Left</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Data Management -->
+      <div class="settings-card">
+        <div class="card-header">
+          <div class="card-icon">💾</div>
+          <h2 class="card-title">Data Management</h2>
+        </div>
+        <p class="card-desc">Export, import, or clear your local storage data.</p>
+        <div style="display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;">
+          <button class="setting-btn" onclick="exportData()" style="flex: 1; min-width: 100px;">Export Data</button>
+          <button class="setting-btn" onclick="document.getElementById('importFileInput').click()" style="flex: 1; min-width: 100px;">Import Data</button>
+          <input type="file" id="importFileInput" style="display: none;" accept=".json,.txt" onchange="importData(event)">
+          <button class="setting-btn" onclick="clearData()" style="flex: 1; min-width: 100px; background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: rgba(239, 68, 68, 0.3);">Clear Data</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Snowflake Particles -->
+  <script>
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+
+    let snowflakes = [];
+
+    class Snowflake {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedY = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.opacity = Math.random() * 0.6 + 0.2;
+      }
+
+      update() {
+        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3;
+        this.y += this.speedY;
+
+        if (this.y > canvas.height) {
+          this.reset();
+          this.y = -10;
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(227, 222, 220, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initSnow() {
+      snowflakes = [];
+      for (let i = 0; i < 120; i++) {
+        snowflakes.push(new Snowflake());
+      }
+    }
+
+    function animateSnow() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      snowflakes.forEach(flake => {
+        flake.update();
+        flake.draw();
+      });
+      requestAnimationFrame(animateSnow);
+    }
+
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      initSnow();
+    });
+
+    initSnow();
+    animateSnow();
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      if (toast) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+    }
+
+    function exportData() {
+      const data = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        data[key] = localStorage.getItem(key);
+      }
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `onlylessons-backup-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showToast('Data exported successfully!');
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          let count = 0;
+          for (const key in data) {
+            localStorage.setItem(key, data[key]);
+            count++;
+          }
+          showToast(`Imported ${count} items successfully!`);
+          setTimeout(() => location.reload(), 1500);
+        } catch (err) {
+          showToast('Failed to import data: Invalid file format');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function clearData() {
+      if (confirm('Are you sure you want to clear ALL local storage data? This cannot be undone.')) {
+        localStorage.clear();
+        showToast('All data cleared!');
+        setTimeout(() => location.reload(), 1000);
+      }
+    }
+  </script>
+
+  <script src="/js/loading.js"></script>
+  <script src="/js/ads.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/panic.js"></script>
+</body>
+</html>

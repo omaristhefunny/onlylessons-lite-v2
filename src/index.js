@@ -5,86 +5,102 @@ import { publicPath } from "ultraviolet-static";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { join } from "node:path";
 import { hostname } from "node:os";
-import "dotenv/config";
-import cluster from "node:cluster";
+import { config } from "dotenv";
 import cors from "cors";
-import { existsSync, writeFileSync } from "node:fs";
-import { unlinkSync } from "node:fs";
+
+config({ path: join(process.cwd(), ".env") });
+
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 const bare = createBareServer("/bare/", {
+  codec: "x-python",
   connectionLimiter: {
-    maxConnectionsPerIP: 15000,
-    windowDuration: 60,
-    blockDuration: 60,
+    maxConnectionsPerIP: 30,
+    windowDuration: 60000,
+    blockDuration: 60000,
   },
 });
+
 const app = express();
 
-// CORS and security headers
 app.use(cors());
 app.use(express.json());
-app.use((req, res, next) => {
-  // Set COOP/COEP headers for routes that need SharedArrayBuffer (WebAssembly games, portal, etc.)
-  if (
-    req.path.includes("portal") ||
-    req.path.includes("terraria") ||
-    req.path.includes("science/") ||
-    req.path.includes(".wasm") ||
-    req.path.includes("dotnet")
-  ) {
-    res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
-  }
-  next();
-});
-
 app.use(express.static(publicPath));
-app.use("/frog/", express.static(uvPath));
-app.get("/calculus", (req, res) => {
-  res.sendFile(join(publicPath, "calculus.html"));
-});
-app.get("/record", (req, res) => {
-  res.sendFile(join(publicPath, "record.html"));
-});
+app.use("/lessons/", express.static(uvPath));
 
-function toIPv4(ip) {
-  if (!ip) return '127.0.0.1';
-  if (ip.includes(',')) ip = ip.split(',')[0].trim();
-  if (ip.startsWith('::ffff:')) ip = ip.replace('::ffff:', '');
-  return ip.match(/^(\d{1,3}\.){3}\d{1,3}$/) ? ip : '127.0.0.1';
-}
+app.get("/lessons/ixl/", (req, res) => {
+  res.redirect("/embed.html");
+});
 
 const routes = [
   { path: "/", file: "index.html" },
-  { path: "/s", file: "calculus.html"},
+  { path: "/s", file: "calculus.html" },
   { path: "/g", file: "science.html" },
   { path: "/p", file: "partners.html" },
   { path: "/c", file: "chat.html" },
+  { path: "/ai", file: "ai-chat.html" },
+  { path: "/studying", file: "studying.html" },
   { path: "/404", file: "404.html" },
-  { path: "/606,", file: "proxy.html" },
+  { path: "/606", file: "proxy.html" },
+  { path: "/embed.html", file: "embed.html" },
+  { path: "/embed-wrapper.html", file: "embed-wrapper.html" },
 ];
-routes.forEach((route) => {
-  app.get(route.path, (req, res) => {
-    res.sendFile(join(publicPath, route.file));
-  });
+
+routes.forEach(({ path, file }) => {
+  app.get(path, (req, res) => res.sendFile(join(publicPath, file)));
 });
-app.get('/ip', (req, res) => {
-  const rawIp = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  const ipv4 = toIPv4(rawIp);
-  const prefix = ipv4.split('.')[0];
-  res.send(prefix);
+
+app.get("/ip", (req, res) => {
+  const ip = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.socket.remoteAddress || "127.0.0.1";
+  const first = ip.split(",")[0].split(".")[0];
+  res.send(first);
+});
+
+app.get("/csrf-token", (req, res) => {
+  res.json({ csrfToken: Math.random().toString(36).substring(2) });
+});
+
+app.post("/ask", async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.status(200).end();
+
+  const { messages, model } = req.body;
+  if (!messages || !Array.isArray(messages))
+    return res.status(400).json({ error: "Invalid messages format" });
+
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+        "HTTP-Referer": "https://onlylessons.network",
+        "X-Title": "OnlyLessons",
+      },
+      body: JSON.stringify({ model: model || "openrouter/free", messages }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("OpenRouter error:", errorData);
+      return res.status(response.status).json({ error: "Failed to get response" });
+    }
+
+    const data = await response.json();
+    res.json({ message: data.choices?.[0]?.message?.content || "No response" });
+  } catch (error) {
+    console.error("AI request error:", error);
+    res.status(500).json({ error: "Failed to reach AI service" });
+  }
 });
 
 app.use((req, res) => {
-  res.redirect("/404");
+  res.status(404).sendFile(join(publicPath, "404.html"));
 });
-const server = createServer();
 
-server.maxConnections = null;  // Unlimited connections
-server.maxRequestsPerSocket = 0;  // 0 = unlimited requests per socket
-server.keepAliveTimeout = 65000;  // Increase keep-alive timeout
-server.headersTimeout = 66000;
+const server = createServer();
 
 server.on("request", (req, res) => {
   if (bare.shouldRoute(req)) {
@@ -102,62 +118,17 @@ server.on("upgrade", (req, socket, head) => {
   }
 });
 
-let port = parseInt(process.env.PORT || "");
+const PORT = parseInt(process.env.PORT || "8080");
 
-if (isNaN(port)) port = 6767;
-
-server.on("listening", () => {
-  const address = server.address();
-
-  console.log("YAAAAYYYY WE ARE UP AND RUNNING TWIN :3");
-  console.log(`\thttp://localhost:${address.port}`);
-  console.log(`\thttp://${hostname()}:${address.port}`);
-  console.log(
-    `\thttp://${
-      address.family === "IPv6" ? `[${address.address}]` : address.address
-    }:${address.port}`
-  );
- // unused discord stuff, cant remove because for some reason it bricks the entire fucking thing idk why
-  if (process.env.NODE_APP_INSTANCE === '0') {
-    const markerFile = "/tmp/arcade-discord-up.announced";
-    if (!existsSync(markerFile)) {
-      console.log('[Discord] Primary instance detected, loading bot...');
-      import("./discordAnnounce.js").then(mod => {
-        mod.discordReady()
-          .then(() => {
-            console.log('[Discord] Bot is ready and connected.');
-            mod.announceUp().then(() => {
-              console.log('[Discord] Announcement sent.');
-              writeFileSync(markerFile, String(Date.now()));
-            }).catch(e => console.error("Announce error:", e));
-            mod.sendStaffLog(`Server started on port ${address.port}`).then(() => {
-              console.log('[Discord] Staff log sent.');
-            }).catch(e => console.error("Staff log error:", e));
-          })
-          .catch(e => console.error("Discord login error:", e));
-      }).catch(e => console.error("Discord module error:", e));
-    } else {
-      console.log('[Discord] Announcement already sent, skipping.');
-    }
-  }
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`http://localhost:${PORT}`);
+  console.log(`http://${hostname()}:${PORT}`);
 });
 
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
-
-function shutdown() {
-  console.log("SIGTERM signal received: closing HTTP server");
-  try {
-    unlinkSync("/tmp/arcade-discord-up.announced");
-    console.log("[Discord] Announcement marker file deleted.");
-  } catch (e) {
-    if (e.code !== 'ENOENT') console.error("[Discord] Error deleting marker file:", e);
-  }
+process.on("SIGINT", () => {
+  console.log("Shutting down...");
   server.close();
   bare.close();
   process.exit(0);
-}
-
-server.listen({
-  port,
 });

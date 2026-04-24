@@ -1,350 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link id="favicon" rel="icon" href="images/nreds.png" type="image/x-icon">
-  <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
-  <link rel="stylesheet" href="css/stylesbeta.css">
+  <title>Music | OnlyLessons</title>
+  <link id="favicon" rel="icon" href="images/onlylessons.png" type="image/x-icon">
+  <script src="/js/custom-colors.js"></script>
   <link rel="stylesheet" href="css/navbar.css">
-  <meta name="description"
-    content="IXL is the world's most popular subscription-based learning site for K–12. Used by over 17 million students, IXL provides personalized learning in more than 17,000 topics, covering math, language arts, science, social studies, and Spanish. Interactive questions, awards, and certificates keep kids motivated as they master skills." />
-  <meta property="og:title" content="IXL | Math, Language Arts, Science, Social Studies, and Spanish" />
-  <meta property="og:description"
-    content="IXL is the world's most popular subscription-based learning site for K–12. Used by over 17 million students, IXL provides personalized learning in more than 17,000 topics, covering math, language arts, science, social studies, and Spanish. Interactive questions, awards, and certificates keep kids motivated as they master skills." />
-  <meta property="og:url" content="https://suntree-net.worksm" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="IXL Learning" />
-  <meta property="og:image"
-    content="https://www.ixl.com/dv3/powZqMuTE7du4asFrVyNGxxoqkw/yui3/opengraph/assets/general_us.png" />
-
-
-    <script src="https://pl28535093.effectivegatecpm.com/aa/03/cb/aa03cb5003372c000be360e36afdb58b.js"></script> 
-  <script src="https://cdn.scaledrone.com/scaledrone.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
-
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: #000;
-      font-family: 'Quicksand', Arial, sans-serif;
-      color: #eee;
-    }
-
-    
-    .chat {
-      max-width: 800px;
-      margin: 20px auto;
-      font-family: 'Quicksand', Arial, sans-serif;
-    }
-
-    .members {
-      font-size: 14px;
-      margin-bottom: 10px;
-      color: #eee;
-      font-family: 'Quicksand', Arial, sans-serif;
-    }
-
-    .members-list .member {
-      margin-right: 6px;
-      display: inline-block;
-      font-family: 'Quicksand', Arial, sans-serif;
-    }
-
-    .messages {
-      height: 400px;
-      width: 670px;
-      overflow-y: auto;
-      border: 1px solid #333;
-      font-family: 'Quicksand', Arial, sans-serif;
-      padding: 10px;
-      background: #000000;
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    .message {
-      margin: 6px 0;
-      font-family: 'Quicksand', Arial, sans-serif;
-    }
-
-    .message-form {
-      display: flex;
-      margin-top: 10px;
-      font-family: 'Quicksand', Arial, sans-serif;
-    }
-
-    .message-form__input {
-      flex: 1;
-      padding: 10px;
-      background: #111;
-      color: #fff;
-      font-family: 'Quicksand', Arial, sans-serif;
-      border: 1px solid #333;
-      border-radius: 5px;
-      outline: none;
-    }
-
-     button {
-      padding: 10px 20px;
-      background-image: linear-gradient(45deg, rgb(255, 102, 0), rgb(0, 0, 0), rgb(255, 153, 0), rgb(0, 0, 0));
-      background-size: 400%;
-      color: #ffffff;
-      font-family: 'Quicksand', Arial, sans-serif;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-     button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 10px rgba(47, 128, 237, 0.5);
-      font-family: 'Quicksand', Arial, sans-serif;
-    }
-
-    
-    #authPanel {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.9);
-      font-family: 'Quicksand', Arial, sans-serif;
-      border: 2px solid #FF8C00;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 0 20px #FF8C00;
-      z-index: 100;
-      min-width: 300px;
-    }
-
-    #authPanel h2, #authPanel h4 {
-      color: #FF8C00;
-      font-family: 'Quicksand', Arial, sans-serif;
-      text-shadow: 0 0 10px #FF8C00;
-      margin-bottom: 15px;
-    }
-
-    #authPanel input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #444;
-      border-radius: 5px;
-      font-family: 'Quicksand', Arial, sans-serif;
-      background-color: #111;
-      color: #fff;
-      box-sizing: border-box;
-      outline: none;
-      transition: border-color 0.3s, background-color 0.3s;
-    }
-
-    #authPanel input:focus {
-      border-color: #FF8C00;
-      font-family: 'Quicksand', Arial, sans-serif;
-      background-color: #000;
-      box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
-    }
-
-    #authPanel hr {
-      border: none;
-      border-top: 1px solid #333;
-      font-family: 'Quicksand', Arial, sans-serif;
-      margin: 20px 0;
-    }
-
-    #authMsg {
-      color: #FFB347;
-      margin-top: 10px;
-      font-family: 'Quicksand', Arial, sans-serif;
-      text-align: center;
-    }
-    #logoutButton {
-      position: fixed;
-      bottom: 30px;
-      background-color: rgba(255, 140, 0, 1);
-      color: #ffffff;
-      padding: 8px 12px;
-      font-family: 'Quicksand', Arial, sans-serif;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      z-index: 100;
-      display: none;
-      position: fixed;
-  bottom: 16px;
-  left: 16px;
-    }
-    #logoutButton:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
-      font-family: 'Quicksand', Arial, sans-serif;
-    }
-    h3 {
-      position: fixed;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      color: #eee;
-      font-family: 'Quicksand', Arial, sans-serif;
-      margin: 0;
-      padding: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 50;
-    }
-
-    
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    
-    .dark-mode-textbox {
-      padding: 10px;
-      border: 1px solid #444;
-      border-radius: 5px;
-      font-size: 14px;
-      background-color: #333;
-      color: #fff;
-      outline: none;
-      transition: border-color 0.3s, background-color 0.3s;
-    }
-
-    .dark-mode-textbox::placeholder {
-      color: #999;
-    }
-
-    .dark-mode-textbox:focus {
-      border-color: #007bff;
-      background-color: #111;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
-
-    .green-text { color: #00fe2f; }
-    .red-text { color: #ff0000; }
-    .yellow-text { color: rgb(255, 255, 0); }
-
-    
-    @keyframes rainbow {
-      0% { color: #ff0000; }
-      16% { color: #ff7f00; }
-      33% { color: #ffff00; }
-      50% { color: #00ff00; }
-      66% { color: #0000ff; }
-      83% { color: #8b00ff; }
-      100% { color: #ff0000; }
-    }
-
-    .dev-name {
-      animation: rainbow 3s linear infinite;
-      font-weight: bold;
-      text-shadow: 0 0 10px currentColor;
-    }
-
-    .dev-crown {
-      display: inline-block;
-      margin-left: 5px;
-      font-size: 1.2em;
-      filter: drop-shadow(0 0 5px gold);
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #121212; color: #fff; min-height: 100vh; }
+    .main-content { padding: 80px 20px 20px; max-width: 900px; margin: 0 auto; }
+    body.has-navbar-left .main-content { padding-top: 20px !important; }
+    .redirect-page { text-align: center; padding: 80px 20px; }
+    .redirect-page h1 { color: #1DB954; font-size: 2.5rem; margin-bottom: 16px; }
+    .redirect-page p { color: rgba(255,255,255,0.6); margin-bottom: 32px; font-size: 1.1rem; }
+    .redirect-btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 36px; background: #1DB954; color: #000; border: none; border-radius: 30px; font-weight: 600; font-size: 1.1rem; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .redirect-btn:hover { background: #1ed760; transform: translateY(-2px); }
+    .redirect-btn svg { width: 28px; height: 28px; }
   </style>
+  <script>window.location.replace('https://monochrome.tf/');</script>
 </head>
-
 <body>
-  <div id="particles-js"></div>
-  
-  <div class="navbar">
-    <div class="navbar-left">
-      <img src="images/blue girl.gif" alt="Kernel's Logo" class="logo">
-      <a href="/" class="active">
-        <span class="logo-text">suntree-network</span>
-      </a>
-    </div>
+  <div class="navbar" id="mainNavbar">
+    <div class="navbar-left"></div>
     <div class="navbar-right">
-      <a href="/" class="active">
-        <span class="label">Home</span>
-      </a>
-      <a href="/chat.html">
-        <span class="label">Chat</span>
-      </a>
-      <a href="/g">
-        <span class="label">ɢɑᴍᴇѕ</span>
-      </a>
-      <div class="dropdown">
-        <a href="#" class="dropdown-toggle">
-          <span class="label">Other ▼</span>
-        </a>
-        <div class="dropdown-menu">
-          <a href="/other/partners.html">Partners</a>
-          <a href="/other/privacy.html">Privacy Policy</a>
-          <a href="/other/dmca.html">DMCA</a>
-        </div>
-      </div>
+      <a href="/main.html" title="Home"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a>
+      <a href="/chat.html" class="active" title="Music"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></a>
+      <a href="/g" title="Lessons"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2z"/></svg></a>
+      <a href="/spanish.html" title="Apps"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg></a>
+      <a href="/studying.html" title="AI"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg></a>
+      <a href="/settings.html" title="Settings"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></a>
+      <div class="dropdown"><a href="#" class="dropdown-toggle" title="More"><svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></a><div class="dropdown-menu"><a href="/other/partners.html">Partners</a><a href="/other/privacy.html">Privacy Policy</a><a href="/other/dmca.html">DMCA</a></div></div>
     </div>
   </div>
 
-
-
-  
-  <div id="authPanel">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input id="loginUser" placeholder="Username" autocomplete="username" required />
-      <input id="loginPass" placeholder="Password" type="password" autocomplete="current-password" required />
-      <button type="submit">Login</button>
-    </form>
-
-    <hr />
-
-    <h4>New Here?</h4>
-    <form id="registerForm">
-      <input id="registerUser" placeholder="Username" autocomplete="username" required />
-      <input id="registerPass" placeholder="Password" type="password" autocomplete="new-password" required />
-      <button type="submit">Register</button>
-    </form>
-
-    <p id="authMsg"></p>
-  </div>
-
-  <div id="chat" class="chat">
-    <div class="members">
-      <span class="members-count"></span>
-      <div class="members-list"></div>
+  <div class="main-content">
+    <div class="redirect-page">
+      <h1>Music Player</h1>
+      <p>Redirecting to monochrome.tf...</p>
+      <a href="https://monochrome.tf/" class="redirect-btn" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        Open Music Player
+      </a>
     </div>
-    <div class="messages"></div>
-    <form class="message-form">
-      <input class="message-form__input" placeholder="Type your message here..." autocomplete="off" />
-      <button type="submit">Send</button>
-    </form>
   </div>
-<button  id="logoutButton">Logout</button>
 
-  <script src="/js/chatsystem.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="/js/vanta.dots.min.js"></script>
-  <script>
-    VANTA.DOTS({
-      el: "#particles-js",
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 5.00,
-      minWidth: 5.00,
-      scale: 1.00,
-      scaleMobile: 1.00,
-      color: 0xff4800,
-      color2: 0x7bff20,
-      backgroundColor: 0x0,
-      showLines: false
-    })
-  </script>
+  <script src="/js/ads.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/panic.js"></script>
 </body>
-
 </html>

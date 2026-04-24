@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link id="favicon" rel="icon" href="images/ixl.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/stylesbeta.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/update.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <meta name="description" content="IXL is the world's most popular subscription-based learning site for K–12."/>
+  <meta property="og:title" content="IXL | Math, Language Arts, Science, Social Studies, and Spanish"/>
+  <meta property="og:url" content="https://suntree-net.works"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="IXL Learning"/>
+<!-- Add this in your <head> -->
+<script src="https://cdn.jsdelivr.net/npm/gifuct-js@2.1.2/dist/gifuct-js.min.js"></script>
+  <!-- Google tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C9BNBCB6YN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C9BNBCB6YN');
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 20px 40px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      left: 0 !important;
+      right: 0 !important;
+    }
+
+    /* Force container to center when navbar is on left - override any JS inline styles */
+    body.has-navbar-left .container {
+      margin-left: auto !important;
+      margin-right: auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      left: auto !important;
+      right: auto !important;
+      transform: none !important;
+    }
+
+    /* Also force center on search container */
+    body.has-navbar-left .search-container {
+      margin-left: auto !important;
+      margin-right: auto !important;
+      width: 100% !important;
+      max-width: 640px !important;
+      left: auto !important;
+      right: auto !important;
+    }
+
+    body.has-navbar-left .app-icons {
+      justify-content: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    .title-image { max-width: 400px; height: auto; margin-bottom: 10px; }
+
+    .discord-link { margin-top: 8px; margin-bottom: 40px; }
+    .discord-link a {
+      color: rgba(135, 206, 235, 0.8);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+    .discord-link a:hover { color: #87CEEB; }
+
+    .search-container { width: 100%; max-width: 640px; margin-bottom: 50px; }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(135, 206, 235, 0.03);
+      border: 1px solid rgba(135, 206, 235, 0.2);
+      border-radius: 16px;
+      padding: 14px 18px;
+      gap: 12px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+    .search-bar:focus-within {
+      background: rgba(135, 206, 235, 0.06);
+      border-color: rgba(135, 206, 235, 0.4);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.6), 0 0 20px rgba(135,206,235,0.1);
+    }
+    .search-icon { width: 20px; height: 20px; color: rgba(135,206,235,0.6); flex-shrink: 0; }
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #87CEEB;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+    }
+    .search-input::placeholder { color: rgba(135,206,235,0.5); }
+    .search-engine-select {
+      background: rgba(135,206,235,0.08);
+      border: 1px solid rgba(135,206,235,0.2);
+      border-radius: 8px;
+      color: #87CEEB;
+      font-size: 13px;
+      padding: 6px 10px;
+      cursor: pointer;
+      outline: none;
+      font-family: inherit;
+    }
+    .search-engine-select option { background: #000; color: #87CEEB; }
+    .search-hint {
+      font-size: 11px;
+      color: rgba(135,206,235,0.5);
+      background: rgba(135,206,235,0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(135,206,235,0.15);
+      flex-shrink: 0;
+    }
+
+    .app-icons { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+    .app-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .app-button:hover { transform: translateY(-5px); }
+    .app-button:hover img { box-shadow: 0 0 25px rgba(135,206,235,0.3); border-color: rgba(135,206,235,0.8); }
+    .app-button:hover span { color: #87CEEB; }
+    .app-button img {
+      width: 72px; height: 72px;
+      border-radius: 16px;
+      border: 2px solid rgba(135,206,235,0.25);
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      transition: all 0.2s ease;
+    }
+    .app-button span { color: rgba(135,206,235,0.8); margin-top: 8px; font-size: 13px; font-weight: 500; transition: color 0.2s ease; }
+
+    .add-custom-btn { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s ease; }
+    .add-custom-btn:hover { transform: translateY(-5px); }
+    .add-custom-btn:hover .add-icon { background: rgba(135,206,235,0.15); border-color: rgba(135,206,235,0.8); box-shadow: 0 0 25px rgba(135,206,235,0.3); }
+    .add-custom-btn:hover span { color: #87CEEB; }
+    .add-icon {
+      width: 72px; height: 72px;
+      border-radius: 16px;
+      border: 2px dashed rgba(135,206,235,0.4);
+      background: rgba(135,206,235,0.05);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      color: rgba(135,206,235,0.6);
+      transition: all 0.2s ease;
+    }
+    .add-custom-btn span { color: rgba(135,206,235,0.8); margin-top: 8px; font-size: 13px; font-weight: 500; }
+
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,17,68,0.9);
+      z-index: 99999;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #1a1a1a; border-radius: 16px; padding: 24px;
+      width: 90%; max-width: 400px;
+      border: 1px solid rgba(135,206,235,0.2);
+    }
+    .modal h2 { color: #87CEEB; margin-bottom: 20px; font-size: 20px; }
+    .modal input {
+      width: 100%; padding: 12px; margin-bottom: 12px;
+      background: rgba(135,206,235,0.05);
+      border: 1px solid rgba(135,206,235,0.2);
+      border-radius: 8px; color: #87CEEB; font-size: 14px;
+    }
+    .modal input::placeholder { color: rgba(135,206,235,0.5); }
+    .modal input:focus { outline: none; border-color: rgba(135,206,235,0.5); }
+    .modal-buttons { display: flex; gap: 10px; margin-top: 16px; }
+    .modal-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
+    .modal-btn.cancel { background: rgba(135,206,235,0.1); color: #87CEEB; }
+    .modal-btn.cancel:hover { background: rgba(135,206,235,0.2); }
+    .modal-btn.save { background: rgba(135,206,235,0.3); color: #87CEEB; }
+    .modal-btn.save:hover { background: rgba(135,206,235,0.5); }
+
+    .custom-app-delete {
+      position: absolute; top: -8px; right: -8px;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #ff4444; border: none; color: white;
+      font-size: 14px; cursor: pointer;
+      display: none; align-items: center; justify-content: center; line-height: 1;
+    }
+    .app-button-wrapper { position: relative; }
+    .app-button-wrapper:hover .custom-app-delete { display: flex; }
+
+    .app-button .letter-icon {
+      width: 72px; height: 72px; border-radius: 16px;
+      border: 2px solid rgba(135,206,235,0.25);
+      background: linear-gradient(135deg, #1a3a4a, #2a5a6a);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 700; color: #87CEEB; text-transform: uppercase;
+    }
+
+ 
+    #goonerOverlay {
+      display: none;
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 9999999;
+      pointer-events: none;
+    }
+    #goonerGif {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.92;
+    }
+  </style>
+</head>
+<body>
+  <div id="goonerOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999999; pointer-events:none;">
+  <video id="goonerVideo"
+    src="/images/0324.mp4"
+    style="position:absolute; top:0; left:0; width:100%; height:100%;"
+    playsinline
+    preload="auto">
+  </video>
+</div>
+
+  <!-- Navbar -->
+  <div class="navbar" id="mainNavbar">
+    <div class="navbar-left"></div>
+    <div class="navbar-right">
+      <a href="/main.html" class="active" title="Home">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </a>
+      <a href="/chat.html" title="Music">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </a>
+      <a href="/g" title="Lessons">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      </a>
+      <a href="/spanish.html" title="Apps">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+      </a>
+      <a href="/studying.html" title="AI">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+      </a>
+      <a href="/settings.html" title="Settings">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      </a>
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" title="More">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </a>
+        <div class="dropdown-menu">
+          <a href="/other/partners.html">Partners</a>
+          <a href="/other/privacy.html">Privacy Policy</a>
+          <a href="/other/dmca.html">DMCA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <img src="images/enhanced_logo.png" alt="OnlyLessons" class="title-image">
+
+    <div class="discord-link">
+      <a href="https://discord.gg/onlylessons" target="_blank">discord.gg/onlylessons</a>
+    </div>
+
+    <div class="search-container">
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search or enter URL..." autocomplete="off">
+        <select class="search-engine-select" id="searchEngine">
+          <option value="duckduckgo" selected>DuckDuckGo</option>
+          <option value="brave">Brave</option>
+          <option value="bing">Bing</option>
+          <option value="yahoo">Yahoo</option>
+        </select>
+        <span class="search-hint">Ctrl + K</span>
+      </div>
+    </div>
+
+    <div class="app-icons">
+      <a href="/g?embed=embed-wrapper.html" class="app-button">
+        <img src="images/roblox.png" alt="Roblox">
+        <span>Roblox</span>
+      </a>
+      <a href="embed.html#https://d11jzht7mj96rr.cloudfront.net/" class="app-button">
+        <img src="images/science.png" alt="Discord">
+        <span>More & More Games</span>
+      </a>
+      <a href="/g?embed=embed.html#https://youtube.com" class="app-button">
+        <img src="images/youtube.png" alt="YouTube">
+        <span>YouTube</span>
+      </a>
+      <a href="/g?embed=embed.html#https://gemini.google.com" class="app-button">
+        <img src="images/gemini.webp" alt="Gemini">
+        <span>Gemini</span>
+      </a>
+      <a href="/g?embed=embed.html#https://bcine.app" class="app-button">
+        <img src="images/bcine.webp" alt="Movies">
+        <span>Movies</span>
+      </a>
+      <div class="app-button-wrapper">
+        <div class="add-custom-btn" id="addCustomBtn">
+          <div class="add-icon">+</div>
+          <span>Add App</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Custom App Modal -->
+  <div class="modal-overlay" id="customAppModal">
+    <div class="modal">
+      <h2>Add Custom App</h2>
+      <input type="text" id="customAppName" placeholder="App Name">
+      <input type="text" id="customAppUrl" placeholder="App URL (e.g., https://example.com)">
+      <input type="text" id="customAppImage" placeholder="Image URL (optional)">
+      <div class="modal-buttons">
+        <button class="modal-btn cancel" id="cancelCustomApp">Cancel</button>
+        <button class="modal-btn save" id="saveCustomApp">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:none;">
+    <form id="uv-form" autocomplete="off">
+      <input id="homework-chapter" value="https://duckduckgo.com/?t=h_&ia=web&q=" type="hidden">
+      <input id="homework-material" type="text" placeholder="search here" class="form__input">
+    </form>
+  </div>
+
+  <div id="overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:999;"></div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const searchEngine = document.getElementById('searchEngine');
+
+  const searchUrls = {
+    duckduckgo: 'https://duckduckgo.com/?t=h_&q=',
+    brave: 'https://search.brave.com/search?q=',
+    bing: 'https://www.bing.com/search?q=',
+    yahoo: 'https://search.yahoo.com/search?p='
+  };
+
+  const jumpVideo = document.getElementById('goonerVideo');
+  jumpVideo.load();
+
+  jumpVideo.addEventListener('ended', () => {
+    document.getElementById('goonerOverlay').style.display = 'none';
+    jumpVideo.currentTime = 0;
+  });
+
+  function triggergooner() {
+    const overlay = document.getElementById('goonerOverlay');
+    jumpVideo.currentTime = 0;
+    jumpVideo.playbackRate = 1.0;
+    overlay.style.display = 'block';
+    jumpVideo.play().catch(() => {});
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      searchInput.focus();
+    }
+  });
+
+  searchInput.addEventListener('keydown', async (e) => {
+    if (e.key !== 'Enter') return;
+    const query = searchInput.value.trim();
+    if (!query) return;
+
+    const BAD = ['porn','pornhub','xvideos','xnxx','onlyfans','redtube',
+      'youporn','xvideo','brazzers','hentai','xxx','nsfw','rule34',
+      'sex','nude','naked','lewd','erotic','baddie', 'gooning'];
+    const cleaned = query.toLowerCase().replace(/\s+/g, '');
+
+    if (BAD.some(kw => cleaned.includes(kw))) {
+      triggergooner();
+      searchInput.value = '';
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/search-check?q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      if (data.blocked) {
+        triggergooner();
+        searchInput.value = '';
+        return;
+      }
+    } catch (_) {}
+
+    const engine = searchEngine.value;
+    window.location.href = '/g?embed=embed.html#' + searchUrls[engine] + encodeURIComponent(query);
+  });
+</script>
+
+  <script src="/lessons/bundle.js" defer></script>
+  <script src="/lessons/config.js?cdn" defer></script>
+
+  <script>
+    function getQueryParam(param) {
+      return new URLSearchParams(window.location.search).get(param);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const joinid = getQueryParam('game');
+      if (joinid) window.location.href = '/share.html?game=' + joinid;
+    });
+  </script>
+
+  <script src="/js/settings.js"></script>
+  <script src="/js/loading.js"></script>
+  <script src="/js/ads.js"></script>
+  <script src="/js/update.js"></script>
+  <script src="/js/panic.js"></script>
+
+  <script>
+    const STORAGE_KEY = 'onlylessons_custom_apps';
+
+    function getCustomApps() {
+      const apps = localStorage.getItem(STORAGE_KEY);
+      return apps ? JSON.parse(apps) : [];
+    }
+
+    function saveCustomApps(apps) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(apps));
+    }
+
+    function renderCustomApps() {
+      const customApps = getCustomApps();
+      const appIcons = document.querySelector('.app-icons');
+      const addBtn = document.getElementById('addCustomBtn').parentElement;
+
+      document.querySelectorAll('.custom-app-wrapper').forEach(el => el.remove());
+
+      customApps.forEach((app, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'app-button-wrapper custom-app-wrapper';
+        const appTitle = app.title || '?';
+        let url = app.url;
+        if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
+        wrapper.innerHTML = `
+          <a href="/g?embed=embed.html#${url}" class="app-button">
+            ${app.image
+              ? `<img src="${app.image}" alt="${appTitle}">`
+              : `<div class="letter-icon">${appTitle.charAt(0).toUpperCase()}</div>`}
+            <span>${appTitle}</span>
+          </a>
+          <button class="custom-app-delete" data-index="${index}">&times;</button>
+        `;
+        appIcons.insertBefore(wrapper, addBtn);
+      });
+
+      document.querySelectorAll('.custom-app-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const apps = getCustomApps();
+          apps.splice(parseInt(btn.dataset.index), 1);
+          saveCustomApps(apps);
+          renderCustomApps();
+        });
+      });
+    }
+
+    const modal = document.getElementById('customAppModal');
+    const addCustomBtn = document.getElementById('addCustomBtn');
+    const cancelCustomApp = document.getElementById('cancelCustomApp');
+    const saveCustomApp = document.getElementById('saveCustomApp');
+    const customAppName = document.getElementById('customAppName');
+    const customAppUrl = document.getElementById('customAppUrl');
+    const customAppImage = document.getElementById('customAppImage');
+
+    addCustomBtn.addEventListener('click', () => {
+      modal.classList.add('active');
+      customAppName.value = '';
+      customAppUrl.value = '';
+      customAppImage.value = '';
+      customAppName.focus();
+    });
+
+    [cancelCustomApp].forEach(btn => btn.addEventListener('click', () => modal.classList.remove('active')));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+
+    saveCustomApp.addEventListener('click', () => {
+      const title = customAppName.value.trim();
+      const url = customAppUrl.value.trim();
+      const image = customAppImage.value.trim();
+      if (!title || !url) { alert('Please fill in both fields'); return; }
+      const apps = getCustomApps();
+      apps.push({ title, url, image });
+      saveCustomApps(apps);
+      renderCustomApps();
+      modal.classList.remove('active');
+    });
+
+    renderCustomApps();
+  </script>
+</body>
+</html>
